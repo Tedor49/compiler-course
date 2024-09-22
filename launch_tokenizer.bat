@@ -4,7 +4,6 @@ setlocal enabledelayedexpansion
 
 echo Compiling the tokenizer...
 g++ tokenizer.cpp -w -std=c++20 -o tokenizer
-echo Compilation successful!
 
 for %%f in (test_code/*.d) do (
     call set in=%%~nf.d

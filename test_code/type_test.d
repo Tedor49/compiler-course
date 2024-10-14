@@ -1,5 +1,5 @@
-var types = [1, 1.1, false, "hello", empty, [1, 2, 3], {a:="lol", "kek"}, func(a, b) => a+b, readInt, readReal, readString, 1 + 1, 1+2.0, 3.0-4, 0.1 * 0.1]
-var names = ["int", "real", "bool", "str", "emp", "arr", "tup", "func", "rInt", "rRl", "rStr", "i+i", "i+r", "r-i", "r*r"]
+var types := [1, 1.1, false, "hello", empty, [1, 2, 3], {a:="lol", "kek"}, func(a, b) => a+b, readInt, readReal, readString, 1 + 1, 1+2.0, 3.0-4, 0.1 * 0.1]
+var names := ["int", "real", "bool", "str", "emp", "arr", "tup", "func", "rInt", "rRl", "rStr", "i+i", "i+r", "r-i", "r*r"]
 
 for i in 1 .. 8 loop
 	print "///\t", names[i]

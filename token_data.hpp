@@ -443,8 +443,6 @@ const std::unordered_map<std::string, TokenCode> hash_lookup = {
 	{ ":=", TokenCode::tkAssignment },
 	{ "+=", TokenCode::tkPlusEq },
 	{ "-=", TokenCode::tkMinusEq },
-	{ "*=", TokenCode::tkMultiplyEq },
-	{ "/=", TokenCode::tkDivideEq },
 	{ "import", TokenCode::tkImport },
 	{ "print", TokenCode::tkPrint },
 	{ "readInt", TokenCode::tkReadInt },

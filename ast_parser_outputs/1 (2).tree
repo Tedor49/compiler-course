@@ -1,0 +1,69 @@
+Programm{
+  Statement{
+    Print{
+      ExpressionsAmount: 2
+      Value 1:
+        Expression{
+          Element amount: 1
+          Element 1: 
+            Relation{
+              Element amount: 1
+              Element 1: 
+                Factor{
+                  Element amount: 1
+                  Element 1: 
+                    Term{
+                      Element amount: 1
+                      Element 1: 
+                        Unary{
+                          Type: Primary
+                          UnaryOperation: None
+                          Value:
+                            Primary{
+                              Type: Literal
+                              Literal:
+                                Literal{
+                                  Type: String
+                                  Value: "abcdefghijklmnopqrstvuwxyz"
+                                }
+                            }
+                          Type indicator: None
+                        }
+                    }
+                }
+            }
+        }
+      Value 2:
+        Expression{
+          Element amount: 1
+          Element 1: 
+            Relation{
+              Element amount: 1
+              Element 1: 
+                Factor{
+                  Element amount: 1
+                  Element 1: 
+                    Term{
+                      Element amount: 1
+                      Element 1: 
+                        Unary{
+                          Type: Primary
+                          UnaryOperation: None
+                          Value:
+                            Primary{
+                              Type: Literal
+                              Literal:
+                                Literal{
+                                  Type: String
+                                  Value: "1234567890"
+                                }
+                            }
+                          Type indicator: None
+                        }
+                    }
+                }
+            }
+        }
+    }
+  }
+}

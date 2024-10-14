@@ -7,5 +7,5 @@ arr2 := {x:=2.3, y:=[3, 2, 1]}
 print arr1+arr2, "\n"
 
 arr1 := {x:=1, y:=12.3}
-arr1 += arr2
+arr1 := arr1+arr2
 print arr1, "\n"

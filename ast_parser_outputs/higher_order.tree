@@ -1,0 +1,722 @@
+Programm{
+  Statement{
+    Declaration{
+      VariableDefinition{
+        Identifier: map
+        Value:
+          Expression{
+            Element amount: 1
+            Element 1: 
+              Relation{
+                Element amount: 1
+                Element 1: 
+                  Factor{
+                    Element amount: 1
+                    Element 1: 
+                      Term{
+                        Element amount: 1
+                        Element 1: 
+                          Unary{
+                            Type: Primary
+                            UnaryOperation: None
+                            Value:
+                              Primary{
+                                Type: Literal
+                                Literal:
+                                  Literal{
+                                    Type: Function
+                                    Value:
+                                      Function{
+                                        Type: Body
+                                        ParamAmount: 3
+                                        Parameter 1: "apply"
+                                        Parameter 2: "n"
+                                        Parameter 3: "arr"
+                                        Body:
+                                          Body{
+                                            Statement{
+                                              Assignment{
+                                                Primary:
+                                                  Primary{
+                                                    Type: Value
+                                                    Identifier: "ans"
+                                                    TailAmount: 0
+                                                  }
+                                                Expression:
+                                                  Expression{
+                                                    Element amount: 1
+                                                    Element 1: 
+                                                      Relation{
+                                                        Element amount: 1
+                                                        Element 1: 
+                                                          Factor{
+                                                            Element amount: 1
+                                                            Element 1: 
+                                                              Term{
+                                                                Element amount: 1
+                                                                Element 1: 
+                                                                  Unary{
+                                                                    Type: Primary
+                                                                    UnaryOperation: None
+                                                                    Value:
+                                                                      Primary{
+                                                                        Type: Literal
+                                                                        Literal:
+                                                                          Literal{
+                                                                            Type: Array
+                                                                            Value:
+                                                                              ArrayLiteral{
+                                                                                EntriesAmount: 1
+                                                                                Value 1:
+                                                                                  Expression{
+                                                                                    Element amount: 1
+                                                                                    Element 1: 
+                                                                                      Relation{
+                                                                                        Element amount: 1
+                                                                                        Element 1: 
+                                                                                          Factor{
+                                                                                            Element amount: 1
+                                                                                            Element 1: 
+                                                                                              Term{
+                                                                                                Element amount: 1
+                                                                                                Element 1: 
+                                                                                                  Unary{
+                                                                                                    Type:                                                                                                   }
+                                                                                              }
+                                                                                          }
+                                                                                      }
+                                                                                  }
+                                                                              }
+                                                                          }
+                                                                      }
+                                                                    Type indicator: None
+                                                                  }
+                                                              }
+                                                          }
+                                                      }
+                                                  }
+                                              }
+                                            }
+                                            Statement{
+                                              For{
+                                                Identifier: "i"
+                                                Range:
+                                                  Range{
+                                                    ExpressionBegin:
+                                                      Expression{
+                                                        Element amount: 1
+                                                        Element 1: 
+                                                          Relation{
+                                                            Element amount: 1
+                                                            Element 1: 
+                                                              Factor{
+                                                                Element amount: 1
+                                                                Element 1: 
+                                                                  Term{
+                                                                    Element amount: 1
+                                                                    Element 1: 
+                                                                      Unary{
+                                                                        Type: Primary
+                                                                        UnaryOperation: None
+                                                                        Value:
+                                                                          Primary{
+                                                                            Type: Literal
+                                                                            Literal:
+                                                                              Literal{
+                                                                                Type: Integer
+                                                                                Value: 1
+                                                                              }
+                                                                          }
+                                                                        Type indicator: None
+                                                                      }
+                                                                  }
+                                                              }
+                                                          }
+                                                      }
+                                                    ExpressionEnd:
+                                                      Expression{
+                                                        Element amount: 1
+                                                        Element 1: 
+                                                          Relation{
+                                                            Element amount: 1
+                                                            Element 1: 
+                                                              Factor{
+                                                                Element amount: 1
+                                                                Element 1: 
+                                                                  Term{
+                                                                    Element amount: 1
+                                                                    Element 1: 
+                                                                      Unary{
+                                                                        Type: Primary
+                                                                        UnaryOperation: None
+                                                                        Value:
+                                                                          Primary{
+                                                                            Type: Value
+                                                                            Identifier: "n"
+                                                                            TailAmount: 0
+                                                                          }
+                                                                        Type indicator: None
+                                                                      }
+                                                                  }
+                                                              }
+                                                          }
+                                                      }
+                                                  }
+                                                Body:
+                                                  Body{
+                                                    Statement{
+                                                      Assignment{
+                                                        Primary:
+                                                          Primary{
+                                                            Type: Value
+                                                            Identifier: "ans"
+                                                            TailAmount: 0
+                                                          }
+                                                        Expression:
+                                                          Expression{
+                                                            Element amount: 1
+                                                            Element 1: 
+                                                              Relation{
+                                                                Element amount: 1
+                                                                Element 1: 
+                                                                  Factor{
+                                                                    Element amount: 2
+                                                                    Element 1: 
+                                                                      Term{
+                                                                        Element amount: 1
+                                                                        Element 1: 
+                                                                          Unary{
+                                                                            Type: Primary
+                                                                            UnaryOperation: None
+                                                                            Value:
+                                                                              Primary{
+                                                                                Type: Value
+                                                                                Identifier: "ans"
+                                                                                TailAmount: 0
+                                                                              }
+                                                                            Type indicator: None
+                                                                          }
+                                                                      }
+                                                                    Operation 1: +
+                                                                    Element 2: 
+                                                                      Term{
+                                                                        Element amount: 1
+                                                                        Element 1: 
+                                                                          Unary{
+                                                                            Type: Primary
+                                                                            UnaryOperation: None
+                                                                            Value:
+                                                                              Primary{
+                                                                                Type: Literal
+                                                                                Literal:
+                                                                                  Literal{
+                                                                                    Type: Array
+                                                                                    Value:
+                                                                                      ArrayLiteral{
+                                                                                        EntriesAmount: 1
+                                                                                        Value 1:
+                                                                                          Expression{
+                                                                                            Element amount: 1
+                                                                                            Element 1: 
+                                                                                              Relation{
+                                                                                                Element amount: 1
+                                                                                                Element 1: 
+                                                                                                  Factor{
+                                                                                                    Element amount: 1
+                                                                                                    Element 1: 
+                                                                                                      Term{
+                                                                                                        Element amount: 1
+                                                                                                        Element 1: 
+                                                                                                          Unary{
+                                                                                                            Type: Primary
+                                                                                                            UnaryOperation: None
+                                                                                                            Value:
+                                                                                                              Primary{
+                                                                                                                Type: Value
+                                                                                                                Identifier: "apply"
+                                                                                                                TailAmount: 1
+                                                                                                                Tail 1:
+                                                                                                                  Tail{
+                                                                                                                    Type: Parameters
+                                                                                                                    ParametersAmount: 1
+                                                                                                                    Parameter 1:
+                                                                                                                      Expression{
+                                                                                                                        Element amount: 1
+                                                                                                                        Element 1: 
+                                                                                                                          Relation{
+                                                                                                                            Element amount: 1
+                                                                                                                            Element 1: 
+                                                                                                                              Factor{
+                                                                                                                                Element amount: 1
+                                                                                                                                Element 1: 
+                                                                                                                                  Term{
+                                                                                                                                    Element amount: 1
+                                                                                                                                    Element 1: 
+                                                                                                                                      Unary{
+                                                                                                                                        Type: Primary
+                                                                                                                                        UnaryOperation: None
+                                                                                                                                        Value:
+                                                                                                                                          Primary{
+                                                                                                                                            Type: Value
+                                                                                                                                            Identifier: "arr"
+                                                                                                                                            TailAmount: 1
+                                                                                                                                            Tail 1:
+                                                                                                                                              Tail{
+                                                                                                                                                Type: Subscript
+                                                                                                                                                Expression:
+                                                                                                                                                  Expression{
+                                                                                                                                                    Element amount: 1
+                                                                                                                                                    Element 1: 
+                                                                                                                                                      Relation{
+                                                                                                                                                        Element amount: 1
+                                                                                                                                                        Element 1: 
+                                                                                                                                                          Factor{
+                                                                                                                                                            Element amount: 1
+                                                                                                                                                            Element 1: 
+                                                                                                                                                              Term{
+                                                                                                                                                                Element amount: 1
+                                                                                                                                                                Element 1: 
+                                                                                                                                                                  Unary{
+                                                                                                                                                                    Type: Primary
+                                                                                                                                                                    UnaryOperation: None
+                                                                                                                                                                    Value:
+                                                                                                                                                                      Primary{
+                                                                                                                                                                        Type: Value
+                                                                                                                                                                        Identifier: "i"
+                                                                                                                                                                        TailAmount: 0
+                                                                                                                                                                      }
+                                                                                                                                                                    Type indicator: None
+                                                                                                                                                                  }
+                                                                                                                                                              }
+                                                                                                                                                          }
+                                                                                                                                                      }
+                                                                                                                                                  }
+                                                                                                                                              }
+                                                                                                                                          }
+                                                                                                                                        Type indicator: None
+                                                                                                                                      }
+                                                                                                                                  }
+                                                                                                                              }
+                                                                                                                          }
+                                                                                                                      }
+                                                                                                                  }
+                                                                                                              }
+                                                                                                            Type indicator: None
+                                                                                                          }
+                                                                                                      }
+                                                                                                  }
+                                                                                              }
+                                                                                          }
+                                                                                      }
+                                                                                  }
+                                                                              }
+                                                                            Type indicator: None
+                                                                          }
+                                                                      }
+                                                                  }
+                                                              }
+                                                          }
+                                                      }
+                                                    }
+                                                  }
+                                              }
+                                            }
+                                            Statement{
+                                              Resturn{
+                                                Expression:
+                                                  Expression{
+                                                    Element amount: 1
+                                                    Element 1: 
+                                                      Relation{
+                                                        Element amount: 1
+                                                        Element 1: 
+                                                          Factor{
+                                                            Element amount: 1
+                                                            Element 1: 
+                                                              Term{
+                                                                Element amount: 1
+                                                                Element 1: 
+                                                                  Unary{
+                                                                    Type: Primary
+                                                                    UnaryOperation: None
+                                                                    Value:
+                                                                      Primary{
+                                                                        Type: Value
+                                                                        Identifier: "ans"
+                                                                        TailAmount: 0
+                                                                      }
+                                                                    Type indicator: None
+                                                                  }
+                                                              }
+                                                          }
+                                                      }
+                                                  }
+                                              }
+                                            }
+                                          }
+                                      }
+                                  }
+                              }
+                            Type indicator: None
+                          }
+                      }
+                  }
+              }
+          }
+      }
+    }
+  }
+  Statement{
+    Declaration{
+      VariableDefinition{
+        Identifier: inc2by
+        Value:
+          Expression{
+            Element amount: 1
+            Element 1: 
+              Relation{
+                Element amount: 1
+                Element 1: 
+                  Factor{
+                    Element amount: 1
+                    Element 1: 
+                      Term{
+                        Element amount: 1
+                        Element 1: 
+                          Unary{
+                            Type: Primary
+                            UnaryOperation: None
+                            Value:
+                              Primary{
+                                Type: Literal
+                                Literal:
+                                  Literal{
+                                    Type: Function
+                                    Value:
+                                      Function{
+                                        Type: Lambda
+                                        ParamAmount: 1
+                                        Parameter 1: "x"
+                                        Expression:
+                                          Expression{
+                                            Element amount: 1
+                                            Element 1: 
+                                              Relation{
+                                                Element amount: 1
+                                                Element 1: 
+                                                  Factor{
+                                                    Element amount: 2
+                                                    Element 1: 
+                                                      Term{
+                                                        Element amount: 1
+                                                        Element 1: 
+                                                          Unary{
+                                                            Type: Primary
+                                                            UnaryOperation: None
+                                                            Value:
+                                                              Primary{
+                                                                Type: Value
+                                                                Identifier: "x"
+                                                                TailAmount: 0
+                                                              }
+                                                            Type indicator: None
+                                                          }
+                                                      }
+                                                    Operation 1: +
+                                                    Element 2: 
+                                                      Term{
+                                                        Element amount: 1
+                                                        Element 1: 
+                                                          Unary{
+                                                            Type: Primary
+                                                            UnaryOperation: None
+                                                            Value:
+                                                              Primary{
+                                                                Type: Literal
+                                                                Literal:
+                                                                  Literal{
+                                                                    Type: Integer
+                                                                    Value: 2
+                                                                  }
+                                                              }
+                                                            Type indicator: None
+                                                          }
+                                                      }
+                                                  }
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
+                            Type indicator: None
+                          }
+                      }
+                  }
+              }
+          }
+      }
+    }
+  }
+  Statement{
+    Assignment{
+      Primary:
+        Primary{
+          Type: Value
+          Identifier: "array"
+          TailAmount: 0
+        }
+      Expression:
+        Expression{
+          Element amount: 1
+          Element 1: 
+            Relation{
+              Element amount: 1
+              Element 1: 
+                Factor{
+                  Element amount: 1
+                  Element 1: 
+                    Term{
+                      Element amount: 1
+                      Element 1: 
+                        Unary{
+                          Type: Primary
+                          UnaryOperation: None
+                          Value:
+                            Primary{
+                              Type: Literal
+                              Literal:
+                                Literal{
+                                  Type: Array
+                                  Value:
+                                    ArrayLiteral{
+                                      EntriesAmount: 3
+                                      Value 1:
+                                        Expression{
+                                          Element amount: 1
+                                          Element 1: 
+                                            Relation{
+                                              Element amount: 1
+                                              Element 1: 
+                                                Factor{
+                                                  Element amount: 1
+                                                  Element 1: 
+                                                    Term{
+                                                      Element amount: 1
+                                                      Element 1: 
+                                                        Unary{
+                                                          Type: Primary
+                                                          UnaryOperation: None
+                                                          Value:
+                                                            Primary{
+                                                              Type: Literal
+                                                              Literal:
+                                                                Literal{
+                                                                  Type: Integer
+                                                                  Value: 1
+                                                                }
+                                                            }
+                                                          Type indicator: None
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                      Value 2:
+                                        Expression{
+                                          Element amount: 1
+                                          Element 1: 
+                                            Relation{
+                                              Element amount: 1
+                                              Element 1: 
+                                                Factor{
+                                                  Element amount: 1
+                                                  Element 1: 
+                                                    Term{
+                                                      Element amount: 1
+                                                      Element 1: 
+                                                        Unary{
+                                                          Type: Primary
+                                                          UnaryOperation: None
+                                                          Value:
+                                                            Primary{
+                                                              Type: Literal
+                                                              Literal:
+                                                                Literal{
+                                                                  Type: Integer
+                                                                  Value: 2
+                                                                }
+                                                            }
+                                                          Type indicator: None
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                      Value 3:
+                                        Expression{
+                                          Element amount: 1
+                                          Element 1: 
+                                            Relation{
+                                              Element amount: 1
+                                              Element 1: 
+                                                Factor{
+                                                  Element amount: 1
+                                                  Element 1: 
+                                                    Term{
+                                                      Element amount: 1
+                                                      Element 1: 
+                                                        Unary{
+                                                          Type: Primary
+                                                          UnaryOperation: None
+                                                          Value:
+                                                            Primary{
+                                                              Type: Literal
+                                                              Literal:
+                                                                Literal{
+                                                                  Type: Integer
+                                                                  Value: 3
+                                                                }
+                                                            }
+                                                          Type indicator: None
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                          Type indicator: None
+                        }
+                    }
+                }
+            }
+        }
+    }
+  }
+  Statement{
+    Print{
+      ExpressionsAmount: 1
+      Value 1:
+        Expression{
+          Element amount: 1
+          Element 1: 
+            Relation{
+              Element amount: 1
+              Element 1: 
+                Factor{
+                  Element amount: 1
+                  Element 1: 
+                    Term{
+                      Element amount: 1
+                      Element 1: 
+                        Unary{
+                          Type: Primary
+                          UnaryOperation: None
+                          Value:
+                            Primary{
+                              Type: Value
+                              Identifier: "map"
+                              TailAmount: 1
+                              Tail 1:
+                                Tail{
+                                  Type: Parameters
+                                  ParametersAmount: 3
+                                  Parameter 1:
+                                    Expression{
+                                      Element amount: 1
+                                      Element 1: 
+                                        Relation{
+                                          Element amount: 1
+                                          Element 1: 
+                                            Factor{
+                                              Element amount: 1
+                                              Element 1: 
+                                                Term{
+                                                  Element amount: 1
+                                                  Element 1: 
+                                                    Unary{
+                                                      Type: Primary
+                                                      UnaryOperation: None
+                                                      Value:
+                                                        Primary{
+                                                          Type: Value
+                                                          Identifier: "inc2by"
+                                                          TailAmount: 0
+                                                        }
+                                                      Type indicator: None
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                  Parameter 2:
+                                    Expression{
+                                      Element amount: 1
+                                      Element 1: 
+                                        Relation{
+                                          Element amount: 1
+                                          Element 1: 
+                                            Factor{
+                                              Element amount: 1
+                                              Element 1: 
+                                                Term{
+                                                  Element amount: 1
+                                                  Element 1: 
+                                                    Unary{
+                                                      Type: Primary
+                                                      UnaryOperation: None
+                                                      Value:
+                                                        Primary{
+                                                          Type: Literal
+                                                          Literal:
+                                                            Literal{
+                                                              Type: Integer
+                                                              Value: 3
+                                                            }
+                                                        }
+                                                      Type indicator: None
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                  Parameter 3:
+                                    Expression{
+                                      Element amount: 1
+                                      Element 1: 
+                                        Relation{
+                                          Element amount: 1
+                                          Element 1: 
+                                            Factor{
+                                              Element amount: 1
+                                              Element 1: 
+                                                Term{
+                                                  Element amount: 1
+                                                  Element 1: 
+                                                    Unary{
+                                                      Type: Primary
+                                                      UnaryOperation: None
+                                                      Value:
+                                                        Primary{
+                                                          Type: Value
+                                                          Identifier: "array"
+                                                          TailAmount: 0
+                                                        }
+                                                      Type indicator: None
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                          Type indicator: None
+                        }
+                    }
+                }
+            }
+        }
+    }
+  }
+}

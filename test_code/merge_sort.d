@@ -1,21 +1,21 @@
 var slice := func(arr, l, r) is
-	var newarr = []
+	var newarr := []
 	for i in l .. r loop
-		newarr += [arr[i]]
+		newarr := newarr + [arr[i]]
 	end
 	return newarr
 end
 
 var merge := func(h1, l1, h2, l2) is
-	var merged = [], y1 = 0
+	var merged := [], y1 := 0
 	for y2 in 1 .. l2 loop
 		while y1 <= l1 and h1[y1] < h2[y2] loop
-			merged += [h1[y1]]
+			merged := merged + [h1[y1]]
 		end
-		merged += [h2[y2]]
+		merged := merged + [h2[y2]]
 	end
 	while y1 <= l1 loop
-		merged += [h1[y1]]
+		merged := merged + [h1[y1]]
 	end	
 	return merged
 end
@@ -25,8 +25,8 @@ var merge_sort := func(arrlen, arr) is
 		return arr
 	end
 	
-	var h1 = merge_sort(arrlen / 2, slice(arr, 1, arrlen / 2))
-	var h2 = merge_sort(arrlen - arrlen / 2, slice(arr, arrlen / 2 + 1, arrlen))
+	var h1 := merge_sort(arrlen / 2, slice(arr, 1, arrlen / 2))
+	var h2 := merge_sort(arrlen - arrlen / 2, slice(arr, arrlen / 2 + 1, arrlen))
 	
 	return merge(h1, arrlen / 2, h2, arrlen - arrlen / 2)
 end
@@ -35,7 +35,7 @@ var arrlen := readInt
 var arr := []
 
 for i in 1 .. arrlen loop
-	arr = arr + [readInt]
+	arr := arr + [readInt]
 end
 
 print merge_sort(arrlen, arr)

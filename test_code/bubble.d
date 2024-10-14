@@ -15,8 +15,7 @@ var arrlen := readInt
 var arr := []
 
 for i in 1 .. arrlen loop
-	arr = arr + [readInt]
+	arr := arr + [readInt]
 end
 
 print bubble_sort(arrlen, arr)
-`

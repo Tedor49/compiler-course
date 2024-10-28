@@ -6,7 +6,7 @@
 #include <format>
 #include <cstring>
 
-#include "token_data.hpp"
+#include "../syntax_tree_nodes.hpp"
 
 using namespace std;
 
@@ -54,15 +54,58 @@ void parse_args(int& argc, char* argv[], input_params& par){
     par.human = true;
 }
 
+int nodes = 0;
+
+bool prev_foo = false;
+
+vector<int> foo_wraps;
+
+void at_enter (Node* node) {
+    ++nodes;
+
+    bool is_body = dynamic_cast<BodyNode*>(node) != nullptr;
+    bool is_ret = dynamic_cast<ReturnNode*>(node) != nullptr;
+
+    if (is_body) {
+        if (prev_foo) {
+            foo_wraps.push_back(node->id);
+        }
+    } else if (is_ret) {
+        if (foo_wraps.size() == 0) {
+            throw invalid_argument("Return statement must be inside of function!");
+        }
+    }
+
+    prev_foo = dynamic_cast<FunctionNode*>(node) != nullptr;
+
+    return;
+}
+
+void at_repeat (Node* node) {
+    return;
+}
+
+void at_exit (Node* node) {
+    bool is_body = dynamic_cast<BodyNode*>(node) != nullptr;
+
+    if (is_body) {
+        if (foo_wraps.back() == node->id) {
+            foo_wraps.pop_back();
+        }
+    }
+
+    return;
+}
+
 
 int main(int argc, char *argv[]) {
     input_params param;
     parse_args(argc, argv, param);
 
-    human_output_tokens = param.human;
+    Node* tree = readTree(*param.in_stream);
 
-    vector<Token> tokenized;
-    (*param.in_stream) >> tokenized;
+    human_output_nodes = false;
+    tree->visit(at_enter, at_repeat, at_exit);
 
-    cout << tokenized;
+    cout << "Success!" << endl;
 }

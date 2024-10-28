@@ -1,3 +1,4 @@
+
 #include <filesystem>
 #include <iostream>
 #include <vector>
@@ -6,7 +7,7 @@
 #include <format>
 #include <cstring>
 
-#include "syntax_tree_nodes.hpp"
+#include "../syntax_tree_nodes.hpp"
 
 using namespace std;
 
@@ -92,29 +93,89 @@ void parse_args(int& argc, char* argv[], input_params& par){
     }
 }
 
-int main(int argc, char *argv[]){
+
+int nodes = 0;
+
+bool prev_foo = false;
+
+vector<int> scope_wraps;
+vector<vector<string>> scopes;
+
+void at_enter (Node* node) {
+    ++nodes;
+
+    VariableDefinitionNode* vardef_node = dynamic_cast<VariableDefinitionNode*>(node); // .identifier
+    ForNode* for_node = dynamic_cast<ForNode*>(node); // .identifier
+    PrimaryNode* primary_node = dynamic_cast<PrimaryNode*>(node); // .identifier
+    FunctionNode* func_node = dynamic_cast<FunctionNode*>(node); // .params
+    BodyNode* body_node = dynamic_cast<BodyNode*>(node);
+
+    if (vardef_node != nullptr) {
+        scopes.back().push_back(vardef_node->identifier);
+    } else if (for_node != nullptr) {
+        scope_wraps.push_back(node->id);
+        scopes.push_back(vector<string>());
+        scopes.back().push_back(for_node->identifier);
+    } else if (func_node != nullptr) {
+        scope_wraps.push_back(node->id);
+        scopes.push_back(vector<string>(func_node->params.begin(), func_node->params.end()));
+    } else if (body_node != nullptr) {
+        scope_wraps.push_back(node->id);
+        scopes.push_back(vector<string>());
+    } else if (primary_node != nullptr) {
+        if (primary_node->type != 'v') return;
+
+        bool exists = false;
+        for (auto& i : scopes) {
+            for (auto j : i) {
+                if (j == primary_node->identifier) {
+                    exists = true;
+                    break;
+                }
+            }
+        }
+
+        if (!exists) {
+            throw invalid_argument(format("Undefined variable {}", primary_node->identifier));
+        }
+    }
+
+    return;
+}
+
+void at_repeat (Node* node) {
+    return;
+}
+
+void at_exit (Node* node) {
+    if (scope_wraps.back() == node->id) {
+        scope_wraps.pop_back();
+        scopes.pop_back();
+    }
+    return;
+}
+
+
+int main(int argc, char *argv[]) {
     input_params param;
     parse_args(argc, argv, param);
 
-    human_output_nodes = param.human;
+    Node* tree = readTree(*param.in_stream);
 
-    vector<Token> tokenized;
-    (*param.in_stream) >> tokenized;
+    //cout << "TREE ID: " << reinterpret_cast<std::uintptr_t>(tree) << endl;
 
-    int walker = 0;
-    try{
-        ProgramNode prog;
-        prog.from_tokens(tokenized, walker);
+    human_output_nodes = false;
 
-        if(param.out_is_file){
-            (*param.out_stream) << &prog;
-            (*param.out_stream).close();
-        } else {
-            cout << &prog;
-        }
-    } catch (const invalid_argument& ex) {
-        throw invalid_argument(format("{} at line {}, pos {}", ex.what(), tokenized[walker].line, tokenized[walker].pos));
-    } catch (const out_of_range& ex) {
-        throw invalid_argument("Unexpected program end");
+    scope_wraps.push_back(-1);
+    scopes.resize(1);
+
+    tree->visit(at_enter, at_repeat, at_exit);
+
+    if(param.out_is_file){
+        (*param.out_stream) << tree;
+        (*param.out_stream).close();
+    } else {
+        cout << tree;
     }
+    //cout << "Total nodes: " << nodes << endl;
 }

@@ -1,562 +1,135 @@
-Programm{
-  Statement{
-    Print{
-      ExpressionsAmount: 2
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "abcdefghijklmnopqrstvuwxyz"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-      Value 2:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "1234567890"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 2
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "abcdefghijklmnopqrstvuwxyz"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-      Value 2:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "1234567890"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 1
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "lol"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-  Statement{
-    Assignment{
-      Primary:
-        Primary{
-          Type: Value
-          Identifier: "x"
-          TailAmount: 0
-        }
-      Expression:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 2
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "a"
-                              TailAmount: 0
-                            }
-                          Type indicator: None
-                        }
-                    }
-                  Operation 1: +
-                  Element 2: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "b"
-                              TailAmount: 0
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 2
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "abcdefghijklmnopqrstvuwxyz"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-      Value 2:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "1234567890"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 2
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "abcdefghijklmnopqrstvuwxyz"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-      Value 2:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "1234567890"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 2
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "abcdefghijklmnopqrstvuwxyz"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-      Value 2:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "1234567890"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 2
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "abcdefghijklmnopqrstvuwxyz"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-      Value 2:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "1234567890"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 2
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "abcdefg//jklmnopqrstvuwxyz"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-      Value 2:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "1234567890"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-}
+Program|1|(2|18|34|43|55|71|87|103|119)
+Statement|2|p|3
+Print|3|(4|11)
+Expression|4|(5)|()
+Relation|5|(6)|()
+Factor|6|(7)|()
+Term|7|(8)|()
+Unary|8|p|#|9|0
+Primary|9|l|10
+Literal|10|s|abcdefghijklmnopqrstvuwxyz
+Expression|11|(12)|()
+Relation|12|(13)|()
+Factor|13|(14)|()
+Term|14|(15)|()
+Unary|15|p|#|16|0
+Primary|16|l|17
+Literal|17|s|1234567890
+Statement|18|p|19
+Print|19|(20|27)
+Expression|20|(21)|()
+Relation|21|(22)|()
+Factor|22|(23)|()
+Term|23|(24)|()
+Unary|24|p|#|25|0
+Primary|25|l|26
+Literal|26|s|abcdefghijklmnopqrstvuwxyz
+Expression|27|(28)|()
+Relation|28|(29)|()
+Factor|29|(30)|()
+Term|30|(31)|()
+Unary|31|p|#|32|0
+Primary|32|l|33
+Literal|33|s|1234567890
+Statement|34|p|35
+Print|35|(36)
+Expression|36|(37)|()
+Relation|37|(38)|()
+Factor|38|(39)|()
+Term|39|(40)|()
+Unary|40|p|#|41|0
+Primary|41|l|42
+Literal|42|s|lol
+Statement|43|a|44
+Assignment|44|45|46
+Primary|45|v|x|()
+Expression|46|(47)|()
+Relation|47|(48)|()
+Factor|48|(49|52)|(+)
+Term|49|(50)|()
+Unary|50|p|#|51|0
+Primary|51|v|a|()
+Term|52|(53)|()
+Unary|53|p|#|54|0
+Primary|54|v|b|()
+Statement|55|p|56
+Print|56|(57|64)
+Expression|57|(58)|()
+Relation|58|(59)|()
+Factor|59|(60)|()
+Term|60|(61)|()
+Unary|61|p|#|62|0
+Primary|62|l|63
+Literal|63|s|abcdefghijklmnopqrstvuwxyz
+Expression|64|(65)|()
+Relation|65|(66)|()
+Factor|66|(67)|()
+Term|67|(68)|()
+Unary|68|p|#|69|0
+Primary|69|l|70
+Literal|70|s|1234567890
+Statement|71|p|72
+Print|72|(73|80)
+Expression|73|(74)|()
+Relation|74|(75)|()
+Factor|75|(76)|()
+Term|76|(77)|()
+Unary|77|p|#|78|0
+Primary|78|l|79
+Literal|79|s|abcdefghijklmnopqrstvuwxyz
+Expression|80|(81)|()
+Relation|81|(82)|()
+Factor|82|(83)|()
+Term|83|(84)|()
+Unary|84|p|#|85|0
+Primary|85|l|86
+Literal|86|s|1234567890
+Statement|87|p|88
+Print|88|(89|96)
+Expression|89|(90)|()
+Relation|90|(91)|()
+Factor|91|(92)|()
+Term|92|(93)|()
+Unary|93|p|#|94|0
+Primary|94|l|95
+Literal|95|s|abcdefghijklmnopqrstvuwxyz
+Expression|96|(97)|()
+Relation|97|(98)|()
+Factor|98|(99)|()
+Term|99|(100)|()
+Unary|100|p|#|101|0
+Primary|101|l|102
+Literal|102|s|1234567890
+Statement|103|p|104
+Print|104|(105|112)
+Expression|105|(106)|()
+Relation|106|(107)|()
+Factor|107|(108)|()
+Term|108|(109)|()
+Unary|109|p|#|110|0
+Primary|110|l|111
+Literal|111|s|abcdefghijklmnopqrstvuwxyz
+Expression|112|(113)|()
+Relation|113|(114)|()
+Factor|114|(115)|()
+Term|115|(116)|()
+Unary|116|p|#|117|0
+Primary|117|l|118
+Literal|118|s|1234567890
+Statement|119|p|120
+Print|120|(121|128)
+Expression|121|(122)|()
+Relation|122|(123)|()
+Factor|123|(124)|()
+Term|124|(125)|()
+Unary|125|p|#|126|0
+Primary|126|l|127
+Literal|127|s|abcdefg//jklmnopqrstvuwxyz
+Expression|128|(129)|()
+Relation|129|(130)|()
+Factor|130|(131)|()
+Term|131|(132)|()
+Unary|132|p|#|133|0
+Primary|133|l|134
+Literal|134|s|1234567890
+END|-1

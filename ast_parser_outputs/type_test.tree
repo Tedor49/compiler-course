@@ -1,3338 +1,791 @@
-Programm{
-  Statement{
-    Declaration{
-      VariableDefinition{
-        Identifier: types
-        Value:
-          Expression{
-            Element amount: 1
-            Element 1: 
-              Relation{
-                Element amount: 1
-                Element 1: 
-                  Factor{
-                    Element amount: 1
-                    Element 1: 
-                      Term{
-                        Element amount: 1
-                        Element 1: 
-                          Unary{
-                            Type: Primary
-                            UnaryOperation: None
-                            Value:
-                              Primary{
-                                Type: Literal
-                                Literal:
-                                  Literal{
-                                    Type: Array
-                                    Value:
-                                      ArrayLiteral{
-                                        EntriesAmount: 15
-                                        Value 1:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Integer
-                                                                    Value: 1
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 2:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Real
-                                                                    Value: 1.1
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 3:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Boolean
-                                                                    Value: 0
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 4:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "hello"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 5:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Empty
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 6:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Array
-                                                                    Value:
-                                                                      ArrayLiteral{
-                                                                        EntriesAmount: 3
-                                                                        Value 1:
-                                                                          Expression{
-                                                                            Element amount: 1
-                                                                            Element 1: 
-                                                                              Relation{
-                                                                                Element amount: 1
-                                                                                Element 1: 
-                                                                                  Factor{
-                                                                                    Element amount: 1
-                                                                                    Element 1: 
-                                                                                      Term{
-                                                                                        Element amount: 1
-                                                                                        Element 1: 
-                                                                                          Unary{
-                                                                                            Type: Primary
-                                                                                            UnaryOperation: None
-                                                                                            Value:
-                                                                                              Primary{
-                                                                                                Type: Literal
-                                                                                                Literal:
-                                                                                                  Literal{
-                                                                                                    Type: Integer
-                                                                                                    Value: 1
-                                                                                                  }
-                                                                                              }
-                                                                                            Type indicator: None
-                                                                                          }
-                                                                                      }
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                        Value 2:
-                                                                          Expression{
-                                                                            Element amount: 1
-                                                                            Element 1: 
-                                                                              Relation{
-                                                                                Element amount: 1
-                                                                                Element 1: 
-                                                                                  Factor{
-                                                                                    Element amount: 1
-                                                                                    Element 1: 
-                                                                                      Term{
-                                                                                        Element amount: 1
-                                                                                        Element 1: 
-                                                                                          Unary{
-                                                                                            Type: Primary
-                                                                                            UnaryOperation: None
-                                                                                            Value:
-                                                                                              Primary{
-                                                                                                Type: Literal
-                                                                                                Literal:
-                                                                                                  Literal{
-                                                                                                    Type: Integer
-                                                                                                    Value: 2
-                                                                                                  }
-                                                                                              }
-                                                                                            Type indicator: None
-                                                                                          }
-                                                                                      }
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                        Value 3:
-                                                                          Expression{
-                                                                            Element amount: 1
-                                                                            Element 1: 
-                                                                              Relation{
-                                                                                Element amount: 1
-                                                                                Element 1: 
-                                                                                  Factor{
-                                                                                    Element amount: 1
-                                                                                    Element 1: 
-                                                                                      Term{
-                                                                                        Element amount: 1
-                                                                                        Element 1: 
-                                                                                          Unary{
-                                                                                            Type: Primary
-                                                                                            UnaryOperation: None
-                                                                                            Value:
-                                                                                              Primary{
-                                                                                                Type: Literal
-                                                                                                Literal:
-                                                                                                  Literal{
-                                                                                                    Type: Integer
-                                                                                                    Value: 3
-                                                                                                  }
-                                                                                              }
-                                                                                            Type indicator: None
-                                                                                          }
-                                                                                      }
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                      }
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 7:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Tuple
-                                                                    Value:
-                                                                      TupleLiteral{
-                                                                        EntriesAmount: 2
-                                                                        Identifier 1: "a"
-                                                                        Value 1:
-                                                                          Expression{
-                                                                            Element amount: 1
-                                                                            Element 1: 
-                                                                              Relation{
-                                                                                Element amount: 1
-                                                                                Element 1: 
-                                                                                  Factor{
-                                                                                    Element amount: 1
-                                                                                    Element 1: 
-                                                                                      Term{
-                                                                                        Element amount: 1
-                                                                                        Element 1: 
-                                                                                          Unary{
-                                                                                            Type: Primary
-                                                                                            UnaryOperation: None
-                                                                                            Value:
-                                                                                              Primary{
-                                                                                                Type: Literal
-                                                                                                Literal:
-                                                                                                  Literal{
-                                                                                                    Type: String
-                                                                                                    Value: "lol"
-                                                                                                  }
-                                                                                              }
-                                                                                            Type indicator: None
-                                                                                          }
-                                                                                      }
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                        Identifier 2: None
-                                                                        Value 2:
-                                                                          Expression{
-                                                                            Element amount: 1
-                                                                            Element 1: 
-                                                                              Relation{
-                                                                                Element amount: 1
-                                                                                Element 1: 
-                                                                                  Factor{
-                                                                                    Element amount: 1
-                                                                                    Element 1: 
-                                                                                      Term{
-                                                                                        Element amount: 1
-                                                                                        Element 1: 
-                                                                                          Unary{
-                                                                                            Type: Primary
-                                                                                            UnaryOperation: None
-                                                                                            Value:
-                                                                                              Primary{
-                                                                                                Type: Literal
-                                                                                                Literal:
-                                                                                                  Literal{
-                                                                                                    Type: String
-                                                                                                    Value: "kek"
-                                                                                                  }
-                                                                                              }
-                                                                                            Type indicator: None
-                                                                                          }
-                                                                                      }
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                      }
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 8:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Function
-                                                                    Value:
-                                                                      Function{
-                                                                        Type: Lambda
-                                                                        ParamAmount: 2
-                                                                        Parameter 1: "a"
-                                                                        Parameter 2: "b"
-                                                                        Expression:
-                                                                          Expression{
-                                                                            Element amount: 1
-                                                                            Element 1: 
-                                                                              Relation{
-                                                                                Element amount: 1
-                                                                                Element 1: 
-                                                                                  Factor{
-                                                                                    Element amount: 2
-                                                                                    Element 1: 
-                                                                                      Term{
-                                                                                        Element amount: 1
-                                                                                        Element 1: 
-                                                                                          Unary{
-                                                                                            Type: Primary
-                                                                                            UnaryOperation: None
-                                                                                            Value:
-                                                                                              Primary{
-                                                                                                Type: Value
-                                                                                                Identifier: "a"
-                                                                                                TailAmount: 0
-                                                                                              }
-                                                                                            Type indicator: None
-                                                                                          }
-                                                                                      }
-                                                                                    Operation 1: +
-                                                                                    Element 2: 
-                                                                                      Term{
-                                                                                        Element amount: 1
-                                                                                        Element 1: 
-                                                                                          Unary{
-                                                                                            Type: Primary
-                                                                                            UnaryOperation: None
-                                                                                            Value:
-                                                                                              Primary{
-                                                                                                Type: Value
-                                                                                                Identifier: "b"
-                                                                                                TailAmount: 0
-                                                                                              }
-                                                                                            Type indicator: None
-                                                                                          }
-                                                                                      }
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                      }
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 9:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: ReadInt
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 10:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: ReadReal
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 11:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: ReadString
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 12:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 2
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Integer
-                                                                    Value: 1
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                    Operation 1: +
-                                                    Element 2: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Integer
-                                                                    Value: 1
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 13:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 2
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Integer
-                                                                    Value: 1
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                    Operation 1: +
-                                                    Element 2: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Real
-                                                                    Value: 2
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 14:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 2
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Real
-                                                                    Value: 3
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                    Operation 1: -
-                                                    Element 2: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Integer
-                                                                    Value: 4
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 15:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 2
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Real
-                                                                    Value: 0.1
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                        Operation 1: *
-                                                        Element 2: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: Real
-                                                                    Value: 0.1
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              }
-                            Type indicator: None
-                          }
-                      }
-                  }
-              }
-          }
-      }
-    }
-  }
-  Statement{
-    Declaration{
-      VariableDefinition{
-        Identifier: names
-        Value:
-          Expression{
-            Element amount: 1
-            Element 1: 
-              Relation{
-                Element amount: 1
-                Element 1: 
-                  Factor{
-                    Element amount: 1
-                    Element 1: 
-                      Term{
-                        Element amount: 1
-                        Element 1: 
-                          Unary{
-                            Type: Primary
-                            UnaryOperation: None
-                            Value:
-                              Primary{
-                                Type: Literal
-                                Literal:
-                                  Literal{
-                                    Type: Array
-                                    Value:
-                                      ArrayLiteral{
-                                        EntriesAmount: 15
-                                        Value 1:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "int"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 2:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "real"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 3:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "bool"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 4:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "str"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 5:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "emp"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 6:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "arr"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 7:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "tup"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 8:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "func"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 9:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "rInt"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 10:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "rRl"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 11:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "rStr"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 12:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "i+i"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 13:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "i+r"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 14:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "r-i"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                        Value 15:
-                                          Expression{
-                                            Element amount: 1
-                                            Element 1: 
-                                              Relation{
-                                                Element amount: 1
-                                                Element 1: 
-                                                  Factor{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Term{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Unary{
-                                                            Type: Primary
-                                                            UnaryOperation: None
-                                                            Value:
-                                                              Primary{
-                                                                Type: Literal
-                                                                Literal:
-                                                                  Literal{
-                                                                    Type: String
-                                                                    Value: "r*r"
-                                                                  }
-                                                              }
-                                                            Type indicator: None
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              }
-                            Type indicator: None
-                          }
-                      }
-                  }
-              }
-          }
-      }
-    }
-  }
-  Statement{
-    For{
-      Identifier: "i"
-      Range:
-        Range{
-          ExpressionBegin:
-            Expression{
-              Element amount: 1
-              Element 1: 
-                Relation{
-                  Element amount: 1
-                  Element 1: 
-                    Factor{
-                      Element amount: 1
-                      Element 1: 
-                        Term{
-                          Element amount: 1
-                          Element 1: 
-                            Unary{
-                              Type: Primary
-                              UnaryOperation: None
-                              Value:
-                                Primary{
-                                  Type: Literal
-                                  Literal:
-                                    Literal{
-                                      Type: Integer
-                                      Value: 1
-                                    }
-                                }
-                              Type indicator: None
-                            }
-                        }
-                    }
-                }
-            }
-          ExpressionEnd:
-            Expression{
-              Element amount: 1
-              Element 1: 
-                Relation{
-                  Element amount: 1
-                  Element 1: 
-                    Factor{
-                      Element amount: 1
-                      Element 1: 
-                        Term{
-                          Element amount: 1
-                          Element 1: 
-                            Unary{
-                              Type: Primary
-                              UnaryOperation: None
-                              Value:
-                                Primary{
-                                  Type: Literal
-                                  Literal:
-                                    Literal{
-                                      Type: Integer
-                                      Value: 8
-                                    }
-                                }
-                              Type indicator: None
-                            }
-                        }
-                    }
-                }
-            }
-        }
-      Body:
-        Body{
-          Statement{
-            Print{
-              ExpressionsAmount: 2
-              Value 1:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Literal
-                                      Literal:
-                                        Literal{
-                                          Type: String
-                                          Value: "///\t"
-                                        }
-                                    }
-                                  Type indicator: None
-                                }
-                            }
-                        }
-                    }
-                }
-              Value 2:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "names"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator: None
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-          }
-        }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 1
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "\n"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-  Statement{
-    For{
-      Identifier: "i"
-      Range:
-        Range{
-          ExpressionBegin:
-            Expression{
-              Element amount: 1
-              Element 1: 
-                Relation{
-                  Element amount: 1
-                  Element 1: 
-                    Factor{
-                      Element amount: 1
-                      Element 1: 
-                        Term{
-                          Element amount: 1
-                          Element 1: 
-                            Unary{
-                              Type: Primary
-                              UnaryOperation: None
-                              Value:
-                                Primary{
-                                  Type: Literal
-                                  Literal:
-                                    Literal{
-                                      Type: Integer
-                                      Value: 1
-                                    }
-                                }
-                              Type indicator: None
-                            }
-                        }
-                    }
-                }
-            }
-          ExpressionEnd:
-            Expression{
-              Element amount: 1
-              Element 1: 
-                Relation{
-                  Element amount: 1
-                  Element 1: 
-                    Factor{
-                      Element amount: 1
-                      Element 1: 
-                        Term{
-                          Element amount: 1
-                          Element 1: 
-                            Unary{
-                              Type: Primary
-                              UnaryOperation: None
-                              Value:
-                                Primary{
-                                  Type: Literal
-                                  Literal:
-                                    Literal{
-                                      Type: Integer
-                                      Value: 15
-                                    }
-                                }
-                              Type indicator: None
-                            }
-                        }
-                    }
-                }
-            }
-        }
-      Body:
-        Body{
-          Statement{
-            Print{
-              ExpressionsAmount: 2
-              Value 1:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "names"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator: None
-                                }
-                            }
-                        }
-                    }
-                }
-              Value 2:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Literal
-                                      Literal:
-                                        Literal{
-                                          Type: String
-                                          Value: "\t"
-                                        }
-                                    }
-                                  Type indicator: None
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-          }
-          Statement{
-            If{
-              Expression:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "types"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator:
-                                    TypeIndicator{Int}
-                                }
-                            }
-                        }
-                    }
-                }
-              Body:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "V"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-              ElseBody:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "X"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-            }
-          }
-          Statement{
-            If{
-              Expression:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "types"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator:
-                                    TypeIndicator{Real}
-                                }
-                            }
-                        }
-                    }
-                }
-              Body:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "V"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-              ElseBody:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "X"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-            }
-          }
-          Statement{
-            If{
-              Expression:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "types"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator:
-                                    TypeIndicator{Boolean}
-                                }
-                            }
-                        }
-                    }
-                }
-              Body:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "V"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-              ElseBody:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "X"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-            }
-          }
-          Statement{
-            If{
-              Expression:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "types"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator:
-                                    TypeIndicator{String}
-                                }
-                            }
-                        }
-                    }
-                }
-              Body:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "V"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-              ElseBody:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "X"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-            }
-          }
-          Statement{
-            If{
-              Expression:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "types"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator:
-                                    TypeIndicator{Empty}
-                                }
-                            }
-                        }
-                    }
-                }
-              Body:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "V"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-              ElseBody:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "X"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-            }
-          }
-          Statement{
-            If{
-              Expression:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "types"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator:
-                                    TypeIndicator{Array}
-                                }
-                            }
-                        }
-                    }
-                }
-              Body:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "V"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-              ElseBody:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "X"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-            }
-          }
-          Statement{
-            If{
-              Expression:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "types"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator:
-                                    TypeIndicator{Tuple}
-                                }
-                            }
-                        }
-                    }
-                }
-              Body:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "V"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-              ElseBody:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "X"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-            }
-          }
-          Statement{
-            If{
-              Expression:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Value
-                                      Identifier: "types"
-                                      TailAmount: 1
-                                      Tail 1:
-                                        Tail{
-                                          Type: Subscript
-                                          Expression:
-                                            Expression{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Relation{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Factor{
-                                                      Element amount: 1
-                                                      Element 1: 
-                                                        Term{
-                                                          Element amount: 1
-                                                          Element 1: 
-                                                            Unary{
-                                                              Type: Primary
-                                                              UnaryOperation: None
-                                                              Value:
-                                                                Primary{
-                                                                  Type: Value
-                                                                  Identifier: "i"
-                                                                  TailAmount: 0
-                                                                }
-                                                              Type indicator: None
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                  Type indicator:
-                                    TypeIndicator{Function}
-                                }
-                            }
-                        }
-                    }
-                }
-              Body:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "V"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-              ElseBody:
-                Body{
-                  Statement{
-                    Print{
-                      ExpressionsAmount: 2
-                      Value 1:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "X"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      Value 2:
-                        Expression{
-                          Element amount: 1
-                          Element 1: 
-                            Relation{
-                              Element amount: 1
-                              Element 1: 
-                                Factor{
-                                  Element amount: 1
-                                  Element 1: 
-                                    Term{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Unary{
-                                          Type: Primary
-                                          UnaryOperation: None
-                                          Value:
-                                            Primary{
-                                              Type: Literal
-                                              Literal:
-                                                Literal{
-                                                  Type: String
-                                                  Value: "\t"
-                                                }
-                                            }
-                                          Type indicator: None
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                  }
-                }
-            }
-          }
-          Statement{
-            Print{
-              ExpressionsAmount: 1
-              Value 1:
-                Expression{
-                  Element amount: 1
-                  Element 1: 
-                    Relation{
-                      Element amount: 1
-                      Element 1: 
-                        Factor{
-                          Element amount: 1
-                          Element 1: 
-                            Term{
-                              Element amount: 1
-                              Element 1: 
-                                Unary{
-                                  Type: Primary
-                                  UnaryOperation: None
-                                  Value:
-                                    Primary{
-                                      Type: Literal
-                                      Literal:
-                                        Literal{
-                                          Type: String
-                                          Value: "\n"
-                                        }
-                                    }
-                                  Type indicator: None
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-          }
-        }
-    }
-  }
-}
+Program|1|(2|177|293|333|342)
+Statement|2|d|3
+Declaration|3|(4)
+VariableDefinition|4|types|5
+Expression|5|(6)|()
+Relation|6|(7)|()
+Factor|7|(8)|()
+Term|8|(9)|()
+Unary|9|p|#|10|0
+Primary|10|l|11
+Literal|11|a|12
+ArrayLiteral|12|(13|20|27|34|41|48|77|99|116|122|128|134|145|156|167)
+Expression|13|(14)|()
+Relation|14|(15)|()
+Factor|15|(16)|()
+Term|16|(17)|()
+Unary|17|p|#|18|0
+Primary|18|l|19
+Literal|19|i|1
+Expression|20|(21)|()
+Relation|21|(22)|()
+Factor|22|(23)|()
+Term|23|(24)|()
+Unary|24|p|#|25|0
+Primary|25|l|26
+Literal|26|r|1.1
+Expression|27|(28)|()
+Relation|28|(29)|()
+Factor|29|(30)|()
+Term|30|(31)|()
+Unary|31|p|#|32|0
+Primary|32|l|33
+Literal|33|b|0
+Expression|34|(35)|()
+Relation|35|(36)|()
+Factor|36|(37)|()
+Term|37|(38)|()
+Unary|38|p|#|39|0
+Primary|39|l|40
+Literal|40|s|hello
+Expression|41|(42)|()
+Relation|42|(43)|()
+Factor|43|(44)|()
+Term|44|(45)|()
+Unary|45|p|#|46|0
+Primary|46|l|47
+Literal|47|e
+Expression|48|(49)|()
+Relation|49|(50)|()
+Factor|50|(51)|()
+Term|51|(52)|()
+Unary|52|p|#|53|0
+Primary|53|l|54
+Literal|54|a|55
+ArrayLiteral|55|(56|63|70)
+Expression|56|(57)|()
+Relation|57|(58)|()
+Factor|58|(59)|()
+Term|59|(60)|()
+Unary|60|p|#|61|0
+Primary|61|l|62
+Literal|62|i|1
+Expression|63|(64)|()
+Relation|64|(65)|()
+Factor|65|(66)|()
+Term|66|(67)|()
+Unary|67|p|#|68|0
+Primary|68|l|69
+Literal|69|i|2
+Expression|70|(71)|()
+Relation|71|(72)|()
+Factor|72|(73)|()
+Term|73|(74)|()
+Unary|74|p|#|75|0
+Primary|75|l|76
+Literal|76|i|3
+Expression|77|(78)|()
+Relation|78|(79)|()
+Factor|79|(80)|()
+Term|80|(81)|()
+Unary|81|p|#|82|0
+Primary|82|l|83
+Literal|83|t|84
+TupleLiteral|84|(a|)|(85|92)
+Expression|85|(86)|()
+Relation|86|(87)|()
+Factor|87|(88)|()
+Term|88|(89)|()
+Unary|89|p|#|90|0
+Primary|90|l|91
+Literal|91|s|lol
+Expression|92|(93)|()
+Relation|93|(94)|()
+Factor|94|(95)|()
+Term|95|(96)|()
+Unary|96|p|#|97|0
+Primary|97|l|98
+Literal|98|s|kek
+Expression|99|(100)|()
+Relation|100|(101)|()
+Factor|101|(102)|()
+Term|102|(103)|()
+Unary|103|p|#|104|0
+Primary|104|l|105
+Literal|105|f|106
+Function|106|l|(a|b)|107
+Expression|107|(108)|()
+Relation|108|(109)|()
+Factor|109|(110|113)|(+)
+Term|110|(111)|()
+Unary|111|p|#|112|0
+Primary|112|v|a|()
+Term|113|(114)|()
+Unary|114|p|#|115|0
+Primary|115|v|b|()
+Expression|116|(117)|()
+Relation|117|(118)|()
+Factor|118|(119)|()
+Term|119|(120)|()
+Unary|120|p|#|121|0
+Primary|121|i
+Expression|122|(123)|()
+Relation|123|(124)|()
+Factor|124|(125)|()
+Term|125|(126)|()
+Unary|126|p|#|127|0
+Primary|127|r
+Expression|128|(129)|()
+Relation|129|(130)|()
+Factor|130|(131)|()
+Term|131|(132)|()
+Unary|132|p|#|133|0
+Primary|133|s
+Expression|134|(135)|()
+Relation|135|(136)|()
+Factor|136|(137|141)|(+)
+Term|137|(138)|()
+Unary|138|p|#|139|0
+Primary|139|l|140
+Literal|140|i|1
+Term|141|(142)|()
+Unary|142|p|#|143|0
+Primary|143|l|144
+Literal|144|i|1
+Expression|145|(146)|()
+Relation|146|(147)|()
+Factor|147|(148|152)|(+)
+Term|148|(149)|()
+Unary|149|p|#|150|0
+Primary|150|l|151
+Literal|151|i|1
+Term|152|(153)|()
+Unary|153|p|#|154|0
+Primary|154|l|155
+Literal|155|r|2
+Expression|156|(157)|()
+Relation|157|(158)|()
+Factor|158|(159|163)|(-)
+Term|159|(160)|()
+Unary|160|p|#|161|0
+Primary|161|l|162
+Literal|162|r|3
+Term|163|(164)|()
+Unary|164|p|#|165|0
+Primary|165|l|166
+Literal|166|i|4
+Expression|167|(168)|()
+Relation|168|(169)|()
+Factor|169|(170)|()
+Term|170|(171|174)|(*)
+Unary|171|p|#|172|0
+Primary|172|l|173
+Literal|173|r|0.1
+Unary|174|p|#|175|0
+Primary|175|l|176
+Literal|176|r|0.1
+Statement|177|d|178
+Declaration|178|(179)
+VariableDefinition|179|names|180
+Expression|180|(181)|()
+Relation|181|(182)|()
+Factor|182|(183)|()
+Term|183|(184)|()
+Unary|184|p|#|185|0
+Primary|185|l|186
+Literal|186|a|187
+ArrayLiteral|187|(188|195|202|209|216|223|230|237|244|251|258|265|272|279|286)
+Expression|188|(189)|()
+Relation|189|(190)|()
+Factor|190|(191)|()
+Term|191|(192)|()
+Unary|192|p|#|193|0
+Primary|193|l|194
+Literal|194|s|int
+Expression|195|(196)|()
+Relation|196|(197)|()
+Factor|197|(198)|()
+Term|198|(199)|()
+Unary|199|p|#|200|0
+Primary|200|l|201
+Literal|201|s|real
+Expression|202|(203)|()
+Relation|203|(204)|()
+Factor|204|(205)|()
+Term|205|(206)|()
+Unary|206|p|#|207|0
+Primary|207|l|208
+Literal|208|s|bool
+Expression|209|(210)|()
+Relation|210|(211)|()
+Factor|211|(212)|()
+Term|212|(213)|()
+Unary|213|p|#|214|0
+Primary|214|l|215
+Literal|215|s|str
+Expression|216|(217)|()
+Relation|217|(218)|()
+Factor|218|(219)|()
+Term|219|(220)|()
+Unary|220|p|#|221|0
+Primary|221|l|222
+Literal|222|s|emp
+Expression|223|(224)|()
+Relation|224|(225)|()
+Factor|225|(226)|()
+Term|226|(227)|()
+Unary|227|p|#|228|0
+Primary|228|l|229
+Literal|229|s|arr
+Expression|230|(231)|()
+Relation|231|(232)|()
+Factor|232|(233)|()
+Term|233|(234)|()
+Unary|234|p|#|235|0
+Primary|235|l|236
+Literal|236|s|tup
+Expression|237|(238)|()
+Relation|238|(239)|()
+Factor|239|(240)|()
+Term|240|(241)|()
+Unary|241|p|#|242|0
+Primary|242|l|243
+Literal|243|s|func
+Expression|244|(245)|()
+Relation|245|(246)|()
+Factor|246|(247)|()
+Term|247|(248)|()
+Unary|248|p|#|249|0
+Primary|249|l|250
+Literal|250|s|rInt
+Expression|251|(252)|()
+Relation|252|(253)|()
+Factor|253|(254)|()
+Term|254|(255)|()
+Unary|255|p|#|256|0
+Primary|256|l|257
+Literal|257|s|rRl
+Expression|258|(259)|()
+Relation|259|(260)|()
+Factor|260|(261)|()
+Term|261|(262)|()
+Unary|262|p|#|263|0
+Primary|263|l|264
+Literal|264|s|rStr
+Expression|265|(266)|()
+Relation|266|(267)|()
+Factor|267|(268)|()
+Term|268|(269)|()
+Unary|269|p|#|270|0
+Primary|270|l|271
+Literal|271|s|i+i
+Expression|272|(273)|()
+Relation|273|(274)|()
+Factor|274|(275)|()
+Term|275|(276)|()
+Unary|276|p|#|277|0
+Primary|277|l|278
+Literal|278|s|i+r
+Expression|279|(280)|()
+Relation|280|(281)|()
+Factor|281|(282)|()
+Term|282|(283)|()
+Unary|283|p|#|284|0
+Primary|284|l|285
+Literal|285|s|r-i
+Expression|286|(287)|()
+Relation|287|(288)|()
+Factor|288|(289)|()
+Term|289|(290)|()
+Unary|290|p|#|291|0
+Primary|291|l|292
+Literal|292|s|r*r
+Statement|293|f|294
+For|294|i|295|310
+Range|295|296|303
+Expression|296|(297)|()
+Relation|297|(298)|()
+Factor|298|(299)|()
+Term|299|(300)|()
+Unary|300|p|#|301|0
+Primary|301|l|302
+Literal|302|i|1
+Expression|303|(304)|()
+Relation|304|(305)|()
+Factor|305|(306)|()
+Term|306|(307)|()
+Unary|307|p|#|308|0
+Primary|308|l|309
+Literal|309|i|8
+Body|310|(311)
+Statement|311|p|312
+Print|312|(313|320)
+Expression|313|(314)|()
+Relation|314|(315)|()
+Factor|315|(316)|()
+Term|316|(317)|()
+Unary|317|p|#|318|0
+Primary|318|l|319
+Literal|319|s|///\t
+Expression|320|(321)|()
+Relation|321|(322)|()
+Factor|322|(323)|()
+Term|323|(324)|()
+Unary|324|p|#|325|0
+Primary|325|v|names|(326)
+Tail|326|s|327
+Expression|327|(328)|()
+Relation|328|(329)|()
+Factor|329|(330)|()
+Term|330|(331)|()
+Unary|331|p|#|332|0
+Primary|332|v|i|()
+Statement|333|p|334
+Print|334|(335)
+Expression|335|(336)|()
+Relation|336|(337)|()
+Factor|337|(338)|()
+Term|338|(339)|()
+Unary|339|p|#|340|0
+Primary|340|l|341
+Literal|341|s|\n
+Statement|342|f|343
+For|343|i|344|359
+Range|344|345|352
+Expression|345|(346)|()
+Relation|346|(347)|()
+Factor|347|(348)|()
+Term|348|(349)|()
+Unary|349|p|#|350|0
+Primary|350|l|351
+Literal|351|i|1
+Expression|352|(353)|()
+Relation|353|(354)|()
+Factor|354|(355)|()
+Term|355|(356)|()
+Unary|356|p|#|357|0
+Primary|357|l|358
+Literal|358|i|15
+Body|359|(360|382|432|482|532|582|632|682|732|782)
+Statement|360|p|361
+Print|361|(362|375)
+Expression|362|(363)|()
+Relation|363|(364)|()
+Factor|364|(365)|()
+Term|365|(366)|()
+Unary|366|p|#|367|0
+Primary|367|v|names|(368)
+Tail|368|s|369
+Expression|369|(370)|()
+Relation|370|(371)|()
+Factor|371|(372)|()
+Term|372|(373)|()
+Unary|373|p|#|374|0
+Primary|374|v|i|()
+Expression|375|(376)|()
+Relation|376|(377)|()
+Factor|377|(378)|()
+Term|378|(379)|()
+Unary|379|p|#|380|0
+Primary|380|l|381
+Literal|381|s|\t
+Statement|382|i|383
+If|383|384|398|415
+Expression|384|(385)|()
+Relation|385|(386)|()
+Factor|386|(387)|()
+Term|387|(388)|()
+Unary|388|p|#|389|397
+Primary|389|v|types|(390)
+Tail|390|s|391
+Expression|391|(392)|()
+Relation|392|(393)|()
+Factor|393|(394)|()
+Term|394|(395)|()
+Unary|395|p|#|396|0
+Primary|396|v|i|()
+TypeIndicator|397|i
+Body|398|(399)
+Statement|399|p|400
+Print|400|(401|408)
+Expression|401|(402)|()
+Relation|402|(403)|()
+Factor|403|(404)|()
+Term|404|(405)|()
+Unary|405|p|#|406|0
+Primary|406|l|407
+Literal|407|s|V
+Expression|408|(409)|()
+Relation|409|(410)|()
+Factor|410|(411)|()
+Term|411|(412)|()
+Unary|412|p|#|413|0
+Primary|413|l|414
+Literal|414|s|\t
+Body|415|(416)
+Statement|416|p|417
+Print|417|(418|425)
+Expression|418|(419)|()
+Relation|419|(420)|()
+Factor|420|(421)|()
+Term|421|(422)|()
+Unary|422|p|#|423|0
+Primary|423|l|424
+Literal|424|s|X
+Expression|425|(426)|()
+Relation|426|(427)|()
+Factor|427|(428)|()
+Term|428|(429)|()
+Unary|429|p|#|430|0
+Primary|430|l|431
+Literal|431|s|\t
+Statement|432|i|433
+If|433|434|448|465
+Expression|434|(435)|()
+Relation|435|(436)|()
+Factor|436|(437)|()
+Term|437|(438)|()
+Unary|438|p|#|439|447
+Primary|439|v|types|(440)
+Tail|440|s|441
+Expression|441|(442)|()
+Relation|442|(443)|()
+Factor|443|(444)|()
+Term|444|(445)|()
+Unary|445|p|#|446|0
+Primary|446|v|i|()
+TypeIndicator|447|r
+Body|448|(449)
+Statement|449|p|450
+Print|450|(451|458)
+Expression|451|(452)|()
+Relation|452|(453)|()
+Factor|453|(454)|()
+Term|454|(455)|()
+Unary|455|p|#|456|0
+Primary|456|l|457
+Literal|457|s|V
+Expression|458|(459)|()
+Relation|459|(460)|()
+Factor|460|(461)|()
+Term|461|(462)|()
+Unary|462|p|#|463|0
+Primary|463|l|464
+Literal|464|s|\t
+Body|465|(466)
+Statement|466|p|467
+Print|467|(468|475)
+Expression|468|(469)|()
+Relation|469|(470)|()
+Factor|470|(471)|()
+Term|471|(472)|()
+Unary|472|p|#|473|0
+Primary|473|l|474
+Literal|474|s|X
+Expression|475|(476)|()
+Relation|476|(477)|()
+Factor|477|(478)|()
+Term|478|(479)|()
+Unary|479|p|#|480|0
+Primary|480|l|481
+Literal|481|s|\t
+Statement|482|i|483
+If|483|484|498|515
+Expression|484|(485)|()
+Relation|485|(486)|()
+Factor|486|(487)|()
+Term|487|(488)|()
+Unary|488|p|#|489|497
+Primary|489|v|types|(490)
+Tail|490|s|491
+Expression|491|(492)|()
+Relation|492|(493)|()
+Factor|493|(494)|()
+Term|494|(495)|()
+Unary|495|p|#|496|0
+Primary|496|v|i|()
+TypeIndicator|497|b
+Body|498|(499)
+Statement|499|p|500
+Print|500|(501|508)
+Expression|501|(502)|()
+Relation|502|(503)|()
+Factor|503|(504)|()
+Term|504|(505)|()
+Unary|505|p|#|506|0
+Primary|506|l|507
+Literal|507|s|V
+Expression|508|(509)|()
+Relation|509|(510)|()
+Factor|510|(511)|()
+Term|511|(512)|()
+Unary|512|p|#|513|0
+Primary|513|l|514
+Literal|514|s|\t
+Body|515|(516)
+Statement|516|p|517
+Print|517|(518|525)
+Expression|518|(519)|()
+Relation|519|(520)|()
+Factor|520|(521)|()
+Term|521|(522)|()
+Unary|522|p|#|523|0
+Primary|523|l|524
+Literal|524|s|X
+Expression|525|(526)|()
+Relation|526|(527)|()
+Factor|527|(528)|()
+Term|528|(529)|()
+Unary|529|p|#|530|0
+Primary|530|l|531
+Literal|531|s|\t
+Statement|532|i|533
+If|533|534|548|565
+Expression|534|(535)|()
+Relation|535|(536)|()
+Factor|536|(537)|()
+Term|537|(538)|()
+Unary|538|p|#|539|547
+Primary|539|v|types|(540)
+Tail|540|s|541
+Expression|541|(542)|()
+Relation|542|(543)|()
+Factor|543|(544)|()
+Term|544|(545)|()
+Unary|545|p|#|546|0
+Primary|546|v|i|()
+TypeIndicator|547|s
+Body|548|(549)
+Statement|549|p|550
+Print|550|(551|558)
+Expression|551|(552)|()
+Relation|552|(553)|()
+Factor|553|(554)|()
+Term|554|(555)|()
+Unary|555|p|#|556|0
+Primary|556|l|557
+Literal|557|s|V
+Expression|558|(559)|()
+Relation|559|(560)|()
+Factor|560|(561)|()
+Term|561|(562)|()
+Unary|562|p|#|563|0
+Primary|563|l|564
+Literal|564|s|\t
+Body|565|(566)
+Statement|566|p|567
+Print|567|(568|575)
+Expression|568|(569)|()
+Relation|569|(570)|()
+Factor|570|(571)|()
+Term|571|(572)|()
+Unary|572|p|#|573|0
+Primary|573|l|574
+Literal|574|s|X
+Expression|575|(576)|()
+Relation|576|(577)|()
+Factor|577|(578)|()
+Term|578|(579)|()
+Unary|579|p|#|580|0
+Primary|580|l|581
+Literal|581|s|\t
+Statement|582|i|583
+If|583|584|598|615
+Expression|584|(585)|()
+Relation|585|(586)|()
+Factor|586|(587)|()
+Term|587|(588)|()
+Unary|588|p|#|589|597
+Primary|589|v|types|(590)
+Tail|590|s|591
+Expression|591|(592)|()
+Relation|592|(593)|()
+Factor|593|(594)|()
+Term|594|(595)|()
+Unary|595|p|#|596|0
+Primary|596|v|i|()
+TypeIndicator|597|e
+Body|598|(599)
+Statement|599|p|600
+Print|600|(601|608)
+Expression|601|(602)|()
+Relation|602|(603)|()
+Factor|603|(604)|()
+Term|604|(605)|()
+Unary|605|p|#|606|0
+Primary|606|l|607
+Literal|607|s|V
+Expression|608|(609)|()
+Relation|609|(610)|()
+Factor|610|(611)|()
+Term|611|(612)|()
+Unary|612|p|#|613|0
+Primary|613|l|614
+Literal|614|s|\t
+Body|615|(616)
+Statement|616|p|617
+Print|617|(618|625)
+Expression|618|(619)|()
+Relation|619|(620)|()
+Factor|620|(621)|()
+Term|621|(622)|()
+Unary|622|p|#|623|0
+Primary|623|l|624
+Literal|624|s|X
+Expression|625|(626)|()
+Relation|626|(627)|()
+Factor|627|(628)|()
+Term|628|(629)|()
+Unary|629|p|#|630|0
+Primary|630|l|631
+Literal|631|s|\t
+Statement|632|i|633
+If|633|634|648|665
+Expression|634|(635)|()
+Relation|635|(636)|()
+Factor|636|(637)|()
+Term|637|(638)|()
+Unary|638|p|#|639|647
+Primary|639|v|types|(640)
+Tail|640|s|641
+Expression|641|(642)|()
+Relation|642|(643)|()
+Factor|643|(644)|()
+Term|644|(645)|()
+Unary|645|p|#|646|0
+Primary|646|v|i|()
+TypeIndicator|647|a
+Body|648|(649)
+Statement|649|p|650
+Print|650|(651|658)
+Expression|651|(652)|()
+Relation|652|(653)|()
+Factor|653|(654)|()
+Term|654|(655)|()
+Unary|655|p|#|656|0
+Primary|656|l|657
+Literal|657|s|V
+Expression|658|(659)|()
+Relation|659|(660)|()
+Factor|660|(661)|()
+Term|661|(662)|()
+Unary|662|p|#|663|0
+Primary|663|l|664
+Literal|664|s|\t
+Body|665|(666)
+Statement|666|p|667
+Print|667|(668|675)
+Expression|668|(669)|()
+Relation|669|(670)|()
+Factor|670|(671)|()
+Term|671|(672)|()
+Unary|672|p|#|673|0
+Primary|673|l|674
+Literal|674|s|X
+Expression|675|(676)|()
+Relation|676|(677)|()
+Factor|677|(678)|()
+Term|678|(679)|()
+Unary|679|p|#|680|0
+Primary|680|l|681
+Literal|681|s|\t
+Statement|682|i|683
+If|683|684|698|715
+Expression|684|(685)|()
+Relation|685|(686)|()
+Factor|686|(687)|()
+Term|687|(688)|()
+Unary|688|p|#|689|697
+Primary|689|v|types|(690)
+Tail|690|s|691
+Expression|691|(692)|()
+Relation|692|(693)|()
+Factor|693|(694)|()
+Term|694|(695)|()
+Unary|695|p|#|696|0
+Primary|696|v|i|()
+TypeIndicator|697|t
+Body|698|(699)
+Statement|699|p|700
+Print|700|(701|708)
+Expression|701|(702)|()
+Relation|702|(703)|()
+Factor|703|(704)|()
+Term|704|(705)|()
+Unary|705|p|#|706|0
+Primary|706|l|707
+Literal|707|s|V
+Expression|708|(709)|()
+Relation|709|(710)|()
+Factor|710|(711)|()
+Term|711|(712)|()
+Unary|712|p|#|713|0
+Primary|713|l|714
+Literal|714|s|\t
+Body|715|(716)
+Statement|716|p|717
+Print|717|(718|725)
+Expression|718|(719)|()
+Relation|719|(720)|()
+Factor|720|(721)|()
+Term|721|(722)|()
+Unary|722|p|#|723|0
+Primary|723|l|724
+Literal|724|s|X
+Expression|725|(726)|()
+Relation|726|(727)|()
+Factor|727|(728)|()
+Term|728|(729)|()
+Unary|729|p|#|730|0
+Primary|730|l|731
+Literal|731|s|\t
+Statement|732|i|733
+If|733|734|748|765
+Expression|734|(735)|()
+Relation|735|(736)|()
+Factor|736|(737)|()
+Term|737|(738)|()
+Unary|738|p|#|739|747
+Primary|739|v|types|(740)
+Tail|740|s|741
+Expression|741|(742)|()
+Relation|742|(743)|()
+Factor|743|(744)|()
+Term|744|(745)|()
+Unary|745|p|#|746|0
+Primary|746|v|i|()
+TypeIndicator|747|f
+Body|748|(749)
+Statement|749|p|750
+Print|750|(751|758)
+Expression|751|(752)|()
+Relation|752|(753)|()
+Factor|753|(754)|()
+Term|754|(755)|()
+Unary|755|p|#|756|0
+Primary|756|l|757
+Literal|757|s|V
+Expression|758|(759)|()
+Relation|759|(760)|()
+Factor|760|(761)|()
+Term|761|(762)|()
+Unary|762|p|#|763|0
+Primary|763|l|764
+Literal|764|s|\t
+Body|765|(766)
+Statement|766|p|767
+Print|767|(768|775)
+Expression|768|(769)|()
+Relation|769|(770)|()
+Factor|770|(771)|()
+Term|771|(772)|()
+Unary|772|p|#|773|0
+Primary|773|l|774
+Literal|774|s|X
+Expression|775|(776)|()
+Relation|776|(777)|()
+Factor|777|(778)|()
+Term|778|(779)|()
+Unary|779|p|#|780|0
+Primary|780|l|781
+Literal|781|s|\t
+Statement|782|p|783
+Print|783|(784)
+Expression|784|(785)|()
+Relation|785|(786)|()
+Factor|786|(787)|()
+Term|787|(788)|()
+Unary|788|p|#|789|0
+Primary|789|l|790
+Literal|790|s|\n
+END|-1

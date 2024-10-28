@@ -1,339 +1,73 @@
-Programm{
-  Statement{
-    Declaration{
-      VariableDefinition{
-        Identifier: x
-        Value:
-          Expression{
-            Element amount: 1
-            Element 1: 
-              Relation{
-                Element amount: 1
-                Element 1: 
-                  Factor{
-                    Element amount: 1
-                    Element 1: 
-                      Term{
-                        Element amount: 1
-                        Element 1: 
-                          Unary{
-                            Type: Primary
-                            UnaryOperation: None
-                            Value:
-                              Primary{
-                                Type: ReadInt
-                              }
-                            Type indicator: None
-                          }
-                      }
-                  }
-              }
-          }
-      }
-    }
-  }
-  Statement{
-    Declaration{
-      VariableDefinition{
-        Identifier: y
-        Value:
-          Expression{
-            Element amount: 1
-            Element 1: 
-              Relation{
-                Element amount: 1
-                Element 1: 
-                  Factor{
-                    Element amount: 1
-                    Element 1: 
-                      Term{
-                        Element amount: 1
-                        Element 1: 
-                          Unary{
-                            Type: Primary
-                            UnaryOperation: None
-                            Value:
-                              Primary{
-                                Type: ReadReal
-                              }
-                            Type indicator: None
-                          }
-                      }
-                  }
-              }
-          }
-      }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 1
-      Value 1:
-        Expression{
-          Element amount: 3
-          Element 1: 
-            Relation{
-              Element amount: 2
-              Element 1: 
-                Factor{
-                  Element amount: 2
-                  Element 1: 
-                    Term{
-                      Element amount: 3
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: -
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: Integer
-                                  Value: 30
-                                }
-                            }
-                          Type indicator: None
-                        }
-                      Operation 1: *
-                      Element 2: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "y"
-                              TailAmount: 0
-                            }
-                          Type indicator: None
-                        }
-                      Operation 2: /
-                      Element 3: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "x"
-                              TailAmount: 0
-                            }
-                          Type indicator: None
-                        }
-                    }
-                  Operation 1: +
-                  Element 2: 
-                    Term{
-                      Element amount: 2
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: Integer
-                                  Value: 50
-                                }
-                            }
-                          Type indicator: None
-                        }
-                      Operation 1: /
-                      Element 2: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: Real
-                                  Value: 4.3
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-              Operation 1: >=
-              Element 2: 
-                Factor{
-                  Element amount: 2
-                  Element 1: 
-                    Term{
-                      Element amount: 2
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: +
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: Integer
-                                  Value: 120
-                                }
-                            }
-                          Type indicator: None
-                        }
-                      Operation 1: /
-                      Element 2: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: Real
-                                  Value: 29
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                  Operation 1: -
-                  Element 2: 
-                    Term{
-                      Element amount: 2
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "y"
-                              TailAmount: 0
-                            }
-                          Type indicator: None
-                        }
-                      Operation 1: *
-                      Element 2: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: Integer
-                                  Value: 50
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-          Operation 1: and
-          Element 2: 
-            Relation{
-              Element amount: 2
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 2
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: -
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "x"
-                              TailAmount: 0
-                            }
-                          Type indicator: None
-                        }
-                      Operation 1: /
-                      Element 2: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "y"
-                              TailAmount: 0
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-              Operation 1: <
-              Element 2: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 2
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "y"
-                              TailAmount: 0
-                            }
-                          Type indicator: None
-                        }
-                      Operation 1: *
-                      Element 2: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "y"
-                              TailAmount: 0
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-          Operation 2: or
-          Element 3: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: not
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: Boolean
-                                  Value: 1
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-}
+Program|1|(2|11|20)
+Statement|2|d|3
+Declaration|3|(4)
+VariableDefinition|4|x|5
+Expression|5|(6)|()
+Relation|6|(7)|()
+Factor|7|(8)|()
+Term|8|(9)|()
+Unary|9|p|#|10|0
+Primary|10|i
+Statement|11|d|12
+Declaration|12|(13)
+VariableDefinition|13|y|14
+Expression|14|(15)|()
+Relation|15|(16)|()
+Factor|16|(17)|()
+Term|17|(18)|()
+Unary|18|p|#|19|0
+Primary|19|r
+Statement|20|p|21
+Print|21|(22)
+Expression|22|(23|54|67)|(a|o)
+Relation|23|(24|40)|(m)
+Factor|24|(25|33)|(+)
+Term|25|(26|29|31)|(*|/)
+Unary|26|p|-|27|0
+Primary|27|l|28
+Literal|28|i|30
+Unary|29|p|#|30|0
+Primary|30|v|y|()
+Unary|31|p|#|32|0
+Primary|32|v|x|()
+Term|33|(34|37)|(/)
+Unary|34|p|#|35|0
+Primary|35|l|36
+Literal|36|i|50
+Unary|37|p|#|38|0
+Primary|38|l|39
+Literal|39|r|4.3
+Factor|40|(41|48)|(-)
+Term|41|(42|45)|(/)
+Unary|42|p|+|43|0
+Primary|43|l|44
+Literal|44|i|120
+Unary|45|p|#|46|0
+Primary|46|l|47
+Literal|47|r|29
+Term|48|(49|51)|(*)
+Unary|49|p|#|50|0
+Primary|50|v|y|()
+Unary|51|p|#|52|0
+Primary|52|l|53
+Literal|53|i|50
+Relation|54|(55|61)|(<)
+Factor|55|(56)|()
+Term|56|(57|59)|(/)
+Unary|57|p|-|58|0
+Primary|58|v|x|()
+Unary|59|p|#|60|0
+Primary|60|v|y|()
+Factor|61|(62)|()
+Term|62|(63|65)|(*)
+Unary|63|p|#|64|0
+Primary|64|v|y|()
+Unary|65|p|#|66|0
+Primary|66|v|y|()
+Relation|67|(68)|()
+Factor|68|(69)|()
+Term|69|(70)|()
+Unary|70|p|n|71|0
+Primary|71|l|72
+Literal|72|b|1
+END|-1

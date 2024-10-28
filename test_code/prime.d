@@ -9,6 +9,6 @@ var prime := func(n) is
 	return true
 end
 
-x := 244
+var x := 244
 
 print prime(readInt)

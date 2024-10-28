@@ -5,53 +5,32 @@
 #include <sstream>
 #import <queue>
 #include <typeinfo>
+#include <sstream>
 
 #include "token_data.hpp"
 
-enum NodeType {
-    Program,
-    Statement,
-    Declaration,
-    VariableDefinition,
-    Expression,
-    IDENT,
-    Assignment,
-    If,
-    For,
-    While,
-    Return,
-    Print,
-    Relation,
-    Factor,
-    Term,
-    Unary,
-    TypeIndicator,
-    Primary,
-    IntegerLiteral,
-    RealLiteral,
-    BooleanLiteral,
-    StringLiteral,
-    ArrayLiteral,
-    TupleLiteral,
-    Reader,
-    FunctionLiteral,
-    Body,
-    Reference,
-    Array,
-    FunBody,
-    Parameters,
-};
+int id_counter = 1;
+bool human_output_nodes = false;
 
+class Node;
+
+typedef void (*callback_function)(Node* me);
 
 class Node {
     public:
-        virtual void find_nodes(std::vector<void*>& out, std::type_info& q) = 0;
+        unsigned int id;
+        virtual Node* from_tokens(std::vector<Token>& tokens, int& y) = 0;
+        virtual void from_config(std::vector<Node*>& nodes, std::string& confstr) = 0;
+        virtual void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) = 0;
         virtual void print(std::ostream& out, int indent=4, int acc_indent=0) = 0;
+        virtual void machine_print(std::ostream& out) = 0;
 };
 
+
 std::ostream& operator<<(std::ostream& out, Node* node) {
-     node->print(out, 2);
-     return out;
+    if (human_output_nodes) node->print(out, 2);
+    else node->machine_print(out);
+    return out;
 }
 
 class ProgramNode;
@@ -79,13 +58,30 @@ class TupleLiteralNode;
 class FunctionNode;
 class RangeNode;
 
-Node* createNode(const std::string& t, std::vector<Token>& tokens, int& y);
+Node* createNodeFromTokens(const std::string& t, std::vector<Token>& tokens, int& y);
+Node* createNodeByName(const std::string& t);
+
+void read_until_delim(std::istream& in, std::pair<std::string, char>& dest) {
+    dest.first.clear();
+    char cur;
+    in.get(cur);
+    while (cur != ')' && cur != '|' && cur != '\n') {
+        dest.first += cur;
+        in.get(cur);
+    }
+    dest.second = cur;
+
+}
 
 class ProgramNode: public Node {
-    private:
-        std::vector<Node*> statements;
     public:
-        ProgramNode (std::vector<Token>& tokens, int& y) {
+        std::vector<Node*> statements;
+        ProgramNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             while (!tokens.empty()) {
 
                 while (tokens[y].type == TokenCode::tkLineEnd){
@@ -94,18 +90,43 @@ class ProgramNode: public Node {
 
                 }
                 if (tokens.size() == y) break;
-                this->statements.push_back(createNode("Statement", tokens, y));
+                this->statements.push_back(createNodeFromTokens("Statement", tokens, y));
+            }
+            return this;
+        }
+
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                statements.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
+            }
+            if (read.first != "") {
+                statements.push_back(nodes[std::stoll(read.first)]);
             }
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
-
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+            bool first = true;
             for(auto i: statements) {
-                i->find_nodes(out, q);
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -115,10 +136,25 @@ class ProgramNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Program|" << id << "|(";
+            for(int i = 0; i < statements.size(); ++i) {
+                if (i) out << "|";
+                out << statements[i]->id;
+            }
+            out << ")\n";
+
+            for(auto i: statements) {
+                i->machine_print(out);
+            }
+
+            out << "END|-1\n";
+        }
 };
 
 class StatementNode: public Node {
-    private:
+    public:
         char type;
         Node* declare_node;
         Node* assign_node;
@@ -128,80 +164,127 @@ class StatementNode: public Node {
         Node* return_node;
         Node* print_node;
         Node* expression_node;
-    public:
-        StatementNode (std::vector<Token>& tokens, int& y) {
+        StatementNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             switch (tokens[y].type) {
                 case TokenCode::tkVar:
                     this->type = 'd';
                     ++y;
-                    this->declare_node = createNode("Declaration", tokens, y);
+                    this->declare_node = createNodeFromTokens("Declaration", tokens, y);
                     break;
                 case TokenCode::tkIdentifier:
                     this->type = 'a';
-                    this->assign_node = createNode("Assignment", tokens, y);
+                    this->assign_node = createNodeFromTokens("Assignment", tokens, y);
                     break;
                 case TokenCode::tkIf:
                     this->type = 'i';
                     ++y;
-                    this->if_node = createNode("If", tokens, y);
+                    this->if_node = createNodeFromTokens("If", tokens, y);
                     break;
                 case TokenCode::tkFor:
                     this->type = 'f';
                     ++y;
-                    this->for_node = createNode("For", tokens, y);
+                    this->for_node = createNodeFromTokens("For", tokens, y);
                     break;
                 case TokenCode::tkWhile:
                     this->type = 'w';
                     ++y;
-                    this->while_node = createNode("While", tokens, y);
+                    this->while_node = createNodeFromTokens("While", tokens, y);
                     break;
                 case TokenCode::tkReturn:
                     this->type = 'r';
                     ++y;
-                    this->return_node = createNode("Return", tokens, y);
+                    this->return_node = createNodeFromTokens("Return", tokens, y);
                     break;
                 case TokenCode::tkPrint:
                     this->type = 'p';
                     ++y;
-                    this->print_node = createNode("Print", tokens, y);
+                    this->print_node = createNodeFromTokens("Print", tokens, y);
                     break;
                 default:
                     throw std::invalid_argument("Not a statement");
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> type;
+            s >> trash;
+
+            read_until_delim(s, read);
 
             switch (this->type) {
                 case 'd':
-                    this->declare_node->find_nodes(out, q);
+                    this->declare_node = nodes[std::stoll(read.first)];
                     break;
                 case 'a':
-                    this->assign_node->find_nodes(out, q);
+                    this->assign_node = nodes[std::stoll(read.first)];
                     break;
                 case 'e':
-                    this->expression_node->find_nodes(out, q);
+                    this->expression_node = nodes[std::stoll(read.first)];
                     break;
                 case 'i':
-                    this->if_node->find_nodes(out, q);
+                    this->if_node = nodes[std::stoll(read.first)];
                     break;
                 case 'f':
-                    this->for_node->find_nodes(out, q);
+                    this->for_node = nodes[std::stoll(read.first)];
                     break;
                 case 'w':
-                    this->while_node->find_nodes(out, q);
+                    this->while_node = nodes[std::stoll(read.first)];
                     break;
                 case 'r':
-                    this->return_node->find_nodes(out, q);
+                    this->return_node = nodes[std::stoll(read.first)];
                     break;
                 case 'p':
-                    this->print_node->find_nodes(out, q);
+                    this->print_node = nodes[std::stoll(read.first)];
+                    break;
+                default:
+                    throw std::invalid_argument("Expected valid type");
+            }
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit){
+            at_enter(this);
+            switch (this->type) {
+                case 'd':
+                    this->declare_node->visit(at_enter, at_repeat, at_exit);
+                    break;
+                case 'a':
+                    this->assign_node->visit(at_enter, at_repeat, at_exit);
+                    break;
+                case 'e':
+                    this->expression_node->visit(at_enter, at_repeat, at_exit);
+                    break;
+                case 'i':
+                    this->if_node->visit(at_enter, at_repeat, at_exit);
+                    break;
+                case 'f':
+                    this->for_node->visit(at_enter, at_repeat, at_exit);
+                    break;
+                case 'w':
+                    this->while_node->visit(at_enter, at_repeat, at_exit);
+                    break;
+                case 'r':
+                    this->return_node->visit(at_enter, at_repeat, at_exit);
+                    break;
+                case 'p':
+                    this->print_node->visit(at_enter, at_repeat, at_exit);
                     break;
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -234,18 +317,59 @@ class StatementNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Statement|" << id << "|" << type << "|";
+            switch (this->type) {
+                case 'd':
+                    out << declare_node->id << "\n";
+                    this->declare_node->machine_print(out);
+                    break;
+                case 'a':
+                    out << assign_node->id << "\n";
+                    this->assign_node->machine_print(out);
+                    break;
+                case 'e':
+                    out << expression_node->id << "\n";
+                    this->expression_node->machine_print(out);
+                    break;
+                case 'i':
+                    out << if_node->id << "\n";
+                    this->if_node->machine_print(out);
+                    break;
+                case 'f':
+                    out << for_node->id << "\n";
+                    this->for_node->machine_print(out);
+                    break;
+                case 'w':
+                    out << while_node->id << "\n";
+                    this->while_node->machine_print(out);
+                    break;
+                case 'r':
+                    out << return_node->id << "\n";
+                    this->return_node->machine_print(out);
+                    break;
+                case 'p':
+                    out << print_node->id << "\n";
+                    this->print_node->machine_print(out);
+                    break;
+            }
+        }
 };
 
 class DeclarationNode: public Node {
-    private:
-        std::vector<Node*> vars;
     public:
-        DeclarationNode (std::vector<Token>& tokens, int& y) {
-            while (1) {
+        std::vector<Node*> vars;
+        DeclarationNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
+            while (1) {
                 switch (tokens[y].type) {
                     case TokenCode::tkIdentifier:
-                        this->vars.push_back(createNode("VariableDefinition", tokens, y));
+                        this->vars.push_back(createNodeFromTokens("VariableDefinition", tokens, y));
                         break;
                     default:
                         throw std::invalid_argument("Not a variable definition");
@@ -258,16 +382,43 @@ class DeclarationNode: public Node {
                     break;
                 }
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                vars.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
+            }
+            if (read.first != "") {
+                vars.push_back(nodes[std::stoll(read.first)]);
             }
 
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+            bool first = true;
             for(auto i: this->vars) {
-                i->find_nodes(out, q);
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -277,39 +428,69 @@ class DeclarationNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Declaration|" << id << "|(";
+            for(int i = 0; i < vars.size(); ++i) {
+                if (i) out << "|";
+                out << vars[i]->id;
+            }
+            out << ")\n";
+
+            for(auto i: vars) {
+                i->machine_print(out);
+            }
+        }
 };
 
 class VariableDefinitionNode: public Node {
-    private:
+    public:
         std::string identifier;
         Node* value = nullptr;
-    public:
-        VariableDefinitionNode (std::vector<Token>& tokens, int& y) {
+        VariableDefinitionNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             this->identifier = tokens[y].valStr;
             ++y;
 
-
             switch (tokens[y].type) {
                 case TokenCode::tkComma:
-                    return;
                 case TokenCode::tkLineEnd:
-                    return;
+                    return this;
                 case TokenCode::tkAssignment:
                     ++y;
-                    this->value = createNode("Expression", tokens, y);
+                    this->value = createNodeFromTokens("Expression", tokens, y);
                     break;
                 default:
                     throw std::invalid_argument("Unexpected value, expected :=");
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-            if (this->value) this->value->find_nodes(out, q);
+            char trash;
+
+            std::pair<std::string, char> read;
+
+            read_until_delim(s, read);
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            identifier = read.first;
+
+            read_until_delim(s, read);
+            value = nodes[std::stoll(read.first)];
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+            if (this->value) this->value->visit(at_enter, at_repeat, at_exit);
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -324,17 +505,30 @@ class VariableDefinitionNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "VariableDefinition|" << id << "|" << identifier << "|";
+            if (value) {
+                out << value->id << "\n";
+                value->machine_print(out);
+            } else {
+                out << "0\n";
+            }
+        }
 };
 
 class ExpressionNode: public Node {
-    private:
+    public:
         std::vector<Node*> relations;
         std::vector<char> ops;
-    public:
-        ExpressionNode (std::vector<Token>& tokens, int& y) {
+        ExpressionNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             while (1) {
-                this->relations.push_back(createNode("Relation", tokens, y));
+                this->relations.push_back(createNodeFromTokens("Relation", tokens, y));
 
                 if (tokens[y].type == TokenCode::tkLogicAnd) {
                     this->ops.push_back('a');
@@ -349,19 +543,57 @@ class ExpressionNode: public Node {
                     ++y;
                     continue;
                 } else {
-                    return;
+                    return this;
                 }
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                relations.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
+            }
+            if (read.first != "") {
+                relations.push_back(nodes[std::stoll(read.first)]);
             }
 
-            for(auto i: this->relations) {
-                i->find_nodes(out, q);
+            s >> trash >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                ops.push_back(read.first[0]);
+                read_until_delim(s, read);
             }
+            if (read.first != "") {
+                ops.push_back(read.first[0]);
+            }
+
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            bool first = true;
+            for(auto i: this->relations) {
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
+            }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -388,16 +620,38 @@ class ExpressionNode: public Node {
 
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Expression|" << id << "|(";
+            for(int i = 0; i < relations.size(); ++i) {
+                if (i) out << "|";
+                out << relations[i]->id;
+            }
+            out << ")|(";
+            for(int i = 0; i < ops.size(); ++i) {
+                if (i) out << "|";
+                out << ops[i];
+            }
+            out << ")\n";
+
+            for(auto i: relations) {
+                i->machine_print(out);
+            }
+        }
 };
 
 class RelationNode: public Node {
-    private:
+    public:
         std::vector<Node*> factors;
         std::vector<char> ops;
-    public:
-        RelationNode (std::vector<Token>& tokens, int& y) {
+        RelationNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             while (1) {
-                this->factors.push_back(createNode("Factor", tokens, y));
+                this->factors.push_back(createNodeFromTokens("Factor", tokens, y));
 
                 if (tokens[y].type == TokenCode::tkRelationEqual) {
                     this->ops.push_back('=');
@@ -424,19 +678,57 @@ class RelationNode: public Node {
                     ++y;
                     continue;
                 } else {
-                    return;
+                    return this;
                 }
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                factors.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
+            }
+            if (read.first != "") {
+                factors.push_back(nodes[std::stoll(read.first)]);
             }
 
-            for(auto i: this->factors) {
-                i->find_nodes(out, q);
+            s >> trash >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                ops.push_back(read.first[0]);
+                read_until_delim(s, read);
             }
+            if (read.first != "") {
+                ops.push_back(read.first[0]);
+            }
+
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            bool first = true;
+            for(auto i: this->factors) {
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
+            }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -472,16 +764,38 @@ class RelationNode: public Node {
 
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Relation|" << id << "|(";
+            for(int i = 0; i < factors.size(); ++i) {
+                if (i) out << "|";
+                out << factors[i]->id;
+            }
+            out << ")|(";
+            for(int i = 0; i < ops.size(); ++i) {
+                if (i) out << "|";
+                out << ops[i];
+            }
+            out << ")\n";
+
+            for(auto i: factors) {
+                i->machine_print(out);
+            }
+        }
 };
 
 class FactorNode: public Node {
-    private:
+    public:
         std::vector<Node*> terms;
         std::vector<char> ops;
-    public:
-        FactorNode (std::vector<Token>& tokens, int& y) {
+        FactorNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             while (1) {
-                this->terms.push_back(createNode("Term", tokens, y));
+                this->terms.push_back(createNodeFromTokens("Term", tokens, y));
 
                 if (tokens[y].type == TokenCode::tkOperatorPlus) {
                     this->ops.push_back('+');
@@ -492,19 +806,57 @@ class FactorNode: public Node {
                     ++y;
                     continue;
                 } else {
-                    return;
+                    return this;
                 }
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                terms.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
+            }
+            if (read.first != "") {
+                terms.push_back(nodes[std::stoll(read.first)]);
             }
 
-            for(auto i: this->terms) {
-                i->find_nodes(out, q);
+            s >> trash >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                ops.push_back(read.first[0]);
+                read_until_delim(s, read);
             }
+            if (read.first != "") {
+                ops.push_back(read.first[0]);
+            }
+
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            bool first = true;
+            for(auto i: this->terms) {
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
+            }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -527,16 +879,38 @@ class FactorNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Factor|" << id << "|(";
+            for(int i = 0; i < terms.size(); ++i) {
+                if (i) out << "|";
+                out << terms[i]->id;
+            }
+            out << ")|(";
+            for(int i = 0; i < ops.size(); ++i) {
+                if (i) out << "|";
+                out << ops[i];
+            }
+            out << ")\n";
+
+            for(auto i: terms) {
+                i->machine_print(out);
+            }
+        }
 };
 
 class TermNode: public Node {
-    private:
+    public:
         std::vector<Node*> terms;
         std::vector<char> ops;
-    public:
-        TermNode (std::vector<Token>& tokens, int& y) {
+        TermNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             while (1) {
-                this->terms.push_back(createNode("Unary", tokens, y));
+                this->terms.push_back(createNodeFromTokens("Unary", tokens, y));
 
                 if (tokens[y].type == TokenCode::tkOperatorMultiply) {
                     this->ops.push_back('*');
@@ -547,19 +921,58 @@ class TermNode: public Node {
                     ++y;
                     continue;
                 } else {
-                    return;
+                    return this;
                 }
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                terms.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
+            }
+            if (read.first != "") {
+                terms.push_back(nodes[std::stoll(read.first)]);
+            }
+            s >> trash;
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                ops.push_back(read.first[0]);
+                read_until_delim(s, read);
+            }
+            if (read.first != "") {
+                ops.push_back(read.first[0]);
             }
 
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            bool first = true;
             for(auto i: this->terms) {
-                i->find_nodes(out, q);
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -582,35 +995,54 @@ class TermNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Term|" << id << "|(";
+            for(int i = 0; i < terms.size(); ++i) {
+                if (i) out << "|";
+                out << terms[i]->id;
+            }
+            out << ")|(";
+            for(int i = 0; i < ops.size(); ++i) {
+                if (i) out << "|";
+                out << ops[i];
+            }
+            out << ")\n";
+
+            for(auto i: terms) {
+                i->machine_print(out);
+            }
+        }
 };
 
 class UnaryNode: public Node {
-    private:
-        char type;
+    public:
+        char type = '!';
 
         char unaryop = '#';
         Node* primary;
         Node* type_ind = nullptr;
 
-        Node* literal;
-
         Node* expression;
 
-    public:
-        UnaryNode (std::vector<Token>& tokens, int& y) {
+        UnaryNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             switch (tokens[y].type) {
                 case TokenCode::tkUnaryPlus:
                     this->type = 'p';
                     this->unaryop = '+';
 
                     ++y;
-                    this->primary = createNode("Primary", tokens, y);
+                    this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
                     if (tokens[y].type == TokenCode::tkIs) {
                         ++y;
-                        this->type_ind = createNode("TypeIndicator", tokens, y);
+                        this->type_ind = createNodeFromTokens("TypeIndicator", tokens, y);
                     }
 
                     break;
@@ -619,12 +1051,12 @@ class UnaryNode: public Node {
                     this->unaryop = '-';
 
                     ++y;
-                    this->primary = createNode("Primary", tokens, y);
+                    this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
                     if (tokens[y].type == TokenCode::tkIs) {
                         ++y;
-                        this->type_ind = createNode("TypeIndicator", tokens, y);
+                        this->type_ind = createNodeFromTokens("TypeIndicator", tokens, y);
                     }
 
                     break;
@@ -633,12 +1065,12 @@ class UnaryNode: public Node {
                     this->unaryop = 'n';
 
                     ++y;
-                    this->primary = createNode("Primary", tokens, y);
+                    this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
                     if (tokens[y].type == TokenCode::tkIs) {
                         ++y;
-                        this->type_ind = createNode("TypeIndicator", tokens, y);
+                        this->type_ind = createNodeFromTokens("TypeIndicator", tokens, y);
                     }
 
                     break;
@@ -657,12 +1089,12 @@ class UnaryNode: public Node {
                 case TokenCode::tkEmpty:
                     this->type = 'p';
 
-                    this->primary = createNode("Primary", tokens, y);
+                    this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
                     if (tokens[y].type == TokenCode::tkIs) {
                         ++y;
-                        this->type_ind = createNode("TypeIndicator", tokens, y);
+                        this->type_ind = createNodeFromTokens("TypeIndicator", tokens, y);
                     }
 
                     break;
@@ -670,7 +1102,7 @@ class UnaryNode: public Node {
                     this->type = 'e';
                     ++y;
 
-                    this->expression = createNode("Expression", tokens, y);
+                    this->expression = createNodeFromTokens("Expression", tokens, y);
 
 
                     if (tokens[y].type != TokenCode::tkBracketNormalRight){
@@ -680,25 +1112,60 @@ class UnaryNode: public Node {
 
                     break;
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            type = read.first[0];
+
+            switch (type) {
+                case 'p':
+                    read_until_delim(s, read);
+                    unaryop = read.first[0];
+
+                    read_until_delim(s, read);
+                    primary = nodes[std::stoll(read.first)];
+
+                    read_until_delim(s, read);
+                    type_ind = nodes[std::stoll(read.first)];
+
+                    break;
+                case 'e':
+                    read_until_delim(s, read);
+                    expression = nodes[std::stoll(read.first)];
+
+                    break;
+                default:
+                    throw std::invalid_argument("Expected valid type");
             }
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
 
             switch (this->type) {
                 case 'p':
-                    this->primary->find_nodes(out, q);
-                    if (this->type_ind) this->type_ind->find_nodes(out, q);
-                    break;
-                case 'l':
-                    this->literal->find_nodes(out, q);
+                    this->primary->visit(at_enter, at_repeat, at_exit);
+                    if (this->type_ind) {
+                        at_repeat(this);
+                        this->type_ind->visit(at_enter, at_repeat, at_exit);
+                    }
                     break;
                 case 'e':
-                    this->expression->find_nodes(out, q);
+                    this->expression->visit(at_enter, at_repeat, at_exit);
                     break;
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -733,11 +1200,6 @@ class UnaryNode: public Node {
                     }
 
                     break;
-                case 'l':
-                    out << "Literal\n";
-                    out << std::string(acc_indent+indent, ' ') << "Value:\n";
-                    this->literal->print(out, indent, acc_indent+indent*2);
-                    break;
                 case 'e':
                     out << "Expression\n";
                     out << std::string(acc_indent+indent, ' ') << "Value:\n";
@@ -746,15 +1208,39 @@ class UnaryNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Unary|" << id << "|" << type << "|";
+            switch (this->type) {
+                case 'p':
+                    out << this->unaryop << "|" << primary->id << "|";
+                    if (type_ind) {
+                        out << type_ind->id << "\n";
+                        primary->machine_print(out);
+                        type_ind->machine_print(out);
+                    } else {
+                        out << "0\n";
+                        primary->machine_print(out);
+                    }
+                    break;
+                case 'e':
+                    out << expression->id << "\n";
+                    expression->machine_print(out);
+                    break;
+            }
+        }
 };
 
 
 class TypeIndicatorNode: public Node {
-    private:
-        char type;
     public:
-        TypeIndicatorNode (std::vector<Token>& tokens, int& y) {
+        char type;
+        TypeIndicatorNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             switch (tokens[y].type) {
                 case TokenCode::tkTypeInt:
                     this->type = 'i';
@@ -805,12 +1291,26 @@ class TypeIndicatorNode: public Node {
                 default:
                     throw std::invalid_argument("Expected type indicator");
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            type = read.first[0];
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -842,17 +1342,25 @@ class TypeIndicatorNode: public Node {
                     break;
             }
         }
+
+        void machine_print(std::ostream& out){
+            out << "TypeIndicator|" << id << "|" << type << "\n";
+        }
 };
 
 class IfNode: public Node {
-    private:
+    public:
         Node* expression;
         Node* if_body;
         Node* else_body = nullptr;
 
-    public:
-        IfNode (std::vector<Token>& tokens, int& y) {
-            this->expression = createNode("Expression", tokens, y);
+        IfNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
+            this->expression = createNodeFromTokens("Expression", tokens, y);
 
 
             if (tokens[y].type != TokenCode::tkDelimeterThen) {
@@ -860,22 +1368,46 @@ class IfNode: public Node {
             }
             ++y;
 
-            this->if_body = createNode("Body", tokens, y);
+            this->if_body = createNodeFromTokens("Body", tokens, y);
 
             if (tokens[y].type == TokenCode::tkElse) {
                 ++y;
-                this->else_body = createNode("Body", tokens, y);
+                this->else_body = createNodeFromTokens("Body", tokens, y);
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-            this->expression->find_nodes(out, q);
-            this->if_body->find_nodes(out, q);
-            if (this->else_body) this->else_body->find_nodes(out, q);
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            expression = nodes[std::stoll(read.first)];
+
+            read_until_delim(s, read);
+            if_body = nodes[std::stoll(read.first)];
+
+            read_until_delim(s, read);
+            else_body = nodes[std::stoll(read.first)];
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            this->expression->visit(at_enter, at_repeat, at_exit);
+            at_repeat(this);
+            this->if_body->visit(at_enter, at_repeat, at_exit);
+            if (this->else_body) {
+                at_repeat(this);
+                this->else_body->visit(at_enter, at_repeat, at_exit);
+            }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -893,17 +1425,34 @@ class IfNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "If|" << id << "|" << expression->id << "|" << if_body->id << "|";
+            if (else_body) {
+                out << else_body->id << "\n";
+                expression->machine_print(out);
+                if_body->machine_print(out);
+                else_body->machine_print(out);
+            } else {
+                out << "0\n";
+                expression->machine_print(out);
+                if_body->machine_print(out);
+            }
+        }
 };
 
 class ForNode: public Node {
-    private:
+    public:
         std::string identifier;
         Node* range;
         Node* body;
 
-    public:
-        ForNode (std::vector<Token>& tokens, int& y) {
+        ForNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             if (tokens[y].type != TokenCode::tkIdentifier) {
                 throw std::invalid_argument("Expected iteration variable name");
             }
@@ -916,7 +1465,7 @@ class ForNode: public Node {
             }
             ++y;
 
-            this->range = createNode("Range", tokens, y);
+            this->range = createNodeFromTokens("Range", tokens, y);
 
 
             if (tokens[y].type != TokenCode::tkDelimeterLoop) {
@@ -924,21 +1473,42 @@ class ForNode: public Node {
             }
             ++y;
 
-            this->body = createNode("Body", tokens, y);
+            this->body = createNodeFromTokens("Body", tokens, y);
 
 
             if (tokens[y].type != TokenCode::tkLineEnd) {
                 throw std::invalid_argument("Expected line end or ; at the end of loop");
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-            this->range->find_nodes(out, q);
-            this->body->find_nodes(out, q);
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            identifier = read.first;
+
+            read_until_delim(s, read);
+            range = nodes[std::stoll(read.first)];
+
+            read_until_delim(s, read);
+            body = nodes[std::stoll(read.first)];
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            this->range->visit(at_enter, at_repeat, at_exit);
+            at_repeat(this);
+            this->body->visit(at_enter, at_repeat, at_exit);
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -950,17 +1520,26 @@ class ForNode: public Node {
             this->body->print(out, indent, acc_indent+indent*2);
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "For|" << id << "|" << identifier << "|" << range->id << "|" << body->id << "\n";
+            range->machine_print(out);
+            body->machine_print(out);
+        }
 };
 
 class WhileNode: public Node {
-    private:
+    public:
         Node* expression;
         Node* body;
 
-    public:
-        WhileNode (std::vector<Token>& tokens, int& y) {
+        WhileNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
-            this->expression = createNode("Expression", tokens, y);
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
+            this->expression = createNodeFromTokens("Expression", tokens, y);
 
 
             if (tokens[y].type != TokenCode::tkDelimeterLoop) {
@@ -968,21 +1547,40 @@ class WhileNode: public Node {
             }
             ++y;
 
-            this->body = createNode("Body", tokens, y);
+            this->body = createNodeFromTokens("Body", tokens, y);
 
 
             if (tokens[y].type != TokenCode::tkLineEnd) {
                 throw std::invalid_argument("Expected line end or ; at the end of loop");
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-            this->expression->find_nodes(out, q);
-            this->body->find_nodes(out, q);
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            expression = nodes[std::stoll(read.first)];
+
+            read_until_delim(s, read);
+            body = nodes[std::stoll(read.first)];
+        }
+
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            this->expression->visit(at_enter, at_repeat, at_exit);
+            at_repeat(this);
+            this->body->visit(at_enter, at_repeat, at_exit);
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -993,16 +1591,26 @@ class WhileNode: public Node {
             this->body->print(out, indent, acc_indent+indent*2);
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "While|" << id << "|" << expression->id << "|" << body->id << "\n";
+            expression->machine_print(out);
+            body->machine_print(out);
+        }
 };
 
 class RangeNode: public Node {
-    private:
+    public:
         Node* expression_1;
         Node* expression_2;
 
-    public:
-        RangeNode (std::vector<Token>& tokens, int& y) {
-            this->expression_1 = createNode("Expression", tokens, y);
+        RangeNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
+            this->expression_1 = createNodeFromTokens("Expression", tokens, y);
 
 
             if (tokens[y].type != TokenCode::tkDoubleDot) {
@@ -1010,16 +1618,34 @@ class RangeNode: public Node {
             }
             ++y;
 
-            this->expression_2 = createNode("Expression", tokens, y);
+            this->expression_2 = createNodeFromTokens("Expression", tokens, y);
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-            this->expression_1->find_nodes(out, q);
-            this->expression_2->find_nodes(out, q);
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            expression_1 = nodes[std::stoll(read.first)];
+
+            read_until_delim(s, read);
+            expression_2 = nodes[std::stoll(read.first)];
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            this->expression_1->visit(at_enter, at_repeat, at_exit);
+            at_repeat(this);
+            this->expression_2->visit(at_enter, at_repeat, at_exit);
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1030,18 +1656,28 @@ class RangeNode: public Node {
             this->expression_2->print(out, indent, acc_indent+indent*2);
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Range|" << id << "|" << expression_1->id << "|" << expression_2->id << "\n";
+            expression_1->machine_print(out);
+            expression_2->machine_print(out);
+        }
 };
 
 class PrimaryNode: public Node {
-    private:
+    public:
         char type;
 
         Node* literal;
 
         std::string identifier;
         std::vector<Node*> tails;
-    public:
-        PrimaryNode (std::vector<Token>& tokens, int& y) {
+        PrimaryNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             switch (tokens[y].type) {
                 case TokenCode::tkReadInt:
                     this->type = 'i';
@@ -1065,7 +1701,7 @@ class PrimaryNode: public Node {
                 case TokenCode::tkFunc:
                 case TokenCode::tkEmpty:
                     this->type = 'l';
-                    this->literal = createNode("Literal", tokens, y);
+                    this->literal = createNodeFromTokens("Literal", tokens, y);
                     break;
                 case TokenCode::tkIdentifier:
                     this->type = 'v';
@@ -1077,27 +1713,76 @@ class PrimaryNode: public Node {
                         if(tokens[y].type == TokenCode::tkDot ||
                            tokens[y].type == TokenCode::tkBracketSquareLeft ||
                            tokens[y].type == TokenCode::tkBracketNormalLeft) {
-                            this->tails.push_back(createNode("Tail", tokens, y));
+                            this->tails.push_back(createNodeFromTokens("Tail", tokens, y));
                         } else {
                             break;
                         }
                     }
                     break;
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            type = read.first[0];
+
+            switch (type) {
+                case 'i':
+                case 'r':
+                case 's':
+                    break;
+                case 'v':
+                    read_until_delim(s, read);
+                    identifier = read.first;
+
+                    s >> trash;
+                    read_until_delim(s, read);
+                    while (read.second != ')') {
+                        tails.push_back(nodes[std::stoll(read.first)]);
+                        read_until_delim(s, read);
+                    }
+                    if (read.first != "") {
+                        tails.push_back(nodes[std::stoll(read.first)]);
+                    }
+
+                    break;
+                case 'l':
+                    read_until_delim(s, read);
+                    literal = nodes[std::stoll(read.first)];
+
+                    break;
+                default:
+                    throw std::invalid_argument("Expected valid type");
             }
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
 
             if (this->type == 'v') {
+                bool first = true;
                 for(auto i : this->tails) {
-                    i->find_nodes(out, q);
+                    if (!first) {
+                        at_repeat(this);
+                    } else {
+                        first = false;
+                    }
+                    i->visit(at_enter, at_repeat, at_exit);
                 }
             } else if (this->type == 'l') {
-                this->literal->find_nodes(out, q);
+                this->literal->visit(at_enter, at_repeat, at_exit);
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1130,10 +1815,38 @@ class PrimaryNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Primary|" << id << "|" << type;
+            switch  (this->type) {
+                case 'i':
+                case 'r':
+                case 's':
+                    out << "\n";
+                    break;
+                case 'v':
+                    out << "|" << identifier << "|(";
+
+                    for(int i = 0; i < tails.size(); ++i) {
+                        if (i) out << "|";
+                        out << tails[i]->id;
+                    }
+                    out << ")\n";
+
+                    for(auto i: tails) {
+                        i->machine_print(out);
+                    }
+                    break;
+                case 'l':
+                    out << "|" << literal->id << "\n";
+                    literal->machine_print(out);
+                    break;
+            }
+        }
 };
 
 class TailNode: public Node {
-    private:
+    public:
         char type;
 
         long long tuple_idx;
@@ -1144,9 +1857,12 @@ class TailNode: public Node {
 
         std::vector<Node*> params;
 
-    public:
-        TailNode (std::vector<Token>& tokens, int& y) {
+        TailNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             switch (tokens[y].type) {
                 case TokenCode::tkDot:
                     ++y;
@@ -1170,8 +1886,7 @@ class TailNode: public Node {
                     ++y;
 
                     while (1) {
-                        this->params.push_back(createNode("Expression", tokens, y));
-
+                        this->params.push_back(createNodeFromTokens("Expression", tokens, y));
 
                         if (tokens[y].type == TokenCode::tkComma) {
                             ++y;
@@ -1189,7 +1904,7 @@ class TailNode: public Node {
                     this->type = 's';
                     ++y;
 
-                    this->subscript = createNode("Expression", tokens, y);
+                    this->subscript = createNodeFromTokens("Expression", tokens, y);
 
 
                     if (tokens[y].type != TokenCode::tkBracketSquareRight) {
@@ -1201,23 +1916,78 @@ class TailNode: public Node {
                 default:
                     throw std::invalid_argument("SOMEHOW TRIED TO CREATE TAIL FROM INVALID STATE");
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-            switch (this->type) {
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            type = read.first[0];
+
+            switch (type) {
+                case 't':
+                    read_until_delim(s, read);
+                    tuple_idx = std::stoll(read.first);
+                    break;
+                case 'i':
+                    read_until_delim(s, read);
+                    identifier = read.first;
+                    break;
                 case 'p':
-                    this->subscript->find_nodes(out, q);
+                    s >> trash;
+                    read_until_delim(s, read);
+                    while (read.second != ')') {
+                        params.push_back(nodes[std::stoll(read.first)]);
+                        read_until_delim(s, read);
+                    }
+                    if (read.first != "") {
+                        params.push_back(nodes[std::stoll(read.first)]);
+                    }
                     break;
                 case 's':
+                    read_until_delim(s, read);
+                    //std::cout << read.first << std::endl;
+                    subscript = nodes[std::stoll(read.first)];
+                    break;
+                default:
+                    throw std::invalid_argument("Expected valid type");
+            }
+        }
+
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            bool first = true;
+            switch (this->type) {
+                case 's':
+                    //std::cout << "MY ID: " << this->id << std::endl;
+                    //std::cout << "SUBSCRIPT: " << reinterpret_cast<std::uintptr_t>(subscript) << std::endl;
+                    //std::cout << "SUB IS NULL: " << (subscript == nullptr) << std::endl;
+                    //std::cout << typeid(*subscript).name() << std::endl;
+                    this->subscript->visit(at_enter, at_repeat, at_exit);
+
+                    break;
+                case 'p':
                     for(auto i : this->params) {
-                        i->find_nodes(out, q);
+                        if (!first) {
+                            at_repeat(this);
+                        } else {
+                            first = false;
+                        }
+                        i->visit(at_enter, at_repeat, at_exit);
                     }
                     break;
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1248,17 +2018,48 @@ class TailNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Tail|" << id << "|" << type << "|";
+            switch  (this->type) {
+                case 't':
+                    out << tuple_idx << "\n";
+                    break;
+                case 'i':
+                    out << identifier << "\n";
+                    break;
+                case 'p':
+                    out << "(";
+                    for(int i = 0; i < params.size(); ++i) {
+                        if (i) out << "|";
+                        out << params[i]->id;
+                    }
+                    out << ")\n";
+
+                    for(auto i: params) {
+                        i->machine_print(out);
+                    }
+                    break;
+                case 's':
+                    out << subscript->id << "\n";
+                    subscript->machine_print(out);
+                    break;
+            }
+        }
 };
 
 class PrintNode: public Node {
-    private:
+    public:
         std::vector<Node*> values;
 
-    public:
-        PrintNode (std::vector<Token>& tokens, int& y) {
+        PrintNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             while (1) {
-                this->values.push_back(createNode("Expression", tokens, y));
+                this->values.push_back(createNodeFromTokens("Expression", tokens, y));
 
 
                 if (tokens[y].type == TokenCode::tkComma) {
@@ -1268,16 +2069,43 @@ class PrintNode: public Node {
                    break;
                 }
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-            for(auto i : this->values) {
-                i->find_nodes(out, q);
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                values.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
             }
+            if (read.first != "") {
+                values.push_back(nodes[std::stoll(read.first)]);
+            }
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            bool first = true;
+            for(auto i : this->values) {
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
+            }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1289,23 +2117,56 @@ class PrintNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Print|" << id << "|(";
+            for(int i = 0; i < values.size(); ++i) {
+                if (i) out << "|";
+                out << values[i]->id;
+            }
+            out << ")\n";
+
+            for(auto i: values) {
+                i->machine_print(out);
+            }
+        }
 };
 
 class ReturnNode: public Node {
-    private:
+    public:
         Node* value;
 
-    public:
-        ReturnNode (std::vector<Token>& tokens, int& y) {
-            this->value = createNode("Expression", tokens, y);
+        ReturnNode() {
+            this->id = id_counter;
+            ++id_counter;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
+            this->value = createNodeFromTokens("Expression", tokens, y);
+            return this;
+        }
 
-            this->value->find_nodes(out, q);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            value = nodes[std::stoll(read.first)];
+        }
+
+
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            this->value->visit(at_enter, at_repeat, at_exit);
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1314,10 +2175,15 @@ class ReturnNode: public Node {
             this->value->print(out, indent, acc_indent+indent*2);
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Return|" << id << "|" << value->id << "\n";
+            value->machine_print(out);
+        }
 };
 
 class LiteralNode: public Node {
-    private:
+    public:
         char type;
 
         long long int_val;
@@ -1328,8 +2194,12 @@ class LiteralNode: public Node {
         Node* tuple_val;
         Node* func_val;
 
-    public:
-        LiteralNode (std::vector<Token>& tokens, int& y) {
+        LiteralNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             switch (tokens[y].type) {
                 case TokenCode::tkInt:
                     this->type = 'i';
@@ -1369,41 +2239,89 @@ class LiteralNode: public Node {
                     this->type = 'a';
 
                     ++y;
-                    this->array_val = createNode("ArrayLiteral", tokens, y);
+                    this->array_val = createNodeFromTokens("ArrayLiteral", tokens, y);
                     break;
                 case TokenCode::tkBracketCurvyLeft:
                     this->type = 't';
 
                     ++y;
-                    this->tuple_val = createNode("TupleLiteral", tokens, y);
+                    this->tuple_val = createNodeFromTokens("TupleLiteral", tokens, y);
                     break;
                 case TokenCode::tkFunc:
                     this->type = 'f';
 
                     ++y;
-                    this->func_val = createNode("Function", tokens, y);
+                    this->func_val = createNodeFromTokens("Function", tokens, y);
                     break;
                 default:
                     throw std::invalid_argument("SOMEHOW TRIED TO CREATE LITERAL FROM INVALID STATE");
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            type = read.first[0];
+
+            switch (type) {
+                case 'i':
+                    read_until_delim(s, read);
+                    int_val = std::stoll(read.first);
+                    break;
+                case 'r':
+                    read_until_delim(s, read);
+                    real_val = std::stold(read.first);
+                    break;
+                case 'b':
+                    read_until_delim(s, read);
+                    bool_val = std::stoi(read.first);
+                    break;
+                case 's':
+                    std::getline(s, string_val);
+                    break;
+                case 'e':
+                    break;
+                case 'a':
+                    read_until_delim(s, read);
+                    array_val = nodes[std::stoll(read.first)];
+                    break;
+                case 't':
+                    read_until_delim(s, read);
+                    tuple_val = nodes[std::stoll(read.first)];
+                    break;
+                case 'f':
+                    read_until_delim(s, read);
+                    func_val = nodes[std::stoll(read.first)];
+                    break;
+                default:
+                    throw std::invalid_argument("Expected valid type");
             }
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
 
             switch (this->type) {
                 case 'a':
-                    this->array_val->find_nodes(out, q);
+                    this->array_val->visit(at_enter, at_repeat, at_exit);
                     break;
                 case 't':
-                    this->tuple_val->find_nodes(out, q);
+                    this->tuple_val->visit(at_enter, at_repeat, at_exit);
                     break;
                 case 'f':
-                    this->func_val->find_nodes(out, q);
+                    this->func_val->visit(at_enter, at_repeat, at_exit);
                     break;
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1447,17 +2365,57 @@ class LiteralNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Literal|" << id << "|" << type;
+            switch  (this->type) {
+                case 'i':
+                    out << "|" << int_val << "\n";
+                    break;
+                case 'r':
+                    out << "|" << real_val << "\n";
+                    break;
+                case 's':
+                    out << "|" << string_val << "\n";
+                    break;
+                case 'b':
+                    out << "|" << bool_val << "\n";
+                    break;
+                case 'e':
+                    out << "\n";
+                    break;
+                case 'a':
+                    out << "|" << array_val->id << "\n";
+                    array_val->machine_print(out);
+                    break;
+                case 't':
+                    out << "|" << tuple_val->id << "\n";
+                    tuple_val->machine_print(out);
+                    break;
+                case 'f':
+                    out << "|" << func_val->id << "\n";
+                    func_val->machine_print(out);
+                    break;
+            }
+        }
 };
 
 class ArrayLiteralNode: public Node {
-    private:
+    public:
         std::vector<Node*> values;
 
-    public:
-        ArrayLiteralNode (std::vector<Token>& tokens, int& y) {
+        ArrayLiteralNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
+            if (tokens[y].type == TokenCode::tkBracketSquareRight) {
+                ++y;
+                return this;
+            }
             while (1) {
-                this->values.push_back(createNode("Expression", tokens, y));
+                this->values.push_back(createNodeFromTokens("Expression", tokens, y));
 
                 if (tokens[y].type == TokenCode::tkComma) {
                     ++y;
@@ -1469,16 +2427,43 @@ class ArrayLiteralNode: public Node {
                     throw std::invalid_argument("Expected closing bracket or comma");
                 }
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-           for(auto i : this->values) {
-                i->find_nodes(out, q);
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                values.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
             }
+            if (read.first != "") {
+                values.push_back(nodes[std::stoll(read.first)]);
+            }
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            bool first = true;
+            for(auto i : this->values) {
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
+            }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1490,18 +2475,34 @@ class ArrayLiteralNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "ArrayLiteral|" << id << "|(";
+            for(int i = 0; i < values.size(); ++i) {
+                if (i) out << "|";
+                out << values[i]->id;
+            }
+            out << ")\n";
+
+            for(auto i: values) {
+                i->machine_print(out);
+            }
+        }
 };
 
 class TupleLiteralNode: public Node {
-    private:
+    public:
         std::vector<std::string> identifiers;
         std::vector<Node*> values;
 
-    public:
-        TupleLiteralNode (std::vector<Token>& tokens, int& y) {
+        TupleLiteralNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             if (tokens[y].type == TokenCode::tkBracketCurvyRight) {
-                return;
+                return this;
             }
             while (1) {
                 if (tokens[y].type == TokenCode::tkIdentifier) {
@@ -1515,7 +2516,7 @@ class TupleLiteralNode: public Node {
                     this->identifiers.push_back("");
                 }
 
-                this->values.push_back(createNode("Expression", tokens, y));
+                this->values.push_back(createNodeFromTokens("Expression", tokens, y));
 
 
                 if (tokens[y].type == TokenCode::tkComma) {
@@ -1528,16 +2529,54 @@ class TupleLiteralNode: public Node {
                     throw std::invalid_argument("Expected closing bracket or comma");
                 }
             }
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-           for(auto i : this->values) {
-                i->find_nodes(out, q);
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                identifiers.push_back(read.first);
+                read_until_delim(s, read);
             }
+            if (read.first != "") {
+                identifiers.push_back(read.first);
+            }
+            s >> trash;
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                values.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
+            }
+            if (read.first != "") {
+                values.push_back(nodes[std::stoll(read.first)]);
+            }
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            bool first = true;
+            for(auto i : this->values) {
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
+            }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1555,10 +2594,28 @@ class TupleLiteralNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "TupleLiteral|" << id << "|(";
+            for(int i = 0; i < identifiers.size(); ++i) {
+                if (i) out << "|";
+                out << identifiers[i];
+            }
+            out << ")|(";
+            for(int i = 0; i < values.size(); ++i) {
+                if (i) out << "|";
+                out << values[i]->id;
+            }
+            out << ")\n";
+
+            for(auto i: values) {
+                i->machine_print(out);
+            }
+        }
 };
 
 class FunctionNode: public Node {
-    private:
+    public:
         char type;
         std::vector<std::string> params;
 
@@ -1566,8 +2623,12 @@ class FunctionNode: public Node {
 
         Node* expression;
 
-    public:
-        FunctionNode (std::vector<Token>& tokens, int& y) {
+        FunctionNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
             if (tokens[y].type != TokenCode::tkBracketNormalLeft) {
                 throw std::invalid_argument("Expected iteration variable name");
             }
@@ -1593,28 +2654,66 @@ class FunctionNode: public Node {
             if (tokens[y].type == TokenCode::tkDelimeterIs) {
                 this->type = 'b';
                 ++y;
-                this->body = createNode("Body", tokens, y);
+                this->body = createNodeFromTokens("Body", tokens, y);
             } else if (tokens[y].type == TokenCode::tkLambda) {
                 this->type = 'l';
                 ++y;
-                this->expression = createNode("Expression", tokens, y);
+                this->expression = createNodeFromTokens("Expression", tokens, y);
             }
-
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            type = read.first[0];
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                params.push_back(read.first);
+                read_until_delim(s, read);
             }
+            if (read.first != "") {
+                params.push_back(read.first);
+            }
+            s >> trash;
+
+            switch (type) {
+                case 'b':
+                    read_until_delim(s, read);
+                    body = nodes[std::stoll(read.first)];
+                    break;
+                case 'l':
+                    read_until_delim(s, read);
+                    expression = nodes[std::stoll(read.first)];
+                    break;
+                default:
+                    throw std::invalid_argument("Expected valid type");
+
+            }
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
 
             switch (this->type) {
                 case 'b':
-                    this->body->find_nodes(out, q);
+                    this->body->visit(at_enter, at_repeat, at_exit);
                     break;
                 case 'l':
-                    this->expression->find_nodes(out, q);
+                    this->expression->visit(at_enter, at_repeat, at_exit);
                     break;
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1642,16 +2741,39 @@ class FunctionNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Function|" << id << "|" << type << "|(";
+            for(int i = 0; i < params.size(); ++i) {
+                if (i) out << "|";
+                out << params[i];
+            }
+            out << ")|";
+            switch (type) {
+                case 'b':
+                    out << body->id << "\n";
+                    body->machine_print(out);
+                    break;
+                case 'l':
+                    out << expression->id << "\n";
+                    expression->machine_print(out);
+                    break;
+            }
+        }
 };
 
 class AssignmentNode: public Node {
-    private:
+    public:
         Node* primary;
         Node* expression;
 
-    public:
-        AssignmentNode (std::vector<Token>& tokens, int& y) {
-            this->primary = createNode("Primary", tokens, y);
+        AssignmentNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
+
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
+            this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
             if (tokens[y].type != TokenCode::tkAssignment) {
@@ -1659,16 +2781,34 @@ class AssignmentNode: public Node {
             }
             ++y;
 
-            this->expression = createNode("Expression", tokens, y);
+            this->expression = createNodeFromTokens("Expression", tokens, y);
+            return this;
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-            this->primary->find_nodes(out, q);
-            this->expression->find_nodes(out, q);
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            read_until_delim(s, read);
+            primary = nodes[std::stoll(read.first)];
+
+            read_until_delim(s, read);
+            expression = nodes[std::stoll(read.first)];
+        }
+
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
+
+            this->primary->visit(at_enter, at_repeat, at_exit);
+            at_repeat(this);
+            this->expression->visit(at_enter, at_repeat, at_exit);
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1679,18 +2819,26 @@ class AssignmentNode: public Node {
             this->expression->print(out, indent, acc_indent+indent*2);
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Assignment|" << id << "|" << primary->id << "|" << expression->id << "\n";
+            primary->machine_print(out);
+            expression->machine_print(out);
+        }
 };
 
 class BodyNode: public Node {
-    private:
-        std::vector<Node*> statements;
     public:
-        BodyNode (std::vector<Token>& tokens, int& y) {
-            while (1) {
+        std::vector<Node*> statements;
+        BodyNode() {
+            this->id = id_counter;
+            ++id_counter;
+        }
 
+        Node* from_tokens(std::vector<Token>& tokens, int& y){
+            while (1) {
                 while (tokens[y].type == TokenCode::tkLineEnd){
                     ++y;
-
                 }
                 if (tokens[y].type == TokenCode::tkDelimeterEnd) {
                     ++y;
@@ -1698,18 +2846,45 @@ class BodyNode: public Node {
                 } else if (tokens[y].type == TokenCode::tkElse) {
                     break;
                 }
-                this->statements.push_back(createNode("Statement", tokens, y));
+                this->statements.push_back(createNodeFromTokens("Statement", tokens, y));
+            }
+            return this;
+        }
+
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
+
+            char trash;
+
+            std::pair<std::string, char> read;
+            read_until_delim(s, read);
+
+            id = std::stoll(read.first);
+
+            s >> trash;
+            read_until_delim(s, read);
+            while (read.second != ')') {
+                statements.push_back(nodes[std::stoll(read.first)]);
+                read_until_delim(s, read);
+            }
+            if (read.first != "") {
+                statements.push_back(nodes[std::stoll(read.first)]);
             }
         }
 
-        void find_nodes(std::vector<void*>& out, std::type_info& q) {
-            if (typeid(*this) == q) {
-                out.push_back(this);
-            }
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            at_enter(this);
 
+            bool first = true;
             for(auto i: statements) {
-                i->find_nodes(out, q);
+                if (!first) {
+                    at_repeat(this);
+                } else {
+                    first = false;
+                }
+                i->visit(at_enter, at_repeat, at_exit);
             }
+            at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
@@ -1719,59 +2894,111 @@ class BodyNode: public Node {
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
+
+        void machine_print(std::ostream& out){
+            out << "Body|" << id << "|(";
+            for(int i = 0; i < statements.size(); ++i) {
+                if (i) out << "|";
+                out << statements[i]->id;
+            }
+            out << ")\n";
+
+            for(auto i: statements) {
+                i->machine_print(out);
+            }
+        }
 };
 
-
-Node* createNode(const std::string& t, std::vector<Token>& tokens, int& y) {
+Node* createNodeByName(const std::string& t) {
     if (t.compare("Program") == 0) {
-        return new ProgramNode(tokens, y);
+        return (new ProgramNode());
     } else if (t.compare("Statement") == 0) {
-        return new StatementNode(tokens, y);
+        return (new StatementNode());
     } else if (t.compare("Declaration") == 0) {
-        return new DeclarationNode(tokens, y);
+        return (new DeclarationNode());
     } else if (t.compare("VariableDefinition") == 0) {
-        return new VariableDefinitionNode(tokens, y);
+        return (new VariableDefinitionNode());
     } else if (t.compare("Expression") == 0) {
-        return new ExpressionNode(tokens, y);
+        return (new ExpressionNode());
     } else if (t.compare("Relation") == 0) {
-        return new RelationNode(tokens, y);
+        return (new RelationNode());
     } else if (t.compare("Factor") == 0) {
-        return new FactorNode(tokens, y);
+        return (new FactorNode());
     } else if (t.compare("Term") == 0) {
-        return new TermNode(tokens, y);
+        return (new TermNode());
     } else if (t.compare("Unary") == 0) {
-        return new UnaryNode(tokens, y);
+        return (new UnaryNode());
     } else if (t.compare("Primary") == 0) {
-        return new PrimaryNode(tokens, y);
+        return (new PrimaryNode());
     } else if (t.compare("Tail") == 0) {
-        return new TailNode(tokens, y);
+        return (new TailNode());
     } else if (t.compare("Assignment") == 0) {
-        return new AssignmentNode(tokens, y);
+        return (new AssignmentNode());
     } else if (t.compare("Print") == 0) {
-        return new PrintNode(tokens, y);
+        return (new PrintNode());
     } else if (t.compare("Return") == 0) {
-        return new ReturnNode(tokens, y);
+        return (new ReturnNode());
     } else if (t.compare("If") == 0) {
-        return new IfNode(tokens, y);
+        return (new IfNode());
     } else if (t.compare("For") == 0) {
-        return new ForNode(tokens, y);
+        return (new ForNode());
     } else if (t.compare("While") == 0) {
-        return new WhileNode(tokens, y);
+        return (new WhileNode());
     } else if (t.compare("Body") == 0) {
-        return new BodyNode(tokens, y);
+        return (new BodyNode());
     } else if (t.compare("TypeIndicator") == 0) {
-        return new TypeIndicatorNode(tokens, y);
+        return (new TypeIndicatorNode());
     } else if (t.compare("Literal") == 0) {
-        return new LiteralNode(tokens, y);
+        return (new LiteralNode());
     } else if (t.compare("ArrayLiteral") == 0) {
-        return new ArrayLiteralNode(tokens, y);
+        return (new ArrayLiteralNode());
     } else if (t.compare("TupleLiteral") == 0) {
-        return new TupleLiteralNode(tokens, y);
+        return (new TupleLiteralNode());
     } else if (t.compare("Function") == 0) {
-        return new FunctionNode(tokens, y);
+        return (new FunctionNode());
     } else if (t.compare("Range") == 0) {
-        return new RangeNode(tokens, y);
+        return (new RangeNode());
     } else {
         throw std::invalid_argument("Incorrect type");
     }
 }
+
+Node* createNodeFromTokens(const std::string& t, std::vector<Token>& tokens, int& y) {
+    return createNodeByName(t)->from_tokens(tokens, y);
+}
+
+Node* readTree(std::istream& in) {
+    id_counter = 1;
+    std::vector<std::pair<std::string, std::string>> configs;
+    std::vector<Node*> nodes;
+
+    nodes.push_back(nullptr);
+
+    configs.push_back({"", ""});
+
+    std::string s;
+    std::getline(in, s, '|');
+    while (s != "END") {
+        configs.push_back({s, ""});
+        std::getline(in, configs.back().second);
+        configs.back().second += '\n';
+        nodes.push_back(createNodeByName(configs.back().first));
+        std::getline(in, s, '|');
+    }
+
+    //for (int i = 1; i < nodes.size(); ++i) {
+    //    std::cout << i << ": " << typeid(*nodes[i]).name() << std::endl;
+    //}
+
+    std::getline(in, s, '\n');
+
+    for (int i = 1; i < nodes.size(); ++i) {
+        //std::cout << "MAKING NODE:\t" << i << std::endl;
+        //std::cout << "OF TYPE:\t" << configs[i].first << std::endl;
+        //std::cout << "FROM CONFSTR:\t" << configs[i].second << std::endl;
+        nodes[i]->from_config(nodes, configs[i].second);
+    }
+
+    return nodes[1];
+}
+

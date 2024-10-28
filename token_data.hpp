@@ -87,7 +87,7 @@ enum TokenCode {
     tkUndetermined, // end
 };
 
-bool human_output = false;
+bool human_output_tokens = false;
 
 struct Token {
     TokenCode type;
@@ -152,7 +152,7 @@ struct Token {
     }
 
     friend std::ostream& operator<<(std::ostream& out, Token a){
-        if (human_output) {
+        if (human_output_tokens) {
             switch (a.type){
                 case TokenCode::tkInt:
                     out << "(tkInt " << a.line << ' ' << a.pos << ' ' << a.valInt << ")";
@@ -383,7 +383,7 @@ struct Token {
     friend std::ostream& operator<<(std::ostream& out, std::vector<Token>& s){
         out << "(" << s[0];
         for(int i = 1; i < s.size(); ++i){
-            if (human_output){
+            if (human_output_tokens){
                 out << ", ";
             }
             out << s[i];

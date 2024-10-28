@@ -1,3 +1,5 @@
+var _
+
 var getarr := func(l, elem) is
 	var arr := []
 	var n := 0
@@ -31,7 +33,7 @@ var lazy := getarr(n*4, 1)
 var build := func(cx, cl, cr) is
 	if cr - cl = 1 then
 		tree[cx] := arr[cl]
-		return
+		return empty
 	end
 	_ := build(cx*2, cl, (cl + cr) / 2)
 	_ := build(cx*2 + 1, (cl + cr) / 2, cr)
@@ -64,18 +66,18 @@ end
 var mult_segment := func(cx, cl, cr, tl, tr, op) is
 	_ := propagate(cx, cl, cr)
 	if tl >= cr or cl >= tr then
-		return
+		return empty
 	end
 	
 	if tl <= cr and cl <= tr then
 		lazy[cx] := lazy[cx]* op
 		_ := propagate(cx, cl, cr)
-		return
+		return empty
 	end
 	_ := mult_segment(cx*2, cl, (cl+cr)/2, tl, tr, op)
 	_ := mult_segment(cx*2+1, (cl+cr)/2, cr, tl, tr, op)
 	tree[cx] := min(tree[cx*2], tree[cx*2+1])
-	return
+	return empty
 end
 
 _ := build(1, 1, n+1)

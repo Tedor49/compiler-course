@@ -491,7 +491,7 @@ int main(int argc, char *argv[]) {
     input_params param;
     parse_args(argc, argv, param);
 
-    human_output = param.human;
+    human_output_tokens = param.human;
 
     string prog = readfile(*param.in_stream);
 

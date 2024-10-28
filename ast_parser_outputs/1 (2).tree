@@ -1,69 +1,18 @@
-Programm{
-  Statement{
-    Print{
-      ExpressionsAmount: 2
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "abcdefghijklmnopqrstvuwxyz"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-      Value 2:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Literal
-                              Literal:
-                                Literal{
-                                  Type: String
-                                  Value: "1234567890"
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-}
+Program|1|(2)
+Statement|2|p|3
+Print|3|(4|11)
+Expression|4|(5)|()
+Relation|5|(6)|()
+Factor|6|(7)|()
+Term|7|(8)|()
+Unary|8|p|#|9|0
+Primary|9|l|10
+Literal|10|s|abcdefghijklmnopqrstvuwxyz
+Expression|11|(12)|()
+Relation|12|(13)|()
+Factor|13|(14)|()
+Term|14|(15)|()
+Unary|15|p|#|16|0
+Primary|16|l|17
+Literal|17|s|1234567890
+END|-1

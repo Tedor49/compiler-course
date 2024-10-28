@@ -1,359 +1,84 @@
-Programm{
-  Statement{
-    Declaration{
-      VariableDefinition{
-        Identifier: fibonacci
-        Value:
-          Expression{
-            Element amount: 1
-            Element 1: 
-              Relation{
-                Element amount: 1
-                Element 1: 
-                  Factor{
-                    Element amount: 1
-                    Element 1: 
-                      Term{
-                        Element amount: 1
-                        Element 1: 
-                          Unary{
-                            Type: Primary
-                            UnaryOperation: None
-                            Value:
-                              Primary{
-                                Type: Literal
-                                Literal:
-                                  Literal{
-                                    Type: Function
-                                    Value:
-                                      Function{
-                                        Type: Body
-                                        ParamAmount: 1
-                                        Parameter 1: "n"
-                                        Body:
-                                          Body{
-                                            Statement{
-                                              If{
-                                                Expression:
-                                                  Expression{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Relation{
-                                                        Element amount: 2
-                                                        Element 1: 
-                                                          Factor{
-                                                            Element amount: 1
-                                                            Element 1: 
-                                                              Term{
-                                                                Element amount: 1
-                                                                Element 1: 
-                                                                  Unary{
-                                                                    Type: Primary
-                                                                    UnaryOperation: None
-                                                                    Value:
-                                                                      Primary{
-                                                                        Type: Value
-                                                                        Identifier: "n"
-                                                                        TailAmount: 0
-                                                                      }
-                                                                    Type indicator: None
-                                                                  }
-                                                              }
-                                                          }
-                                                        Operation 1: <=
-                                                        Element 2: 
-                                                          Factor{
-                                                            Element amount: 1
-                                                            Element 1: 
-                                                              Term{
-                                                                Element amount: 1
-                                                                Element 1: 
-                                                                  Unary{
-                                                                    Type: Primary
-                                                                    UnaryOperation: None
-                                                                    Value:
-                                                                      Primary{
-                                                                        Type: Literal
-                                                                        Literal:
-                                                                          Literal{
-                                                                            Type: Integer
-                                                                            Value: 1
-                                                                          }
-                                                                      }
-                                                                    Type indicator: None
-                                                                  }
-                                                              }
-                                                          }
-                                                      }
-                                                  }
-                                                Body:
-                                                  Body{
-                                                    Statement{
-                                                      Resturn{
-                                                        Expression:
-                                                          Expression{
-                                                            Element amount: 1
-                                                            Element 1: 
-                                                              Relation{
-                                                                Element amount: 1
-                                                                Element 1: 
-                                                                  Factor{
-                                                                    Element amount: 1
-                                                                    Element 1: 
-                                                                      Term{
-                                                                        Element amount: 1
-                                                                        Element 1: 
-                                                                          Unary{
-                                                                            Type: Primary
-                                                                            UnaryOperation: None
-                                                                            Value:
-                                                                              Primary{
-                                                                                Type: Value
-                                                                                Identifier: "n"
-                                                                                TailAmount: 0
-                                                                              }
-                                                                            Type indicator: None
-                                                                          }
-                                                                      }
-                                                                  }
-                                                              }
-                                                          }
-                                                      }
-                                                    }
-                                                  }
-                                                ElseBody:None
-                                              }
-                                            }
-                                            Statement{
-                                              Resturn{
-                                                Expression:
-                                                  Expression{
-                                                    Element amount: 1
-                                                    Element 1: 
-                                                      Relation{
-                                                        Element amount: 1
-                                                        Element 1: 
-                                                          Factor{
-                                                            Element amount: 2
-                                                            Element 1: 
-                                                              Term{
-                                                                Element amount: 1
-                                                                Element 1: 
-                                                                  Unary{
-                                                                    Type: Primary
-                                                                    UnaryOperation: None
-                                                                    Value:
-                                                                      Primary{
-                                                                        Type: Value
-                                                                        Identifier: "fibonacci"
-                                                                        TailAmount: 1
-                                                                        Tail 1:
-                                                                          Tail{
-                                                                            Type: Parameters
-                                                                            ParametersAmount: 1
-                                                                            Parameter 1:
-                                                                              Expression{
-                                                                                Element amount: 1
-                                                                                Element 1: 
-                                                                                  Relation{
-                                                                                    Element amount: 1
-                                                                                    Element 1: 
-                                                                                      Factor{
-                                                                                        Element amount: 2
-                                                                                        Element 1: 
-                                                                                          Term{
-                                                                                            Element amount: 1
-                                                                                            Element 1: 
-                                                                                              Unary{
-                                                                                                Type: Primary
-                                                                                                UnaryOperation: None
-                                                                                                Value:
-                                                                                                  Primary{
-                                                                                                    Type: Value
-                                                                                                    Identifier: "n"
-                                                                                                    TailAmount: 0
-                                                                                                  }
-                                                                                                Type indicator: None
-                                                                                              }
-                                                                                          }
-                                                                                        Operation 1: -
-                                                                                        Element 2: 
-                                                                                          Term{
-                                                                                            Element amount: 1
-                                                                                            Element 1: 
-                                                                                              Unary{
-                                                                                                Type: Primary
-                                                                                                UnaryOperation: None
-                                                                                                Value:
-                                                                                                  Primary{
-                                                                                                    Type: Literal
-                                                                                                    Literal:
-                                                                                                      Literal{
-                                                                                                        Type: Integer
-                                                                                                        Value: 1
-                                                                                                      }
-                                                                                                  }
-                                                                                                Type indicator: None
-                                                                                              }
-                                                                                          }
-                                                                                      }
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                      }
-                                                                    Type indicator: None
-                                                                  }
-                                                              }
-                                                            Operation 1: +
-                                                            Element 2: 
-                                                              Term{
-                                                                Element amount: 1
-                                                                Element 1: 
-                                                                  Unary{
-                                                                    Type: Primary
-                                                                    UnaryOperation: None
-                                                                    Value:
-                                                                      Primary{
-                                                                        Type: Value
-                                                                        Identifier: "fibonacci"
-                                                                        TailAmount: 1
-                                                                        Tail 1:
-                                                                          Tail{
-                                                                            Type: Parameters
-                                                                            ParametersAmount: 1
-                                                                            Parameter 1:
-                                                                              Expression{
-                                                                                Element amount: 1
-                                                                                Element 1: 
-                                                                                  Relation{
-                                                                                    Element amount: 1
-                                                                                    Element 1: 
-                                                                                      Factor{
-                                                                                        Element amount: 2
-                                                                                        Element 1: 
-                                                                                          Term{
-                                                                                            Element amount: 1
-                                                                                            Element 1: 
-                                                                                              Unary{
-                                                                                                Type: Primary
-                                                                                                UnaryOperation: None
-                                                                                                Value:
-                                                                                                  Primary{
-                                                                                                    Type: Value
-                                                                                                    Identifier: "n"
-                                                                                                    TailAmount: 0
-                                                                                                  }
-                                                                                                Type indicator: None
-                                                                                              }
-                                                                                          }
-                                                                                        Operation 1: -
-                                                                                        Element 2: 
-                                                                                          Term{
-                                                                                            Element amount: 1
-                                                                                            Element 1: 
-                                                                                              Unary{
-                                                                                                Type: Primary
-                                                                                                UnaryOperation: None
-                                                                                                Value:
-                                                                                                  Primary{
-                                                                                                    Type: Literal
-                                                                                                    Literal:
-                                                                                                      Literal{
-                                                                                                        Type: Integer
-                                                                                                        Value: 2
-                                                                                                      }
-                                                                                                  }
-                                                                                                Type indicator: None
-                                                                                              }
-                                                                                          }
-                                                                                      }
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                      }
-                                                                    Type indicator: None
-                                                                  }
-                                                              }
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                            }
-                                          }
-                                      }
-                                  }
-                              }
-                            Type indicator: None
-                          }
-                      }
-                  }
-              }
-          }
-      }
-    }
-  }
-  Statement{
-    Print{
-      ExpressionsAmount: 1
-      Value 1:
-        Expression{
-          Element amount: 1
-          Element 1: 
-            Relation{
-              Element amount: 1
-              Element 1: 
-                Factor{
-                  Element amount: 1
-                  Element 1: 
-                    Term{
-                      Element amount: 1
-                      Element 1: 
-                        Unary{
-                          Type: Primary
-                          UnaryOperation: None
-                          Value:
-                            Primary{
-                              Type: Value
-                              Identifier: "fibonacci"
-                              TailAmount: 1
-                              Tail 1:
-                                Tail{
-                                  Type: Parameters
-                                  ParametersAmount: 1
-                                  Parameter 1:
-                                    Expression{
-                                      Element amount: 1
-                                      Element 1: 
-                                        Relation{
-                                          Element amount: 1
-                                          Element 1: 
-                                            Factor{
-                                              Element amount: 1
-                                              Element 1: 
-                                                Term{
-                                                  Element amount: 1
-                                                  Element 1: 
-                                                    Unary{
-                                                      Type: Primary
-                                                      UnaryOperation: None
-                                                      Value:
-                                                        Primary{
-                                                          Type: ReadInt
-                                                        }
-                                                      Type indicator: None
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                          Type indicator: None
-                        }
-                    }
-                }
-            }
-        }
-    }
-  }
-}
+Program|1|(2|69)
+Statement|2|d|3
+Declaration|3|(4)
+VariableDefinition|4|fibonacci|5
+Expression|5|(6)|()
+Relation|6|(7)|()
+Factor|7|(8)|()
+Term|8|(9)|()
+Unary|9|p|#|10|0
+Primary|10|l|11
+Literal|11|f|12
+Function|12|b|(n)|13
+Body|13|(14|36)
+Statement|14|i|15
+If|15|16|27|0
+Expression|16|(17)|()
+Relation|17|(18|22)|(l)
+Factor|18|(19)|()
+Term|19|(20)|()
+Unary|20|p|#|21|0
+Primary|21|v|n|()
+Factor|22|(23)|()
+Term|23|(24)|()
+Unary|24|p|#|25|0
+Primary|25|l|26
+Literal|26|i|1
+Body|27|(28)
+Statement|28|r|29
+Return|29|30
+Expression|30|(31)|()
+Relation|31|(32)|()
+Factor|32|(33)|()
+Term|33|(34)|()
+Unary|34|p|#|35|0
+Primary|35|v|n|()
+Statement|36|r|37
+Return|37|38
+Expression|38|(39)|()
+Relation|39|(40)|()
+Factor|40|(41|55)|(+)
+Term|41|(42)|()
+Unary|42|p|#|43|0
+Primary|43|v|fibonacci|(44)
+Tail|44|p|(45)
+Expression|45|(46)|()
+Relation|46|(47)|()
+Factor|47|(48|51)|(-)
+Term|48|(49)|()
+Unary|49|p|#|50|0
+Primary|50|v|n|()
+Term|51|(52)|()
+Unary|52|p|#|53|0
+Primary|53|l|54
+Literal|54|i|1
+Term|55|(56)|()
+Unary|56|p|#|57|0
+Primary|57|v|fibonacci|(58)
+Tail|58|p|(59)
+Expression|59|(60)|()
+Relation|60|(61)|()
+Factor|61|(62|65)|(-)
+Term|62|(63)|()
+Unary|63|p|#|64|0
+Primary|64|v|n|()
+Term|65|(66)|()
+Unary|66|p|#|67|0
+Primary|67|l|68
+Literal|68|i|2
+Statement|69|p|70
+Print|70|(71)
+Expression|71|(72)|()
+Relation|72|(73)|()
+Factor|73|(74)|()
+Term|74|(75)|()
+Unary|75|p|#|76|0
+Primary|76|v|fibonacci|(77)
+Tail|77|p|(78)
+Expression|78|(79)|()
+Relation|79|(80)|()
+Factor|80|(81)|()
+Term|81|(82)|()
+Unary|82|p|#|83|0
+Primary|83|i
+END|-1

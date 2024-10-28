@@ -6,7 +6,7 @@
 #include <format>
 #include <cstring>
 
-#include "token_data.hpp"
+#include "syntax_tree_nodes.hpp"
 
 using namespace std;
 
@@ -59,10 +59,9 @@ int main(int argc, char *argv[]) {
     input_params param;
     parse_args(argc, argv, param);
 
-    human_output_tokens = param.human;
+    Node* tree = readTree(*param.in_stream);
 
-    vector<Token> tokenized;
-    (*param.in_stream) >> tokenized;
+    human_output_nodes = false;
 
-    cout << tokenized;
+    cout << tree;
 }

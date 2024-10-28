@@ -16,6 +16,10 @@ class Node;
 
 typedef void (*callback_function)(Node* me);
 
+void dummy (Node* _) {
+    return;
+}
+
 class Node {
     public:
         unsigned int id;
@@ -3000,5 +3004,14 @@ Node* readTree(std::istream& in) {
     }
 
     return nodes[1];
+}
+
+void assign_id(Node* self) {
+    self->id = id_counter++;
+}
+
+void reassign_ids(Node* tree) {
+    id_counter = 1;
+    tree->visit(assign_id, dummy, dummy);
 }
 

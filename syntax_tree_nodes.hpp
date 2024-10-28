@@ -23,6 +23,8 @@ void dummy (Node* _) {
 class Node {
     public:
         unsigned int id;
+        Node* parent = nullptr;
+
         virtual Node* from_tokens(std::vector<Token>& tokens, int& y) = 0;
         virtual void from_config(std::vector<Node*>& nodes, std::string& confstr) = 0;
         virtual void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) = 0;
@@ -64,6 +66,7 @@ class RangeNode;
 
 Node* createNodeFromTokens(const std::string& t, std::vector<Token>& tokens, int& y);
 Node* createNodeByName(const std::string& t);
+void assign_parents(Node* tree);
 
 void read_until_delim(std::istream& in, std::pair<std::string, char>& dest) {
     dest.first.clear();
@@ -96,6 +99,8 @@ class ProgramNode: public Node {
                 if (tokens.size() == y) break;
                 this->statements.push_back(createNodeFromTokens("Statement", tokens, y));
             }
+
+            assign_parents(this);
             return this;
         }
 
@@ -3003,6 +3008,8 @@ Node* readTree(std::istream& in) {
         nodes[i]->from_config(nodes, configs[i].second);
     }
 
+    assign_parents(nodes[1]);
+
     return nodes[1];
 }
 
@@ -3014,4 +3021,22 @@ void reassign_ids(Node* tree) {
     id_counter = 1;
     tree->visit(assign_id, dummy, dummy);
 }
+
+
+Node* last_node_ptr = nullptr;
+
+void assign_parent(Node* self) {
+    self->parent = last_node_ptr;
+    last_node_ptr = self;
+}
+
+void update_last(Node* self) {
+    last_node_ptr = self;
+}
+
+void assign_parents(Node* tree) {
+    last_node_ptr = nullptr;
+    tree->visit(assign_parent, update_last, dummy);
+}
+
 

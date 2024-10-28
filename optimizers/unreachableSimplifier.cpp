@@ -1,0 +1,178 @@
+#include <filesystem>
+#include <iostream>
+#include <vector>
+#include <sstream>
+#include <fstream>
+#include <format>
+#include <cstring>
+
+#include "../syntax_tree_nodes.hpp"
+
+using namespace std;
+
+string readfile (ifstream& in) {
+    stringstream buf;
+
+    buf << in.rdbuf();
+    in.close();
+
+    return buf.str();
+}
+
+struct input_params{
+    ifstream* in_stream;
+    bool out_is_file;
+    ofstream* out_stream;
+    bool human;
+};
+
+void parse_args(int& argc, char* argv[], input_params& par){
+
+    if (argc < 2) {
+        cerr << "Usage: " << argv[0] << " infile [-o outfile] [-h]\n";
+        cerr << "  infile      path to input file\n";
+        cerr << "  -o outfile  path to output file\n";
+        cerr << "  -h          output in a human readable way\n";
+        throw invalid_argument("No input file specified");
+    }
+
+    if (!filesystem::is_regular_file(argv[1]) && !filesystem::is_symlink(argv[1])){
+        cerr << "Usage: " << argv[0] << " infile [-o outfile] [-h]\n";
+        cerr << "  infile      path to input file\n";
+        cerr << "  -o outfile  path to output file\n";
+        cerr << "  -h          output in a human readable way\n";
+        throw invalid_argument("Input file does not refer to a file");
+    }
+
+    ifstream* in = new ifstream(argv[1]);
+
+    if (in->fail()){
+        cerr << "Usage: " << argv[0] << " infile [-o outfile] [-h]\n";
+        cerr << "  infile      path to input file\n";
+        cerr << "  -o outfile  path to output file\n";
+        cerr << "  -h          output in a human readable way\n";
+        throw invalid_argument("Could not open input file");
+    }
+
+    par.in_stream = in;
+    par.out_stream = nullptr;
+    par.out_is_file = false;
+    par.human = false;
+
+    int y = 2;
+
+    while (y != argc) {
+        if (strcmp(argv[y], "-o") == 0) {
+            if (y + 1 == argc){
+                cerr << "Usage: " << argv[0] << " infile [-o outfile] [-h]\n";
+                cerr << "  infile      path to input file\n";
+                cerr << "  -o outfile  path to output file\n";
+                cerr << "  -h          output in a human readable way\n";
+                throw invalid_argument("No output file after flag");
+            }
+
+            ofstream* out = new ofstream(argv[y+1]);
+
+            if (out->fail()) {
+                cerr << "Usage: " << argv[0] << " infile [-o outfile] [-h]\n";
+                cerr << "  infile      path to input file\n";
+                cerr << "  -o outfile  path to output file\n";
+                cerr << "  -h          output in a human readable way\n";
+                throw invalid_argument("Could not open output file");
+            }
+
+            par.out_stream = out;
+            par.out_is_file = true;
+            ++y;
+
+        } else if (strcmp(argv[y], "-h") == 0) {
+            par.human = true;
+        }
+        ++y;
+    }
+}
+
+
+int nodes = 0;
+
+bool prev_foo = false;
+
+vector<int> scope_wraps;
+vector<vector<string>> scopes;
+//map<int, int> // id -> True\False\None as 1\-1\0
+
+void at_enter (Node* node) {
+    ++nodes;
+
+    ReturnNode* return_node = dynamic_cast<ReturnNode*>(node);
+
+    if (return_node != nullptr) {
+        StatementNode* statement_node = dynamic_cast<StatementNode*>(return_node->parent);
+        if (statement_node == nullptr) {
+            return;
+        }
+
+        ProgramNode*    programm_node =             dynamic_cast<ProgramNode*>  (statement_node->parent);
+        BodyNode*       body_node =                 dynamic_cast<BodyNode*>     (statement_node->parent);
+
+        vector<Node*> statements_to_change;
+        vector<Node*> resulting_statements;
+
+        if (programm_node != nullptr) {
+            statements_to_change = programm_node->statements;
+        } else {
+            statements_to_change = body_node->statements;
+        }
+
+        for (auto & i : statements_to_change) {
+            resulting_statements.push_back(i);
+            if (i == statement_node) {
+                break;
+            }
+        }
+        if (programm_node != nullptr) {
+            programm_node->statements = resulting_statements;
+        } else {
+            body_node->statements = resulting_statements;
+        }
+    }
+}
+
+void at_repeat (Node* node) {
+    return;
+}
+
+void at_exit (Node* node) {
+    if (scope_wraps.back() == node->id) {
+        scope_wraps.pop_back();
+        scopes.pop_back();
+    }
+    return;
+}
+
+
+int main(int argc, char *argv[]) {
+    input_params param;
+    parse_args(argc, argv, param);
+
+    Node* tree = readTree(*param.in_stream);
+
+    //cout << "TREE ID: " << reinterpret_cast<std::uintptr_t>(tree) << endl;
+
+    human_output_nodes = false;
+
+    scope_wraps.push_back(-1);
+    scopes.resize(1);
+
+    tree->visit(at_enter, at_repeat, at_exit);
+
+    reassign_ids(tree);
+
+    if(param.out_is_file){
+        (*param.out_stream) << tree;
+        (*param.out_stream).close();
+    } else {
+        cout << tree;
+    }
+    //cout << "Total nodes: " << nodes << endl;
+}

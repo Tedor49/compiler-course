@@ -40,9 +40,9 @@ Term|39|(40)|()
 Unary|40|p|#|41|0
 Primary|41|l|42
 Literal|42|s|lol
-Statement|43|a|44
-Assignment|44|45|46
-Primary|45|v|x|()
+Statement|43|d|44
+Declaration|44|(45)
+VariableDefinition|45|x|46
 Expression|46|(47)|()
 Relation|47|(48)|()
 Factor|48|(49|52)|(+)

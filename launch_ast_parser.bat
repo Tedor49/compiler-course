@@ -2,8 +2,10 @@
 title Parsing all the syntax trees...
 setlocal enabledelayedexpansion
 
-echo Compiling the tree parser...
-g++ ast_parser.cpp -w -std=c++20 -o ast_parser
+if "%1" NEQ "/n" (
+	echo Compiling the tree parser...
+	g++ ast_parser.cpp -w -std=c++20 -o ast_parser
+)
 
 for %%f in (tokenizer_outputs/*.tokens) do (
     call set in=%%~nf.tokens

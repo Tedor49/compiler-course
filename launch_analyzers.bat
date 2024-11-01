@@ -2,12 +2,14 @@
 title Checking all the syntax trees for correctness...
 setlocal enabledelayedexpansion
 
-echo Compiling the analyzers...
-for %%f in (analyzers/*.cpp) do (
-	call set in=%%~nf.cpp
-	call set out=%%~nf
-	echo Compiling analyzers/!in!...
-	g++ analyzers/!in! -w -std=c++20 -o analyzers_comp/!out!
+if "%1" NEQ "/n" (
+	echo Compiling the analyzers...
+	for %%f in (analyzers/*.cpp) do (
+		call set in=%%~nf.cpp
+		call set out=%%~nf
+		echo Compiling analyzers/!in!...
+		g++ analyzers/!in! -w -std=c++20 -o analyzers_comp/!out!
+	)
 )
 
 for %%f in (ast_parser_outputs/*.tree) do (

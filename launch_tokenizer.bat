@@ -2,8 +2,10 @@
 title Tokenizing all the test codes...
 setlocal enabledelayedexpansion
 
-echo Compiling the tokenizer...
-g++ tokenizer.cpp -w -std=c++20 -o tokenizer
+if "%1" NEQ "/n" (
+	echo Compiling the tokenizer...
+	g++ tokenizer.cpp -w -std=c++20 -o tokenizer
+)
 
 for %%f in (test_code/*.d) do (
     call set in=%%~nf.d

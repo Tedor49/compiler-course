@@ -104,39 +104,15 @@ vector<vector<string>> scopes;
 void at_enter (Node* node) {
     ++nodes;
 
-    VariableDefinitionNode* vardef_node =   dynamic_cast<VariableDefinitionNode*>(node); // .identifier
-    ForNode*                for_node =      dynamic_cast<ForNode*>(node); // .identifier
-    PrimaryNode*            primary_node =  dynamic_cast<PrimaryNode*>(node); // .identifier
-    FunctionNode*           func_node =     dynamic_cast<FunctionNode*>(node); // .params
-    BodyNode*               body_node =     dynamic_cast<BodyNode*>(node);
     IfNode*                  if_node =      dynamic_cast<IfNode*>(node);
 
     if (if_node != nullptr) {
         ExpressionNode* expression_node = dynamic_cast<ExpressionNode*>(if_node->expression);
-        if (expression_node->relations.size() != 1) {
+        if (expression_node->terms.size() != 1) {
             return;
         }
 
-        RelationNode* relation_node = dynamic_cast<RelationNode*>(expression_node->relations[0]);
-        if (relation_node->factors.size() != 1) {
-            return;
-        }
-
-        FactorNode* factor_node = dynamic_cast<FactorNode*>(relation_node->factors[0]);
-        if (factor_node->terms.size() != 1) {
-            return;
-        }
-
-        TermNode* term_node = dynamic_cast<TermNode*>(factor_node->terms[0]);
-        if (term_node->terms.size() != 1) {
-            return;
-        }
-
-        UnaryNode* unary_node = dynamic_cast<UnaryNode*>(term_node->terms[0]);
-        if (unary_node->type != 'p') {
-            return;
-        }
-
+        UnaryNode* unary_node = dynamic_cast<UnaryNode*>(expression_node->terms[0]);
         PrimaryNode* primary_node = dynamic_cast<PrimaryNode*>(unary_node->primary);
         if (primary_node->type != 'l') {
             return;

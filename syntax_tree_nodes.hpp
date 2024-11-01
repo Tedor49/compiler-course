@@ -32,21 +32,11 @@ class Node {
         virtual void machine_print(std::ostream& out) = 0;
 };
 
-
-std::ostream& operator<<(std::ostream& out, Node* node) {
-    if (human_output_nodes) node->print(out, 2);
-    else node->machine_print(out);
-    return out;
-}
-
 class ProgramNode;
 class StatementNode;
 class DeclarationNode;
 class VariableDefinitionNode;
 class ExpressionNode;
-class RelationNode;
-class FactorNode;
-class TermNode;
 class UnaryNode;
 class PrimaryNode;
 class TailNode;
@@ -67,6 +57,14 @@ class RangeNode;
 Node* createNodeFromTokens(const std::string& t, std::vector<Token>& tokens, int& y);
 Node* createNodeByName(const std::string& t);
 void assign_parents(Node* tree);
+void reassign_ids(Node* tree);
+
+std::ostream& operator<<(std::ostream& out, Node* node) {
+    reassign_ids(node);
+    if (human_output_nodes) node->print(out, 2);
+    else node->machine_print(out);
+    return out;
+}
 
 void read_until_delim(std::istream& in, std::pair<std::string, char>& dest) {
     dest.first.clear();
@@ -165,14 +163,8 @@ class ProgramNode: public Node {
 class StatementNode: public Node {
     public:
         char type;
-        Node* declare_node;
-        Node* assign_node;
-        Node* if_node;
-        Node* for_node;
-        Node* while_node;
-        Node* return_node;
-        Node* print_node;
-        Node* expression_node;
+        Node* child_node;
+
         StatementNode() {
             this->id = id_counter;
             ++id_counter;
@@ -183,36 +175,36 @@ class StatementNode: public Node {
                 case TokenCode::tkVar:
                     this->type = 'd';
                     ++y;
-                    this->declare_node = createNodeFromTokens("Declaration", tokens, y);
+                    this->child_node = createNodeFromTokens("Declaration", tokens, y);
                     break;
                 case TokenCode::tkIdentifier:
                     this->type = 'a';
-                    this->assign_node = createNodeFromTokens("Assignment", tokens, y);
+                    this->child_node = createNodeFromTokens("Assignment", tokens, y);
                     break;
                 case TokenCode::tkIf:
                     this->type = 'i';
                     ++y;
-                    this->if_node = createNodeFromTokens("If", tokens, y);
+                    this->child_node = createNodeFromTokens("If", tokens, y);
                     break;
                 case TokenCode::tkFor:
                     this->type = 'f';
                     ++y;
-                    this->for_node = createNodeFromTokens("For", tokens, y);
+                    this->child_node = createNodeFromTokens("For", tokens, y);
                     break;
                 case TokenCode::tkWhile:
                     this->type = 'w';
                     ++y;
-                    this->while_node = createNodeFromTokens("While", tokens, y);
+                    this->child_node = createNodeFromTokens("While", tokens, y);
                     break;
                 case TokenCode::tkReturn:
                     this->type = 'r';
                     ++y;
-                    this->return_node = createNodeFromTokens("Return", tokens, y);
+                    this->child_node = createNodeFromTokens("Return", tokens, y);
                     break;
                 case TokenCode::tkPrint:
                     this->type = 'p';
                     ++y;
-                    this->print_node = createNodeFromTokens("Print", tokens, y);
+                    this->child_node = createNodeFromTokens("Print", tokens, y);
                     break;
                 default:
                     throw std::invalid_argument("Not a statement");
@@ -234,135 +226,24 @@ class StatementNode: public Node {
             s >> trash;
 
             read_until_delim(s, read);
-
-            switch (this->type) {
-                case 'd':
-                    this->declare_node = nodes[std::stoll(read.first)];
-                    break;
-                case 'a':
-                    this->assign_node = nodes[std::stoll(read.first)];
-                    break;
-                case 'e':
-                    this->expression_node = nodes[std::stoll(read.first)];
-                    break;
-                case 'i':
-                    this->if_node = nodes[std::stoll(read.first)];
-                    break;
-                case 'f':
-                    this->for_node = nodes[std::stoll(read.first)];
-                    break;
-                case 'w':
-                    this->while_node = nodes[std::stoll(read.first)];
-                    break;
-                case 'r':
-                    this->return_node = nodes[std::stoll(read.first)];
-                    break;
-                case 'p':
-                    this->print_node = nodes[std::stoll(read.first)];
-                    break;
-                default:
-                    throw std::invalid_argument("Expected valid type");
-            }
+            this->child_node = nodes[std::stoll(read.first)];
         }
 
         void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit){
             at_enter(this);
-            switch (this->type) {
-                case 'd':
-                    this->declare_node->visit(at_enter, at_repeat, at_exit);
-                    break;
-                case 'a':
-                    this->assign_node->visit(at_enter, at_repeat, at_exit);
-                    break;
-                case 'e':
-                    this->expression_node->visit(at_enter, at_repeat, at_exit);
-                    break;
-                case 'i':
-                    this->if_node->visit(at_enter, at_repeat, at_exit);
-                    break;
-                case 'f':
-                    this->for_node->visit(at_enter, at_repeat, at_exit);
-                    break;
-                case 'w':
-                    this->while_node->visit(at_enter, at_repeat, at_exit);
-                    break;
-                case 'r':
-                    this->return_node->visit(at_enter, at_repeat, at_exit);
-                    break;
-                case 'p':
-                    this->print_node->visit(at_enter, at_repeat, at_exit);
-                    break;
-            }
+            this->child_node->visit(at_enter, at_repeat, at_exit);
             at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
             out << std::string(acc_indent, ' ') << "Statement{\n";
-            switch (this->type) {
-                case 'd':
-                    this->declare_node->print(out, indent, acc_indent+indent);
-                    break;
-                case 'a':
-                    this->assign_node->print(out, indent, acc_indent+indent);
-                    break;
-                case 'e':
-                    this->expression_node->print(out, indent, acc_indent+indent);
-                    break;
-                case 'i':
-                    this->if_node->print(out, indent, acc_indent+indent);
-                    break;
-                case 'f':
-                    this->for_node->print(out, indent, acc_indent+indent);
-                    break;
-                case 'w':
-                    this->while_node->print(out, indent, acc_indent+indent);
-                    break;
-                case 'r':
-                    this->return_node->print(out, indent, acc_indent+indent);
-                    break;
-                case 'p':
-                    this->print_node->print(out, indent, acc_indent+indent);
-                    break;
-            }
+            this->child_node->print(out, indent, acc_indent+indent);
             out << std::string(acc_indent, ' ') << "}\n";
         }
 
         void machine_print(std::ostream& out){
-            out << "Statement|" << id << "|" << type << "|";
-            switch (this->type) {
-                case 'd':
-                    out << declare_node->id << "\n";
-                    this->declare_node->machine_print(out);
-                    break;
-                case 'a':
-                    out << assign_node->id << "\n";
-                    this->assign_node->machine_print(out);
-                    break;
-                case 'e':
-                    out << expression_node->id << "\n";
-                    this->expression_node->machine_print(out);
-                    break;
-                case 'i':
-                    out << if_node->id << "\n";
-                    this->if_node->machine_print(out);
-                    break;
-                case 'f':
-                    out << for_node->id << "\n";
-                    this->for_node->machine_print(out);
-                    break;
-                case 'w':
-                    out << while_node->id << "\n";
-                    this->while_node->machine_print(out);
-                    break;
-                case 'r':
-                    out << return_node->id << "\n";
-                    this->return_node->machine_print(out);
-                    break;
-                case 'p':
-                    out << print_node->id << "\n";
-                    this->print_node->machine_print(out);
-                    break;
-            }
+            out << "Statement|" << id << "|" << type << "|" << child_node->id << "\n";
+            this->child_node->machine_print(out);
         }
 };
 
@@ -528,32 +409,66 @@ class VariableDefinitionNode: public Node {
 
 class ExpressionNode: public Node {
     public:
-        std::vector<Node*> relations;
+        std::vector<Node*> terms;
         std::vector<char> ops;
-        ExpressionNode() {
+
+        ExpressionNode () {
             this->id = id_counter;
             ++id_counter;
         }
 
         Node* from_tokens(std::vector<Token>& tokens, int& y){
-            while (1) {
-                this->relations.push_back(createNodeFromTokens("Relation", tokens, y));
+            bool complete = false;
 
-                if (tokens[y].type == TokenCode::tkLogicAnd) {
-                    this->ops.push_back('a');
-                    ++y;
-                    continue;
-                } else if (tokens[y].type == TokenCode::tkLogicOr) {
-                    this->ops.push_back('o');
-                    ++y;
-                    continue;
-                } else if (tokens[y].type == TokenCode::tkLogicXor) {
-                    this->ops.push_back('x');
-                    ++y;
-                    continue;
-                } else {
-                    return this;
-                }
+            while (1) {
+                this->terms.push_back(createNodeFromTokens("Unary", tokens, y));
+
+				switch (tokens[y].type) {
+					case TokenCode::tkOperatorMultiply:
+						this->ops.push_back('*');
+						break;
+					case TokenCode::tkOperatorDivide:
+						this->ops.push_back('/');
+						break;
+					case TokenCode::tkOperatorPlus:
+						this->ops.push_back('+');
+						break;
+					case TokenCode::tkOperatorMinus:
+						this->ops.push_back('-');
+						break;
+					case TokenCode::tkRelationEqual:
+						this->ops.push_back('=');
+						break;
+					case TokenCode::tkRelationLess:
+						this->ops.push_back('<');
+						break;
+					case TokenCode::tkRelationLessEq:
+						this->ops.push_back('l');
+						break;
+					case TokenCode::tkRelationMore:
+						this->ops.push_back('>');
+						break;
+					case TokenCode::tkRelationMoreEq:
+						this->ops.push_back('m');
+						break;
+					case TokenCode::tkRelationNotEqual:
+						this->ops.push_back('n');
+						break;
+					case TokenCode::tkLogicAnd:
+						this->ops.push_back('a');
+						break;
+					case TokenCode::tkLogicOr:
+						this->ops.push_back('o');
+						break;
+					case TokenCode::tkLogicXor:
+						this->ops.push_back('x');
+						break;
+                    default:
+                        complete = true;
+                        break;
+				}
+				if (complete) break;
+				++y;
             }
             return this;
         }
@@ -571,14 +486,15 @@ class ExpressionNode: public Node {
             s >> trash;
             read_until_delim(s, read);
             while (read.second != ')') {
-                relations.push_back(nodes[std::stoll(read.first)]);
+                terms.push_back(nodes[std::stoll(read.first)]);
                 read_until_delim(s, read);
             }
             if (read.first != "") {
-                relations.push_back(nodes[std::stoll(read.first)]);
+                terms.push_back(nodes[std::stoll(read.first)]);
             }
+            s >> trash;
 
-            s >> trash >> trash;
+            s >> trash;
             read_until_delim(s, read);
             while (read.second != ')') {
                 ops.push_back(read.first[0]);
@@ -594,7 +510,7 @@ class ExpressionNode: public Node {
             at_enter(this);
 
             bool first = true;
-            for(auto i: this->relations) {
+            for(auto i: this->terms) {
                 if (!first) {
                     at_repeat(this);
                 } else {
@@ -607,385 +523,6 @@ class ExpressionNode: public Node {
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
             out << std::string(acc_indent, ' ') << "Expression{\n";
-            out << std::string(acc_indent+indent, ' ') << "Element amount: " << this->relations.size() << "\n";
-            out << std::string(acc_indent+indent, ' ') << "Element 1: \n";
-            this->relations[0]->print(out, indent, acc_indent+indent*2);
-            for (int i = 1; i < relations.size(); ++i){
-                out << std::string(acc_indent+indent, ' ') << "Operation " << i << ": ";
-                switch (this->ops[i-1]) {
-                    case 'a':
-                        out << "and\n";
-                        break;
-                    case 'o':
-                        out << "or\n";
-                        break;
-                    case 'x':
-                        out << "xor\n";
-                        break;
-                }
-                out << std::string(acc_indent+indent, ' ') << "Element " << i+1 << ": \n";
-                this->relations[i]->print(out, indent, acc_indent+indent*2);
-            }
-
-            out << std::string(acc_indent, ' ') << "}\n";
-        }
-
-        void machine_print(std::ostream& out){
-            out << "Expression|" << id << "|(";
-            for(int i = 0; i < relations.size(); ++i) {
-                if (i) out << "|";
-                out << relations[i]->id;
-            }
-            out << ")|(";
-            for(int i = 0; i < ops.size(); ++i) {
-                if (i) out << "|";
-                out << ops[i];
-            }
-            out << ")\n";
-
-            for(auto i: relations) {
-                i->machine_print(out);
-            }
-        }
-};
-
-class RelationNode: public Node {
-    public:
-        std::vector<Node*> factors;
-        std::vector<char> ops;
-        RelationNode() {
-            this->id = id_counter;
-            ++id_counter;
-        }
-
-        Node* from_tokens(std::vector<Token>& tokens, int& y){
-            while (1) {
-                this->factors.push_back(createNodeFromTokens("Factor", tokens, y));
-
-                if (tokens[y].type == TokenCode::tkRelationEqual) {
-                    this->ops.push_back('=');
-                    ++y;
-                    continue;
-                } else if (tokens[y].type == TokenCode::tkRelationLess) {
-                    this->ops.push_back('<');
-                    ++y;
-                    continue;
-                } else if (tokens[y].type == TokenCode::tkRelationLessEq) {
-                    this->ops.push_back('l');
-                    ++y;
-                    continue;
-                } else if (tokens[y].type == TokenCode::tkRelationMore) {
-                    this->ops.push_back('>');
-                    ++y;
-                    continue;
-                } else if (tokens[y].type == TokenCode::tkRelationMoreEq) {
-                    this->ops.push_back('m');
-                    ++y;
-                    continue;
-                } else if (tokens[y].type == TokenCode::tkRelationNotEqual) {
-                    this->ops.push_back('n');
-                    ++y;
-                    continue;
-                } else {
-                    return this;
-                }
-            }
-            return this;
-        }
-
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
-            std::stringstream s(confstr);
-
-            char trash;
-
-            std::pair<std::string, char> read;
-            read_until_delim(s, read);
-
-            id = std::stoll(read.first);
-
-            s >> trash;
-            read_until_delim(s, read);
-            while (read.second != ')') {
-                factors.push_back(nodes[std::stoll(read.first)]);
-                read_until_delim(s, read);
-            }
-            if (read.first != "") {
-                factors.push_back(nodes[std::stoll(read.first)]);
-            }
-
-            s >> trash >> trash;
-            read_until_delim(s, read);
-            while (read.second != ')') {
-                ops.push_back(read.first[0]);
-                read_until_delim(s, read);
-            }
-            if (read.first != "") {
-                ops.push_back(read.first[0]);
-            }
-
-        }
-
-        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
-            at_enter(this);
-
-            bool first = true;
-            for(auto i: this->factors) {
-                if (!first) {
-                    at_repeat(this);
-                } else {
-                    first = false;
-                }
-                i->visit(at_enter, at_repeat, at_exit);
-            }
-            at_exit(this);
-        }
-
-        void print(std::ostream& out, int indent=4, int acc_indent=0){
-            out << std::string(acc_indent, ' ') << "Relation{\n";
-            out << std::string(acc_indent+indent, ' ') << "Element amount: " << this->factors.size() << "\n";
-            out << std::string(acc_indent+indent, ' ') << "Element 1: \n";
-            this->factors[0]->print(out, indent, acc_indent+indent*2);
-            for (int i = 1; i < factors.size(); ++i){
-                out << std::string(acc_indent+indent, ' ') << "Operation " << i << ": ";
-                switch (this->ops[i-1]) {
-                    case '=':
-                        out << "=\n";
-                        break;
-                    case '<':
-                        out << "<\n";
-                        break;
-                    case 'l':
-                        out << "<=\n";
-                        break;
-                    case '>':
-                        out << ">\n";
-                        break;
-                    case 'm':
-                        out << ">=\n";
-                        break;
-                    case 'n':
-                        out << "/=\n";
-                        break;
-                }
-                out << std::string(acc_indent+indent, ' ') << "Element " << i+1 << ": \n";
-                this->factors[i]->print(out, indent, acc_indent+indent*2);
-            }
-
-            out << std::string(acc_indent, ' ') << "}\n";
-        }
-
-        void machine_print(std::ostream& out){
-            out << "Relation|" << id << "|(";
-            for(int i = 0; i < factors.size(); ++i) {
-                if (i) out << "|";
-                out << factors[i]->id;
-            }
-            out << ")|(";
-            for(int i = 0; i < ops.size(); ++i) {
-                if (i) out << "|";
-                out << ops[i];
-            }
-            out << ")\n";
-
-            for(auto i: factors) {
-                i->machine_print(out);
-            }
-        }
-};
-
-class FactorNode: public Node {
-    public:
-        std::vector<Node*> terms;
-        std::vector<char> ops;
-        FactorNode() {
-            this->id = id_counter;
-            ++id_counter;
-        }
-
-        Node* from_tokens(std::vector<Token>& tokens, int& y){
-            while (1) {
-                this->terms.push_back(createNodeFromTokens("Term", tokens, y));
-
-                if (tokens[y].type == TokenCode::tkOperatorPlus) {
-                    this->ops.push_back('+');
-                    ++y;
-                    continue;
-                } else if (tokens[y].type == TokenCode::tkOperatorMinus) {
-                    this->ops.push_back('-');
-                    ++y;
-                    continue;
-                } else {
-                    return this;
-                }
-            }
-            return this;
-        }
-
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
-            std::stringstream s(confstr);
-
-            char trash;
-
-            std::pair<std::string, char> read;
-            read_until_delim(s, read);
-
-            id = std::stoll(read.first);
-
-            s >> trash;
-            read_until_delim(s, read);
-            while (read.second != ')') {
-                terms.push_back(nodes[std::stoll(read.first)]);
-                read_until_delim(s, read);
-            }
-            if (read.first != "") {
-                terms.push_back(nodes[std::stoll(read.first)]);
-            }
-
-            s >> trash >> trash;
-            read_until_delim(s, read);
-            while (read.second != ')') {
-                ops.push_back(read.first[0]);
-                read_until_delim(s, read);
-            }
-            if (read.first != "") {
-                ops.push_back(read.first[0]);
-            }
-
-        }
-
-        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
-            at_enter(this);
-
-            bool first = true;
-            for(auto i: this->terms) {
-                if (!first) {
-                    at_repeat(this);
-                } else {
-                    first = false;
-                }
-                i->visit(at_enter, at_repeat, at_exit);
-            }
-            at_exit(this);
-        }
-
-        void print(std::ostream& out, int indent=4, int acc_indent=0){
-            out << std::string(acc_indent, ' ') << "Factor{\n";
-            out << std::string(acc_indent+indent, ' ') << "Element amount: " << this->terms.size() << "\n";
-            out << std::string(acc_indent+indent, ' ') << "Element 1: \n";
-            this->terms[0]->print(out, indent, acc_indent+indent*2);
-            for (int i = 1; i < terms.size(); ++i){
-                out << std::string(acc_indent+indent, ' ') << "Operation " << i << ": ";
-                switch (this->ops[i-1]) {
-                    case '+':
-                        out << "+\n";
-                        break;
-                    case '-':
-                        out << "-\n";
-                        break;
-                }
-                out << std::string(acc_indent+indent, ' ') << "Element " << i+1 << ": \n";
-                this->terms[i]->print(out, indent, acc_indent+indent*2);
-            }
-            out << std::string(acc_indent, ' ') << "}\n";
-        }
-
-        void machine_print(std::ostream& out){
-            out << "Factor|" << id << "|(";
-            for(int i = 0; i < terms.size(); ++i) {
-                if (i) out << "|";
-                out << terms[i]->id;
-            }
-            out << ")|(";
-            for(int i = 0; i < ops.size(); ++i) {
-                if (i) out << "|";
-                out << ops[i];
-            }
-            out << ")\n";
-
-            for(auto i: terms) {
-                i->machine_print(out);
-            }
-        }
-};
-
-class TermNode: public Node {
-    public:
-        std::vector<Node*> terms;
-        std::vector<char> ops;
-        TermNode() {
-            this->id = id_counter;
-            ++id_counter;
-        }
-
-        Node* from_tokens(std::vector<Token>& tokens, int& y){
-            while (1) {
-                this->terms.push_back(createNodeFromTokens("Unary", tokens, y));
-
-                if (tokens[y].type == TokenCode::tkOperatorMultiply) {
-                    this->ops.push_back('*');
-                    ++y;
-                    continue;
-                } else if (tokens[y].type == TokenCode::tkOperatorDivide) {
-                    this->ops.push_back('/');
-                    ++y;
-                    continue;
-                } else {
-                    return this;
-                }
-            }
-            return this;
-        }
-
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
-            std::stringstream s(confstr);
-
-            char trash;
-
-            std::pair<std::string, char> read;
-            read_until_delim(s, read);
-
-            id = std::stoll(read.first);
-
-            s >> trash;
-            read_until_delim(s, read);
-            while (read.second != ')') {
-                terms.push_back(nodes[std::stoll(read.first)]);
-                read_until_delim(s, read);
-            }
-            if (read.first != "") {
-                terms.push_back(nodes[std::stoll(read.first)]);
-            }
-            s >> trash;
-
-            s >> trash;
-            read_until_delim(s, read);
-            while (read.second != ')') {
-                ops.push_back(read.first[0]);
-                read_until_delim(s, read);
-            }
-            if (read.first != "") {
-                ops.push_back(read.first[0]);
-            }
-
-        }
-
-        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
-            at_enter(this);
-
-            bool first = true;
-            for(auto i: this->terms) {
-                if (!first) {
-                    at_repeat(this);
-                } else {
-                    first = false;
-                }
-                i->visit(at_enter, at_repeat, at_exit);
-            }
-            at_exit(this);
-        }
-
-        void print(std::ostream& out, int indent=4, int acc_indent=0){
-            out << std::string(acc_indent, ' ') << "Term{\n";
             out << std::string(acc_indent+indent, ' ') << "Element amount: " << this->terms.size() << "\n";
             out << std::string(acc_indent+indent, ' ') << "Element 1: \n";
             this->terms[0]->print(out, indent, acc_indent+indent*2);
@@ -1006,7 +543,7 @@ class TermNode: public Node {
         }
 
         void machine_print(std::ostream& out){
-            out << "Term|" << id << "|(";
+            out << "Expression|" << id << "|(";
             for(int i = 0; i < terms.size(); ++i) {
                 if (i) out << "|";
                 out << terms[i]->id;
@@ -1026,13 +563,9 @@ class TermNode: public Node {
 
 class UnaryNode: public Node {
     public:
-        char type = '!';
-
         char unaryop = '#';
         Node* primary;
         Node* type_ind = nullptr;
-
-        Node* expression;
 
         UnaryNode() {
             this->id = id_counter;
@@ -1042,7 +575,6 @@ class UnaryNode: public Node {
         Node* from_tokens(std::vector<Token>& tokens, int& y){
             switch (tokens[y].type) {
                 case TokenCode::tkUnaryPlus:
-                    this->type = 'p';
                     this->unaryop = '+';
 
                     ++y;
@@ -1056,7 +588,6 @@ class UnaryNode: public Node {
 
                     break;
                 case TokenCode::tkUnaryMinus:
-                    this->type = 'p';
                     this->unaryop = '-';
 
                     ++y;
@@ -1070,7 +601,6 @@ class UnaryNode: public Node {
 
                     break;
                 case TokenCode::tkUnaryNot:
-                    this->type = 'p';
                     this->unaryop = 'n';
 
                     ++y;
@@ -1096,8 +626,7 @@ class UnaryNode: public Node {
                 case TokenCode::tkReal:
                 case TokenCode::tkFunc:
                 case TokenCode::tkEmpty:
-                    this->type = 'p';
-
+                case TokenCode::tkBracketNormalLeft:
                     this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
@@ -1105,19 +634,6 @@ class UnaryNode: public Node {
                         ++y;
                         this->type_ind = createNodeFromTokens("TypeIndicator", tokens, y);
                     }
-
-                    break;
-                case TokenCode::tkBracketNormalLeft:
-                    this->type = 'e';
-                    ++y;
-
-                    this->expression = createNodeFromTokens("Expression", tokens, y);
-
-
-                    if (tokens[y].type != TokenCode::tkBracketNormalRight){
-                        throw std::invalid_argument("Expected closing bracket after expression");
-                    }
-                    ++y;
 
                     break;
             }
@@ -1135,108 +651,67 @@ class UnaryNode: public Node {
             id = std::stoll(read.first);
 
             read_until_delim(s, read);
-            type = read.first[0];
+			unaryop = read.first[0];
 
-            switch (type) {
-                case 'p':
-                    read_until_delim(s, read);
-                    unaryop = read.first[0];
+			read_until_delim(s, read);
+			primary = nodes[std::stoll(read.first)];
 
-                    read_until_delim(s, read);
-                    primary = nodes[std::stoll(read.first)];
-
-                    read_until_delim(s, read);
-                    type_ind = nodes[std::stoll(read.first)];
-
-                    break;
-                case 'e':
-                    read_until_delim(s, read);
-                    expression = nodes[std::stoll(read.first)];
-
-                    break;
-                default:
-                    throw std::invalid_argument("Expected valid type");
-            }
+			read_until_delim(s, read);
+			type_ind = nodes[std::stoll(read.first)];
         }
 
         void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
             at_enter(this);
 
-            switch (this->type) {
-                case 'p':
-                    this->primary->visit(at_enter, at_repeat, at_exit);
-                    if (this->type_ind) {
-                        at_repeat(this);
-                        this->type_ind->visit(at_enter, at_repeat, at_exit);
-                    }
-                    break;
-                case 'e':
-                    this->expression->visit(at_enter, at_repeat, at_exit);
-                    break;
-            }
+            this->primary->visit(at_enter, at_repeat, at_exit);
+			if (this->type_ind) {
+				at_repeat(this);
+				this->type_ind->visit(at_enter, at_repeat, at_exit);
+			}
+
             at_exit(this);
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
             out << std::string(acc_indent, ' ') << "Unary{\n";
-            out << std::string(acc_indent+indent, ' ') << "Type: ";
-            switch (this->type) {
-                case 'p':
-                    out << "Primary\n";
-                    out << std::string(acc_indent+indent, ' ') << "UnaryOperation: ";
-                    switch (this->unaryop) {
-                        case '#':
-                            out << "None\n";
-                            break;
-                        case '+':
-                            out << "+\n";
-                            break;
-                        case '-':
-                            out << "-\n";
-                            break;
-                        case 'n':
-                            out << "not\n";
-                            break;
-                    }
-                    out << std::string(acc_indent+indent, ' ') << "Value:\n";
-                    this->primary->print(out, indent, acc_indent+indent*2);
-                    out << std::string(acc_indent+indent, ' ') << "Type indicator:";
-                    if (this->type_ind) {
-                        out << "\n";
-                        this->type_ind->print(out, indent, acc_indent+indent*2);
-                    } else {
-                        out << " None\n";
-                    }
-
-                    break;
-                case 'e':
-                    out << "Expression\n";
-                    out << std::string(acc_indent+indent, ' ') << "Value:\n";
-                    this->expression->print(out, indent, acc_indent+indent*2);
-                    break;
-            }
+			out << std::string(acc_indent+indent, ' ') << "UnaryOperation: ";
+			switch (this->unaryop) {
+				case '#':
+					out << "None\n";
+					break;
+				case '+':
+					out << "+\n";
+					break;
+				case '-':
+					out << "-\n";
+					break;
+				case 'n':
+					out << "not\n";
+					break;
+			}
+			out << std::string(acc_indent+indent, ' ') << "Value:\n";
+			this->primary->print(out, indent, acc_indent+indent*2);
+			out << std::string(acc_indent+indent, ' ') << "Type indicator:";
+			if (this->type_ind) {
+				out << "\n";
+				this->type_ind->print(out, indent, acc_indent+indent*2);
+			} else {
+				out << " None\n";
+			}
             out << std::string(acc_indent, ' ') << "}\n";
         }
 
         void machine_print(std::ostream& out){
-            out << "Unary|" << id << "|" << type << "|";
-            switch (this->type) {
-                case 'p':
-                    out << this->unaryop << "|" << primary->id << "|";
-                    if (type_ind) {
-                        out << type_ind->id << "\n";
-                        primary->machine_print(out);
-                        type_ind->machine_print(out);
-                    } else {
-                        out << "0\n";
-                        primary->machine_print(out);
-                    }
-                    break;
-                case 'e':
-                    out << expression->id << "\n";
-                    expression->machine_print(out);
-                    break;
-            }
+            out << "Unary|" << id << "|";
+            out << this->unaryop << "|" << primary->id << "|";
+			if (type_ind) {
+				out << type_ind->id << "\n";
+				primary->machine_print(out);
+				type_ind->machine_print(out);
+			} else {
+				out << "0\n";
+				primary->machine_print(out);
+			}
         }
 };
 
@@ -1679,6 +1154,8 @@ class PrimaryNode: public Node {
 
         Node* literal;
 
+        Node* expression;
+
         std::string identifier;
         std::vector<Node*> tails;
         PrimaryNode() {
@@ -1728,6 +1205,17 @@ class PrimaryNode: public Node {
                         }
                     }
                     break;
+				case TokenCode::tkBracketNormalLeft:
+                    this->type = 'e';
+                    ++y;
+
+                    this->expression = createNodeFromTokens("Expression", tokens, y);
+
+                    if (tokens[y].type != TokenCode::tkBracketNormalRight){
+                        throw std::invalid_argument("Expected closing bracket after expression");
+                    }
+                    ++y;
+
             }
             return this;
         }
@@ -1770,6 +1258,11 @@ class PrimaryNode: public Node {
                     literal = nodes[std::stoll(read.first)];
 
                     break;
+                case 'e':
+                    read_until_delim(s, read);
+                    expression = nodes[std::stoll(read.first)];
+
+                    break;
                 default:
                     throw std::invalid_argument("Expected valid type");
             }
@@ -1790,6 +1283,8 @@ class PrimaryNode: public Node {
                 }
             } else if (this->type == 'l') {
                 this->literal->visit(at_enter, at_repeat, at_exit);
+            } else if (this->type == 'e') {
+                this->expression->visit(at_enter, at_repeat, at_exit);
             }
             at_exit(this);
         }
@@ -1821,6 +1316,11 @@ class PrimaryNode: public Node {
                     out << std::string(acc_indent+indent, ' ') << "Literal:\n";
                     this->literal->print(out, indent, acc_indent+indent*2);
                     break;
+                case 'e':
+                    out << "Expression\n";
+                    out << std::string(acc_indent+indent, ' ') << "Expression:\n";
+                    this->expression->print(out, indent, acc_indent+indent*2);
+                    break;
             }
             out << std::string(acc_indent, ' ') << "}\n";
         }
@@ -1849,6 +1349,10 @@ class PrimaryNode: public Node {
                 case 'l':
                     out << "|" << literal->id << "\n";
                     literal->machine_print(out);
+                    break;
+                case 'e':
+                    out << "|" << expression->id << "\n";
+                    expression->machine_print(out);
                     break;
             }
         }
@@ -2929,12 +2433,6 @@ Node* createNodeByName(const std::string& t) {
         return (new VariableDefinitionNode());
     } else if (t.compare("Expression") == 0) {
         return (new ExpressionNode());
-    } else if (t.compare("Relation") == 0) {
-        return (new RelationNode());
-    } else if (t.compare("Factor") == 0) {
-        return (new FactorNode());
-    } else if (t.compare("Term") == 0) {
-        return (new TermNode());
     } else if (t.compare("Unary") == 0) {
         return (new UnaryNode());
     } else if (t.compare("Primary") == 0) {
@@ -3009,6 +2507,7 @@ Node* readTree(std::istream& in) {
     }
 
     assign_parents(nodes[1]);
+    reassign_ids(nodes[1]);
 
     return nodes[1];
 }

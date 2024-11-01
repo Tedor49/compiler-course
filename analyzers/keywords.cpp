@@ -89,7 +89,7 @@ void at_exit (Node* node) {
     bool is_body = dynamic_cast<BodyNode*>(node) != nullptr;
 
     if (is_body) {
-        if (foo_wraps.back() == node->id) {
+        if (foo_wraps.size() != 0 && foo_wraps.back() == node->id) {
             foo_wraps.pop_back();
         }
     }

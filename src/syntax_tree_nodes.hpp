@@ -2540,6 +2540,20 @@ namespace ast_nodes {
         last_node_ptr = nullptr;
         tree->visit(assign_parent, update_last, dummy);
     }
+
+    Node* construct(std::vector<tokens::Token>& tokenized){
+        int walker = 0;
+
+        try {
+            ast_nodes::ProgramNode* tree = new ProgramNode();
+            tree->from_tokens(tokenized, walker);
+            return tree;
+        } catch (std::invalid_argument& ex) {
+            throw std::invalid_argument(std::format("{} at line {}, pos {}", ex.what(), tokenized[walker].line, tokenized[walker].pos));
+        } catch (std::out_of_range& ex) {
+            throw std::invalid_argument("Unexpected program end");
+        }
+    }
 }
 
 #endif // __TREE_NODES_INCLUDED__

@@ -14,21 +14,12 @@ int main(int argc, char *argv[]){
     std::vector<tokens::Token> tokenized;
     (*param.in_stream) >> tokenized;
 
-    int walker = 0;
-    try {
-        ast_nodes::ProgramNode tree;
-        tree.from_tokens(tokenized, walker);
+    ast_nodes::Node* tree = ast_nodes::construct(tokenized);
 
-        if(param.out_is_file){
-            (*param.out_stream) << &tree;
-            (*param.out_stream).close();
-        } else {
-            std::cout << &tree;
-        }
-
-    } catch (std::invalid_argument& ex) {
-        throw std::invalid_argument(std::format("{} at line {}, pos {}", ex.what(), tokenized[walker].line, tokenized[walker].pos));
-    } catch (std::out_of_range& ex) {
-        throw std::invalid_argument("Unexpected program end");
+    if(param.out_is_file){
+        (*param.out_stream) << tree;
+        (*param.out_stream).close();
+    } else {
+        std::cout << tree;
     }
 }

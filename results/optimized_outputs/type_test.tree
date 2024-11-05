@@ -48,7 +48,7 @@ Expression|47|(48)|()
 Unary|48|#|49|0
 Primary|49|l|50
 Literal|50|t|51
-TupleLiteral|51|(a)|(52|56)
+TupleLiteral|51|(a|)|(52|56)
 Expression|52|(53)|()
 Unary|53|#|54|0
 Primary|54|l|55

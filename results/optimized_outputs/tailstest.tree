@@ -34,7 +34,7 @@ Expression|33|(34)|()
 Unary|34|#|35|0
 Primary|35|l|36
 Literal|36|t|37
-TupleLiteral|37|(c)|(38|42)
+TupleLiteral|37|(c|)|(38|42)
 Expression|38|(39)|()
 Unary|39|#|40|0
 Primary|40|l|41

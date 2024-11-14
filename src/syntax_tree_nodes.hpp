@@ -28,7 +28,7 @@ namespace ast_nodes {
 
             virtual Node* from_tokens(std::vector<tokens::Token>& tokens, int& y) = 0;
             virtual void from_config(std::vector<Node*>& nodes, std::string& confstr) = 0;
-            virtual void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) = 0;
+            virtual void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) = 0;
             virtual void print(std::ostream& out, int indent=4, int acc_indent=0) = 0;
             virtual void machine_print(std::ostream& out) = 0;
     };
@@ -123,7 +123,7 @@ namespace ast_nodes {
                 }
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
                 bool first = true;
                 for(auto i: statements) {
@@ -132,7 +132,7 @@ namespace ast_nodes {
                     } else {
                         first = false;
                     }
-                    i->visit(at_enter, at_repeat, at_exit);
+                    i->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }
@@ -230,9 +230,9 @@ namespace ast_nodes {
                 this->child_node = nodes[std::stoll(read.first)];
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit){
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false){
                 at_enter(this);
-                this->child_node->visit(at_enter, at_repeat, at_exit);
+                this->child_node->visit(at_enter, at_repeat, at_exit, visit_body);
                 at_exit(this);
             }
 
@@ -298,7 +298,7 @@ namespace ast_nodes {
 
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
                 bool first = true;
                 for(auto i: this->vars) {
@@ -307,7 +307,7 @@ namespace ast_nodes {
                     } else {
                         first = false;
                     }
-                    i->visit(at_enter, at_repeat, at_exit);
+                    i->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }
@@ -378,9 +378,9 @@ namespace ast_nodes {
                 value = nodes[std::stoll(read.first)];
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
-                if (this->value) this->value->visit(at_enter, at_repeat, at_exit);
+                if (this->value) this->value->visit(at_enter, at_repeat, at_exit, visit_body);
                 at_exit(this);
             }
 
@@ -507,7 +507,7 @@ namespace ast_nodes {
 
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
                 bool first = true;
@@ -517,7 +517,7 @@ namespace ast_nodes {
                     } else {
                         first = false;
                     }
-                    i->visit(at_enter, at_repeat, at_exit);
+                    i->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }
@@ -661,13 +661,13 @@ namespace ast_nodes {
                 type_ind = nodes[std::stoll(read.first)];
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
-                this->primary->visit(at_enter, at_repeat, at_exit);
+                this->primary->visit(at_enter, at_repeat, at_exit, visit_body);
                 if (this->type_ind) {
                     at_repeat(this);
-                    this->type_ind->visit(at_enter, at_repeat, at_exit);
+                    this->type_ind->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
 
                 at_exit(this);
@@ -793,7 +793,7 @@ namespace ast_nodes {
                 type = read.first[0];
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
                 at_exit(this);
             }
@@ -882,15 +882,17 @@ namespace ast_nodes {
                 else_body = nodes[std::stoll(read.first)];
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
-                this->expression->visit(at_enter, at_repeat, at_exit);
-                at_repeat(this);
-                this->if_body->visit(at_enter, at_repeat, at_exit);
-                if (this->else_body) {
+                this->expression->visit(at_enter, at_repeat, at_exit, visit_body);
+                if (visit_body) {
                     at_repeat(this);
-                    this->else_body->visit(at_enter, at_repeat, at_exit);
+                    this->if_body->visit(at_enter, at_repeat, at_exit, visit_body);
+                }
+                if (visit_body && this->else_body) {
+                    at_repeat(this);
+                    this->else_body->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }
@@ -987,12 +989,14 @@ namespace ast_nodes {
                 body = nodes[std::stoll(read.first)];
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
-                this->range->visit(at_enter, at_repeat, at_exit);
-                at_repeat(this);
-                this->body->visit(at_enter, at_repeat, at_exit);
+                this->range->visit(at_enter, at_repeat, at_exit, visit_body);
+                if (visit_body) {
+                    at_repeat(this);
+                    this->body->visit(at_enter, at_repeat, at_exit, visit_body);
+                }
                 at_exit(this);
             }
 
@@ -1059,12 +1063,14 @@ namespace ast_nodes {
             }
 
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
-                this->expression->visit(at_enter, at_repeat, at_exit);
-                at_repeat(this);
-                this->body->visit(at_enter, at_repeat, at_exit);
+                this->expression->visit(at_enter, at_repeat, at_exit, visit_body);
+                if (visit_body) {
+                    at_repeat(this);
+                    this->body->visit(at_enter, at_repeat, at_exit, visit_body);
+                }
                 at_exit(this);
             }
 
@@ -1124,12 +1130,12 @@ namespace ast_nodes {
                 expression_2 = nodes[std::stoll(read.first)];
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
-                this->expression_1->visit(at_enter, at_repeat, at_exit);
+                this->expression_1->visit(at_enter, at_repeat, at_exit, visit_body);
                 at_repeat(this);
-                this->expression_2->visit(at_enter, at_repeat, at_exit);
+                this->expression_2->visit(at_enter, at_repeat, at_exit, visit_body);
                 at_exit(this);
             }
 
@@ -1270,7 +1276,7 @@ namespace ast_nodes {
                 }
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
                 if (this->type == 'v') {
@@ -1281,12 +1287,12 @@ namespace ast_nodes {
                         } else {
                             first = false;
                         }
-                        i->visit(at_enter, at_repeat, at_exit);
+                        i->visit(at_enter, at_repeat, at_exit, visit_body);
                     }
                 } else if (this->type == 'l') {
-                    this->literal->visit(at_enter, at_repeat, at_exit);
+                    this->literal->visit(at_enter, at_repeat, at_exit, visit_body);
                 } else if (this->type == 'e') {
-                    this->expression->visit(at_enter, at_repeat, at_exit);
+                    this->expression->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }
@@ -1478,7 +1484,7 @@ namespace ast_nodes {
             }
 
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
                 bool first = true;
@@ -1488,7 +1494,7 @@ namespace ast_nodes {
                         //std::cout << "SUBSCRIPT: " << reinterpret_cast<std::uintptr_t>(subscript) << std::endl;
                         //std::cout << "SUB IS NULL: " << (subscript == nullptr) << std::endl;
                         //std::cout << typeid(*subscript).name() << std::endl;
-                        this->subscript->visit(at_enter, at_repeat, at_exit);
+                        this->subscript->visit(at_enter, at_repeat, at_exit, visit_body);
 
                         break;
                     case 'p':
@@ -1498,7 +1504,7 @@ namespace ast_nodes {
                             } else {
                                 first = false;
                             }
-                            i->visit(at_enter, at_repeat, at_exit);
+                            i->visit(at_enter, at_repeat, at_exit, visit_body);
                         }
                         break;
                 }
@@ -1608,7 +1614,7 @@ namespace ast_nodes {
                 }
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
                 bool first = true;
@@ -1618,7 +1624,7 @@ namespace ast_nodes {
                     } else {
                         first = false;
                     }
-                    i->visit(at_enter, at_repeat, at_exit);
+                    i->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }
@@ -1677,10 +1683,10 @@ namespace ast_nodes {
 
 
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
-                this->value->visit(at_enter, at_repeat, at_exit);
+                this->value->visit(at_enter, at_repeat, at_exit, visit_body);
                 at_exit(this);
             }
 
@@ -1822,18 +1828,18 @@ namespace ast_nodes {
                 }
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
                 switch (this->type) {
                     case 'a':
-                        this->array_val->visit(at_enter, at_repeat, at_exit);
+                        this->array_val->visit(at_enter, at_repeat, at_exit, visit_body);
                         break;
                     case 't':
-                        this->tuple_val->visit(at_enter, at_repeat, at_exit);
+                        this->tuple_val->visit(at_enter, at_repeat, at_exit, visit_body);
                         break;
                     case 'f':
-                        this->func_val->visit(at_enter, at_repeat, at_exit);
+                        this->func_val->visit(at_enter, at_repeat, at_exit, visit_body);
                         break;
                 }
                 at_exit(this);
@@ -1966,7 +1972,7 @@ namespace ast_nodes {
                 }
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
                 bool first = true;
@@ -1976,7 +1982,7 @@ namespace ast_nodes {
                     } else {
                         first = false;
                     }
-                    i->visit(at_enter, at_repeat, at_exit);
+                    i->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }
@@ -2079,7 +2085,7 @@ namespace ast_nodes {
                 }
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
                 bool first = true;
@@ -2089,7 +2095,7 @@ namespace ast_nodes {
                     } else {
                         first = false;
                     }
-                    i->visit(at_enter, at_repeat, at_exit);
+                    i->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }
@@ -2217,16 +2223,17 @@ namespace ast_nodes {
                 }
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
-
-                switch (this->type) {
-                    case 'b':
-                        this->body->visit(at_enter, at_repeat, at_exit);
-                        break;
-                    case 'l':
-                        this->expression->visit(at_enter, at_repeat, at_exit);
-                        break;
+                if (visit_body) {
+                    switch (this->type) {
+                        case 'b':
+                            this->body->visit(at_enter, at_repeat, at_exit, visit_body);
+                            break;
+                        case 'l':
+                            this->expression->visit(at_enter, at_repeat, at_exit, visit_body);
+                            break;
+                    }
                 }
                 at_exit(this);
             }
@@ -2317,12 +2324,12 @@ namespace ast_nodes {
                 expression = nodes[std::stoll(read.first)];
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
-                this->primary->visit(at_enter, at_repeat, at_exit);
+                this->primary->visit(at_enter, at_repeat, at_exit, visit_body);
                 at_repeat(this);
-                this->expression->visit(at_enter, at_repeat, at_exit);
+                this->expression->visit(at_enter, at_repeat, at_exit, visit_body);
                 at_exit(this);
             }
 
@@ -2387,7 +2394,7 @@ namespace ast_nodes {
                 }
             }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit) {
+            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
                 at_enter(this);
 
                 bool first = true;
@@ -2397,7 +2404,7 @@ namespace ast_nodes {
                     } else {
                         first = false;
                     }
-                    i->visit(at_enter, at_repeat, at_exit);
+                    i->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }

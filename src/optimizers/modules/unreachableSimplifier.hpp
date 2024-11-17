@@ -15,34 +15,23 @@ namespace optimizers {
             ast_nodes::ReturnNode* return_node = dynamic_cast<ast_nodes::ReturnNode*>(node);
 
             if (return_node != nullptr) {
-                ast_nodes::StatementNode* statement_node = dynamic_cast<ast_nodes::StatementNode*>(return_node->parent);
-                if (statement_node == nullptr) {
-                    return;
-                }
-
-                ast_nodes::ProgramNode*    programm_node =             dynamic_cast<ast_nodes::ProgramNode*>  (statement_node->parent);
-                ast_nodes::BodyNode*       body_node =                 dynamic_cast<ast_nodes::BodyNode*>     (statement_node->parent);
+                //std::cout << (return_node->parent == nullptr) << std::endl;
+                //std::cout << return_node->parent->id << std::endl;
+                ast_nodes::BodyNode*       body_node =                 dynamic_cast<ast_nodes::BodyNode*>     (return_node->parent);
 
                 std::vector<ast_nodes::Node*> statements_to_change;
                 std::vector<ast_nodes::Node*> resulting_statements;
 
-                if (programm_node != nullptr) {
-                    statements_to_change = programm_node->statements;
-                } else {
-                    statements_to_change = body_node->statements;
-                }
+                statements_to_change = body_node->statements;
 
                 for (auto & i : statements_to_change) {
                     resulting_statements.push_back(i);
-                    if (i == statement_node) {
+                    if (i == node) {
                         break;
                     }
                 }
-                if (programm_node != nullptr) {
-                    programm_node->statements = resulting_statements;
-                } else {
-                    body_node->statements = resulting_statements;
-                }
+
+                body_node->statements = resulting_statements;
             }
         }
 

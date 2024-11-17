@@ -1,55 +1,47 @@
-Program|1|(2|22|42)
-Statement|2|i|3
-If|3|4|8|15
-Expression|4|(5)|()
-Unary|5|#|6|0
-Primary|6|l|7
-Literal|7|b|1
-Body|8|(9)
-Statement|9|p|10
-Print|10|(11)
-Expression|11|(12)|()
-Unary|12|#|13|0
-Primary|13|l|14
-Literal|14|s|True it is
-Body|15|(16)
-Statement|16|p|17
-Print|17|(18)
-Expression|18|(19)|()
-Unary|19|#|20|0
-Primary|20|l|21
-Literal|21|s|False it must be
-Statement|22|i|23
-If|23|24|28|35
-Expression|24|(25)|()
-Unary|25|#|26|0
-Primary|26|l|27
-Literal|27|b|0
-Body|28|(29)
-Statement|29|p|30
-Print|30|(31)
-Expression|31|(32)|()
-Unary|32|#|33|0
-Primary|33|l|34
-Literal|34|s|True it is
-Body|35|(36)
-Statement|36|p|37
-Print|37|(38)
-Expression|38|(39)|()
-Unary|39|#|40|0
-Primary|40|l|41
-Literal|41|s|False it must be
-Statement|42|i|43
-If|43|44|48|0
-Expression|44|(45)|()
-Unary|45|#|46|0
-Primary|46|l|47
-Literal|47|b|0
-Body|48|(49)
-Statement|49|p|50
-Print|50|(51)
-Expression|51|(52)|()
-Unary|52|#|53|0
-Primary|53|l|54
-Literal|54|s|True it is
+Body|1|(2|19|36)
+If|2|3|7|13
+Expression|3|(4)|()
+Unary|4|#|5|#
+Primary|5|l|6
+Literal|6|b|1
+Body|7|(8)
+Print|8|(9)
+Expression|9|(10)|()
+Unary|10|#|11|#
+Primary|11|l|12
+Literal|12|s|True it is
+Body|13|(14)
+Print|14|(15)
+Expression|15|(16)|()
+Unary|16|#|17|#
+Primary|17|l|18
+Literal|18|s|False it must be
+If|19|20|24|30
+Expression|20|(21)|()
+Unary|21|#|22|#
+Primary|22|l|23
+Literal|23|b|0
+Body|24|(25)
+Print|25|(26)
+Expression|26|(27)|()
+Unary|27|#|28|#
+Primary|28|l|29
+Literal|29|s|True it is
+Body|30|(31)
+Print|31|(32)
+Expression|32|(33)|()
+Unary|33|#|34|#
+Primary|34|l|35
+Literal|35|s|False it must be
+If|36|37|41|0
+Expression|37|(38)|()
+Unary|38|#|39|#
+Primary|39|l|40
+Literal|40|b|0
+Body|41|(42)
+Print|42|(43)
+Expression|43|(44)|()
+Unary|44|#|45|#
+Primary|45|l|46
+Literal|46|s|True it is
 END|-1

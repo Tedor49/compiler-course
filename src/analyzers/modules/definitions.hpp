@@ -17,14 +17,15 @@ namespace analyzers {
         std::vector<std::vector<std::string>> scopes;
 
         void at_enter (ast_nodes::Node* node) {
-            ast_nodes::VariableDefinitionNode* vardef_node = dynamic_cast<ast_nodes::VariableDefinitionNode*>(node); // .identifier
+            ast_nodes::DeclarationNode* decl_node = dynamic_cast<ast_nodes::DeclarationNode*>(node); // .identifier
             ast_nodes::ForNode* for_node = dynamic_cast<ast_nodes::ForNode*>(node); // .identifier
             ast_nodes::PrimaryNode* primary_node = dynamic_cast<ast_nodes::PrimaryNode*>(node); // .identifier
             ast_nodes::FunctionNode* func_node = dynamic_cast<ast_nodes::FunctionNode*>(node); // .params
             ast_nodes::BodyNode* body_node = dynamic_cast<ast_nodes::BodyNode*>(node);
 
-            if (vardef_node != nullptr) {
-                scopes.back().push_back(vardef_node->identifier);
+            if (decl_node != nullptr) {
+                for(auto i : decl_node->identifiers)
+                    scopes.back().push_back(i);
             } else if (for_node != nullptr) {
                 scope_wraps.push_back(node->id);
                 scopes.push_back(std::vector<std::string>());

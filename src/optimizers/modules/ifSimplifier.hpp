@@ -31,17 +31,12 @@ namespace optimizers {
                     return;
                 }
 
-                ast_nodes::ProgramNode*    programm_node =             dynamic_cast<ast_nodes::ProgramNode*>  (node->parent->parent);
-                ast_nodes::BodyNode*       body_node =                 dynamic_cast<ast_nodes::BodyNode*>     (node->parent->parent);
+                ast_nodes::BodyNode*       body_node =                 dynamic_cast<ast_nodes::BodyNode*>     (node->parent);
 
                 std::vector<ast_nodes::Node*> statements_to_change;
                 std::vector<ast_nodes::Node*> resulting_statements;
 
-                if (programm_node != nullptr) {
-                    statements_to_change = programm_node->statements;
-                } else {
-                    statements_to_change = body_node->statements;
-                }
+                statements_to_change = body_node->statements;
 
         //        cout << "If node with True or False detected at " << nodes << endl;
 
@@ -49,7 +44,7 @@ namespace optimizers {
                     ast_nodes::BodyNode* if_body_node = dynamic_cast<ast_nodes::BodyNode*> (if_node->if_body);
 
                     for (auto & i : statements_to_change) {
-                        if (i == node->parent) {
+                        if (i == node) {
                             for (auto & j : if_body_node->statements) {
                                 resulting_statements.push_back(j);
                             }
@@ -57,33 +52,25 @@ namespace optimizers {
                             resulting_statements.push_back(i);
                         }
                     }
-                    if (programm_node != nullptr) {
-                        programm_node->statements = resulting_statements;
-                    } else {
-                        body_node->statements = resulting_statements;
-                    }
+                    body_node->statements = resulting_statements;
                     return;
                 } else {
                     if (if_node->else_body == nullptr) {
                         for (auto & i : statements_to_change) {
-                            if (i == node->parent) {
+                            if (i == node) {
                                 continue;
                             } else {
                                 resulting_statements.push_back(i);
                             }
                         }
-                        if (programm_node != nullptr) {
-                            programm_node->statements = resulting_statements;
-                        } else {
-                            body_node->statements = resulting_statements;
-                        }
+                        body_node->statements = resulting_statements;
                         return;
                     }
 
                     ast_nodes::BodyNode* else_body_node = dynamic_cast<ast_nodes::BodyNode*> (if_node->else_body);
 
                     for (auto & i : statements_to_change) {
-                        if (i == node->parent) {
+                        if (i == node) {
                             for (auto & j : else_body_node->statements) {
                                 resulting_statements.push_back(j);
                             }
@@ -91,11 +78,7 @@ namespace optimizers {
                             resulting_statements.push_back(i);
                         }
                     }
-                    if (programm_node != nullptr) {
-                        programm_node->statements = resulting_statements;
-                    } else {
-                        body_node->statements = resulting_statements;
-                    }
+                    body_node->statements = resulting_statements;
                     return;
                 }
             }

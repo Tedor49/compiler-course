@@ -76,133 +76,72 @@ namespace ast_nodes {
 
     class DeclarationNode: public Node {
         public:
-            std::vector<std::string> identifiers;
-            std::vector<Node*> values;
+        std::string identifier;
+        Node* value = nullptr;
 
-            Node* from_tokens(std::vector<tokens::Token>& tokens, int& y){
-                while (1) {
-                    switch (tokens[y].type) {
-                        case tokens::TokenCode::tkIdentifier:
-                            this->identifiers.push_back(tokens[y].valStr);
-                            this->values.push_back(nullptr);
-                            ++y;
+        Node* from_tokens(std::vector<tokens::Token>& tokens, int& y){
+            this->identifier = tokens[y].valStr;
+            ++y;
 
-                            switch (tokens[y].type) {
-                                case tokens::TokenCode::tkComma:
-                                    ++y;
-                                    continue;
-                                case tokens::TokenCode::tkLineEnd:
-                                    return this;
-                                case tokens::TokenCode::tkAssignment:
-                                    ++y;
-                                    this->values.back() = createNodeFromTokens("Expression", tokens, y);
-                                    break;
-                                default:
-                                    throw std::invalid_argument("Unexpected value, expected :=");
-                            }
-                            break;
-                        default:
-                            throw std::invalid_argument("Not a variable definition");
-                    }
-                    switch (tokens[y].type) {
-                        case tokens::TokenCode::tkComma:
-                            ++y;
-                            continue;
-                        case tokens::TokenCode::tkLineEnd:
-                            return this;
-                        default:
-                            throw std::invalid_argument("Unexpected value, expected either a comma or line end");
-                    }
-                }
+            switch (tokens[y].type) {
+                case tokens::TokenCode::tkComma:
+                case tokens::TokenCode::tkLineEnd:
+                    return this;
+                case tokens::TokenCode::tkAssignment:
+                    ++y;
+                    this->value = createNodeFromTokens("Expression", tokens, y);
+                    break;
+                default:
+                    throw std::invalid_argument("Unexpected value, expected :=");
             }
+            return this;
+        }
 
-            void from_config(std::vector<Node*>& nodes, std::string& confstr) {
-                std::stringstream s(confstr);
+        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+            std::stringstream s(confstr);
 
-                char trash;
+            char trash;
 
-                std::pair<std::string, char> read;
-                read_until_delim(s, read);
+            std::pair<std::string, char> read;
 
-                id = std::stoll(read.first);
+            read_until_delim(s, read);
+            id = std::stoll(read.first);
 
-                s >> trash;
-                read_until_delim(s, read);
-                while (read.second != ')') {
-                    identifiers.push_back(read.first);
-                    read_until_delim(s, read);
-                }
-                if (read.first != "") {
-                    identifiers.push_back(read.first);
-                }
-                s >> trash;
+            read_until_delim(s, read);
+            identifier = read.first;
 
-                s >> trash;
-                read_until_delim(s, read);
-                while (read.second != ')') {
-                    values.push_back(nodes[std::stoll(read.first)]);
-                    read_until_delim(s, read);
-                }
-                if (read.first != "") {
-                    values.push_back(nodes[std::stoll(read.first)]);
-                }
+            read_until_delim(s, read);
+            value = nodes[std::stoll(read.first)];
+        }
 
+        void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=false) {
+            at_enter(this);
+            if (this->value) this->value->visit(at_enter, at_repeat, at_exit, visit_body);
+            at_exit(this);
+        }
+
+        void print(std::ostream& out, int indent=4, int acc_indent=0){
+            out << std::string(acc_indent, ' ') << "VariableDefinition{\n";
+            out << std::string(acc_indent+indent, ' ') << "Identifier: " << this->identifier << "\n";
+            out << std::string(acc_indent+indent, ' ') << "Value:";
+            if (this->value) {
+                out << "\n";
+                this->value->print(out, indent, acc_indent+indent*2);
+            } else {
+                out << " Empty\n";
             }
+            out << std::string(acc_indent, ' ') << "}\n";
+        }
 
-            void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=true) {
-                at_enter(this);
-
-                bool first = true;
-                for(auto i : this->values) {
-                    if (i != nullptr) {
-                        if (!first) {
-                            at_repeat(this);
-                        } else {
-                            first = false;
-                        }
-                        i->visit(at_enter, at_repeat, at_exit, visit_body);
-                    }
-                }
-                at_exit(this);
+        void machine_print(std::ostream& out){
+            out << "VariableDefinition|" << id << "|" << identifier << "|";
+            if (value) {
+                out << value->id << "\n";
+                value->machine_print(out);
+            } else {
+                out << "0\n";
             }
-
-            void print(std::ostream& out, int indent=4, int acc_indent=0){
-                out << std::string(acc_indent, ' ') << "Declaration{\n";
-                out << std::string(acc_indent+indent, ' ') << "EntriesAmount: " << this->values.size() << "\n";
-                for(int i = 0; i < this->values.size(); ++i){
-                    out << std::string(acc_indent+indent, ' ') << "Identifier " << i+1 << ": \"" << this->identifiers[i] << "\"\n";
-                    out << std::string(acc_indent+indent, ' ') << "Value " << i+1 << ":";
-                    if (this->values[i] != nullptr) {
-                        out << "\n";
-                        this->values[i]->print(out, indent, acc_indent+indent*2);
-                    } else {
-                        out << "None\n";
-                    }
-                }
-                out << std::string(acc_indent, ' ') << "}\n";
-            }
-
-            void machine_print(std::ostream& out){
-                out << "Declaration|" << id << "|(";
-                for(int i = 0; i < identifiers.size(); ++i) {
-                    if (i) out << "|";
-                    out << identifiers[i];
-                }
-                out << ")|(";
-                for(int i = 0; i < values.size(); ++i) {
-                    if (i) out << "|";
-                    if(values[i] != nullptr) {
-                        out << values[i]->id;
-                    } else {
-                        out << 0;
-                    }
-                }
-                out << ")\n";
-
-                for(auto i: values) {
-                    if (i != nullptr) i->machine_print(out);
-                }
-            }
+        }
     };
 
     class ExpressionNode: public Node {
@@ -1956,8 +1895,10 @@ namespace ast_nodes {
 
                     switch (tokens[y].type) {
                         case tokens::TokenCode::tkVar:
-                            ++y;
-                            statements.push_back(createNodeFromTokens("Declaration", tokens, y));
+                            do {
+                                ++y;
+                                statements.push_back(createNodeFromTokens("Declaration", tokens, y));
+                            } while (tokens[y].type == tokens::TokenCode::tkComma);
                             break;
                         case tokens::TokenCode::tkIdentifier:
                             statements.push_back(createNodeFromTokens("Assignment", tokens, y));

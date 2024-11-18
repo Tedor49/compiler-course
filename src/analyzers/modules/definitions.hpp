@@ -24,8 +24,7 @@ namespace analyzers {
             ast_nodes::BodyNode* body_node = dynamic_cast<ast_nodes::BodyNode*>(node);
 
             if (decl_node != nullptr) {
-                for(auto i : decl_node->identifiers)
-                    scopes.back().push_back(i);
+                scopes.back().push_back(decl_node->identifier);
             } else if (for_node != nullptr) {
                 scope_wraps.push_back(node->id);
                 scopes.push_back(std::vector<std::string>());

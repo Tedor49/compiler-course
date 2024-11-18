@@ -1,5 +1,5 @@
 Body|1|(2|90|94|100|121)
-Declaration|2|(bubble_sort)|(3)
+VariableDefinition|2|bubble_sort|3
 Expression|3|(4)|()
 Unary|4|#|5|#
 Primary|5|l|6
@@ -47,7 +47,7 @@ Unary|46|#|47|#
 Primary|47|l|48
 Literal|48|i|1
 Body|49|(50|61|77)
-Declaration|50|(c)|(51)
+VariableDefinition|50|c|51
 Expression|51|(52)|()
 Unary|52|#|53|#
 Primary|53|v|arr|(54)
@@ -87,11 +87,11 @@ Return|86|87
 Expression|87|(88)|()
 Unary|88|#|89|#
 Primary|89|v|arr|()
-Declaration|90|(arrlen)|(91)
+VariableDefinition|90|arrlen|91
 Expression|91|(92)|()
 Unary|92|#|93|#
 Primary|93|i
-Declaration|94|(arr)|(95)
+VariableDefinition|94|arr|95
 Expression|95|(96)|()
 Unary|96|#|97|#
 Primary|97|l|98

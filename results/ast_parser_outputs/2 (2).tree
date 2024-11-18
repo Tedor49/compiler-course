@@ -1,5 +1,5 @@
 Body|1|(2|3|15|21|33|39|51|57|69|88)
-Declaration|2|(x)|(0)
+VariableDefinition|2|x|0
 Print|3|(4|8|11)
 Expression|4|(5)|()
 Unary|5|#|6|#

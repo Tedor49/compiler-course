@@ -1,5 +1,5 @@
 Body|1|(2|24)
-Declaration|2|(tribonacci)|(3)
+VariableDefinition|2|tribonacci|3
 Expression|3|(4)|()
 Unary|4|#|5|#
 Primary|5|l|6
@@ -21,7 +21,7 @@ Expression|20|(21)|()
 Unary|21|#|22|#
 Primary|22|l|23
 Literal|23|s|After return
-Declaration|24|(x)|(25)
+VariableDefinition|24|x|25
 Expression|25|(26)|()
 Unary|26|#|27|#
 Primary|27|v|tribonacci|(28)

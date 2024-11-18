@@ -1,12 +1,12 @@
 Body|1|(2|48|60|78)
-Declaration|2|(map)|(3)
+VariableDefinition|2|map|3
 Expression|3|(4)|()
 Unary|4|#|5|#
 Primary|5|l|6
 Literal|6|f|7
 Function|7|b|(apply|n|arr)|8
 Body|8|(9|15|44)
-Declaration|9|(ans)|(10)
+VariableDefinition|9|ans|10
 Expression|10|(11)|()
 Unary|11|#|12|#
 Primary|12|l|13
@@ -45,7 +45,7 @@ Return|44|45
 Expression|45|(46)|()
 Unary|46|#|47|#
 Primary|47|v|ans|()
-Declaration|48|(inc2by)|(49)
+VariableDefinition|48|inc2by|49
 Expression|49|(50)|()
 Unary|50|#|51|#
 Primary|51|l|52
@@ -57,7 +57,7 @@ Primary|56|v|x|()
 Unary|57|#|58|#
 Primary|58|l|59
 Literal|59|i|2
-Declaration|60|(array)|(61)
+VariableDefinition|60|array|61
 Expression|61|(62)|()
 Unary|62|#|63|#
 Primary|63|l|64

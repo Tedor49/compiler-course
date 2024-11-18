@@ -1,5 +1,5 @@
 Body|1|(2|105|171|193|198)
-Declaration|2|(types)|(3)
+VariableDefinition|2|types|3
 Expression|3|(4)|()
 Unary|4|#|5|#
 Primary|5|l|6
@@ -102,7 +102,7 @@ Literal|101|r|0.1
 Unary|102|#|103|#
 Primary|103|l|104
 Literal|104|r|0.1
-Declaration|105|(names)|(106)
+VariableDefinition|105|names|106
 Expression|106|(107)|()
 Unary|107|#|108|#
 Primary|108|l|109

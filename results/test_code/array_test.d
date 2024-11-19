@@ -1,6 +1,6 @@
 var arr := []
 arr[10] := "hello"
-arr[100] := {a:=10, arr[10]*2, c:=true xor false}
+arr[100] := {a:=10, arr[10], c:=true xor false}
 arr[1000] := func(a, b) is
 		return a + b
 		end

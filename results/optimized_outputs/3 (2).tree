@@ -1,5 +1,5 @@
 Body|1|(2|20|49|78|100|113)
-Declaration|2|(x)|(3)
+Declaration|2|x|3
 Expression|3|(4)|()
 Unary|4|#|5|#
 Primary|5|l|6

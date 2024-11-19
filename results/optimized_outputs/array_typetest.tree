@@ -1,5 +1,5 @@
 Body|1|(2|16|35|69|84|112|122|137|144)
-Declaration|2|(arr1)|(3)
+Declaration|2|arr1|3
 Expression|3|(4)|()
 Unary|4|#|5|#
 Primary|5|l|6
@@ -13,7 +13,7 @@ Expression|12|(13)|()
 Unary|13|#|14|#
 Primary|14|l|15
 Literal|15|s|hi
-Declaration|16|(arr2)|(17)
+Declaration|16|arr2|17
 Expression|17|(18)|()
 Unary|18|#|19|#
 Primary|19|l|20

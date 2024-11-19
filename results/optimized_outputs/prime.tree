@@ -1,12 +1,12 @@
 Body|1|(2|58|63)
-Declaration|2|(prime)|(3)
+Declaration|2|prime|3
 Expression|3|(4)|()
 Unary|4|#|5|#
 Primary|5|l|6
 Literal|6|f|7
 Function|7|b|(n)|8
 Body|8|(9|14|53)
-Declaration|9|(k)|(10)
+Declaration|9|k|10
 Expression|10|(11)|()
 Unary|11|#|12|#
 Primary|12|l|13
@@ -55,7 +55,7 @@ Expression|54|(55)|()
 Unary|55|#|56|#
 Primary|56|l|57
 Literal|57|b|1
-Declaration|58|(x)|(59)
+Declaration|58|x|59
 Expression|59|(60)|()
 Unary|60|#|61|#
 Primary|61|l|62

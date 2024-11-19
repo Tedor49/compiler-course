@@ -121,7 +121,7 @@ namespace ast_nodes {
         }
 
         void print(std::ostream& out, int indent=4, int acc_indent=0){
-            out << std::string(acc_indent, ' ') << "VariableDefinition{\n";
+            out << std::string(acc_indent, ' ') << "Declaration{\n";
             out << std::string(acc_indent+indent, ' ') << "Identifier: " << this->identifier << "\n";
             out << std::string(acc_indent+indent, ' ') << "Value:";
             if (this->value) {
@@ -134,7 +134,7 @@ namespace ast_nodes {
         }
 
         void machine_print(std::ostream& out){
-            out << "VariableDefinition|" << id << "|" << identifier << "|";
+            out << "Declaration|" << id << "|" << identifier << "|";
             if (value) {
                 out << value->id << "\n";
                 value->machine_print(out);
@@ -1677,8 +1677,6 @@ namespace ast_nodes {
 
             Node* body;
 
-            Node* expression;
-
             Node* from_tokens(std::vector<tokens::Token>& tokens, int& y){
                 if (tokens[y].type != tokens::TokenCode::tkBracketNormalLeft) {
                     throw std::invalid_argument("Expected iteration variable name");
@@ -1709,7 +1707,7 @@ namespace ast_nodes {
                 } else if (tokens[y].type == tokens::TokenCode::tkLambda) {
                     this->type = 'l';
                     ++y;
-                    this->expression = createNodeFromTokens("Expression", tokens, y);
+                    this->body = createNodeFromTokens("Expression", tokens, y);
                 }
                 return this;
             }
@@ -1737,33 +1735,19 @@ namespace ast_nodes {
                     params.push_back(read.first);
                 }
                 s >> trash;
-
-                switch (type) {
-                    case 'b':
-                        read_until_delim(s, read);
-                        body = nodes[std::stoll(read.first)];
-                        break;
-                    case 'l':
-                        read_until_delim(s, read);
-                        expression = nodes[std::stoll(read.first)];
-                        break;
-                    default:
-                        throw std::invalid_argument("Expected valid type");
-
-                }
+				
+				if (type != 'b' && type != 'l') {
+					throw std::invalid_argument("Expected valid type");
+				}
+				
+				read_until_delim(s, read);
+                body = nodes[std::stoll(read.first)];
             }
 
             void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=true) {
                 at_enter(this);
                 if (visit_body) {
-                    switch (this->type) {
-                        case 'b':
-                            this->body->visit(at_enter, at_repeat, at_exit, visit_body);
-                            break;
-                        case 'l':
-                            this->expression->visit(at_enter, at_repeat, at_exit, visit_body);
-                            break;
-                    }
+                    this->body->visit(at_enter, at_repeat, at_exit, visit_body);
                 }
                 at_exit(this);
             }
@@ -1788,7 +1772,7 @@ namespace ast_nodes {
                             out << std::string(acc_indent+indent, ' ') << "Parameter " << i+1 << ": \"" << params[i] << "\"\n";
                         }
                         out << std::string(acc_indent+indent, ' ') << "Expression:\n";
-                        this->expression->print(out, indent, acc_indent+indent*2);
+                        this->body->print(out, indent, acc_indent+indent*2);
                         break;
                 }
                 out << std::string(acc_indent, ' ') << "}\n";
@@ -1801,16 +1785,8 @@ namespace ast_nodes {
                     out << params[i];
                 }
                 out << ")|";
-                switch (type) {
-                    case 'b':
-                        out << body->id << "\n";
-                        body->machine_print(out);
-                        break;
-                    case 'l':
-                        out << expression->id << "\n";
-                        expression->machine_print(out);
-                        break;
-                }
+                out << body->id << "\n";
+                body->machine_print(out);
             }
     };
 
@@ -1895,7 +1871,7 @@ namespace ast_nodes {
 
                     switch (tokens[y].type) {
                         case tokens::TokenCode::tkVar:
-                            do {
+							do {
                                 ++y;
                                 statements.push_back(createNodeFromTokens("Declaration", tokens, y));
                             } while (tokens[y].type == tokens::TokenCode::tkComma);

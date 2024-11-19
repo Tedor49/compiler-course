@@ -1,5 +1,5 @@
 Body|1|(2|7|15|20|27|35|41|47|57|72|89|97|108|121)
-VariableDefinition|2|x|3
+Declaration|2|x|3
 Expression|3|(4)|()
 Unary|4|#|5|#
 Primary|5|l|6
@@ -12,7 +12,7 @@ Expression|11|(12)|()
 Unary|12|#|13|#
 Primary|13|l|14
 Literal|14|s|\n
-VariableDefinition|15|y|16
+Declaration|15|y|16
 Expression|16|(17)|()
 Unary|17|#|18|#
 Primary|18|l|19

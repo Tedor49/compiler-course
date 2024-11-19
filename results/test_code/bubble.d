@@ -2,7 +2,7 @@ var bubble_sort := func(arrlen, arr) is
 	for i in 1 .. arrlen - 1 loop
         for j in 1 .. arrlen - i loop
             if arr[j] > arr[j + 1] then
-                var c := arr[j+1]
+                var c := +arr[j+1]
 				arr[j+1] := arr[j]
 				arr[j] := c
             end

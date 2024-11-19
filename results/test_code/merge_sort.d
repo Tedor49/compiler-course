@@ -7,15 +7,25 @@ var slice := func(arr, l, r) is
 end
 
 var merge := func(h1, l1, h2, l2) is
-	var merged := [], y1 := 0
+	//print l1, h1, " ", l2, h2, "\n";
+	
+	var merged := [], y1 := 1
+	var flag := true;
 	for y2 in 1 .. l2 loop
-		while y1 <= l1 and h1[y1] < h2[y2] loop
-			merged := merged + [h1[y1]]
+		flag := true;
+		while y1 <= l1 and flag loop
+			if h1[y1] < h2[y2] then				
+				merged := merged + [h1[y1]]
+				y1 := y1 + 1
+			else
+				flag := false
+			end
 		end
 		merged := merged + [h2[y2]]
 	end
 	while y1 <= l1 loop
 		merged := merged + [h1[y1]]
+		y1 := y1 + 1
 	end	
 	return merged
 end

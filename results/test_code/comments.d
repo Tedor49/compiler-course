@@ -1,4 +1,4 @@
-var a,b 
+var a:=0,b:=0 
 
 print "abcdefghijklmnopqrstvuwxyz", "1234567890"  // This is a comment
 print "abcdefghijklmnopqrstvuwxyz", "1234567890"  //This is a comment

@@ -1,6 +1,6 @@
 Body|1|(2|3|4|13|22|27|33|42|51|60|69)
-VariableDefinition|2|a|0
-VariableDefinition|3|b|0
+Declaration|2|a|0
+Declaration|3|b|0
 Print|4|(5|9)
 Expression|5|(6)|()
 Unary|6|#|7|#
@@ -24,7 +24,7 @@ Expression|23|(24)|()
 Unary|24|#|25|#
 Primary|25|l|26
 Literal|26|s|lol
-VariableDefinition|27|x|28
+Declaration|27|x|28
 Expression|28|(29|31)|(+)
 Unary|29|#|30|#
 Primary|30|v|a|()

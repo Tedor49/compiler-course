@@ -6,6 +6,7 @@
 #include "syntax_tree_nodes.hpp"
 #include "analyzers/analyze.hpp"
 #include "optimizers/optimize.hpp"
+#include "interpreter.hpp"
 
 int main(int argc, char *argv[]) {
     cmd_utils::input_params param;
@@ -26,10 +27,5 @@ int main(int argc, char *argv[]) {
     analyzers::analyze(tree, &std::cout);
     for (int iter = 0; iter < 3; ++iter) optimizers::optimize(tree, &std::cout);
 
-    if(param.out_is_file){
-        (*param.out_stream) << tree;
-        (*param.out_stream).close();
-    } else {
-        std::cout << tree;
-    }
+    interpreter::execute(tree, &std::cout);
 }

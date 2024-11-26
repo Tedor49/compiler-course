@@ -9,7 +9,7 @@
 #include <map>
 #include <unordered_map>
 
-#include "syntax_tree_nodes.hpp"
+#include "ast_lib.hpp"
 
 namespace arithmetic {
     struct AmbiguousVariable {

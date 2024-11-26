@@ -1,4 +1,4 @@
-#include "../syntax_tree_nodes.hpp"
+#include "../ast_lib.hpp"
 #include "../optimizers/optimize.hpp"
 #include "../cmd_utils.hpp"
 

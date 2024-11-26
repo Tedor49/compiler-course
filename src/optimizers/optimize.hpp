@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 
-#include "../syntax_tree_nodes.hpp"
+#include "../ast_lib.hpp"
 #include "./modules/ifSimplifier.hpp"
 #include "./modules/unreachableSimplifier.hpp"
 

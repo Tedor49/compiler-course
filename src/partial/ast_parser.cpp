@@ -1,8 +1,7 @@
 #include <vector>
 #include <format>
 
-#include "../token_data.hpp"
-#include "../syntax_tree_nodes.hpp"
+#include "../ast_lib.hpp"
 #include "../cmd_utils.hpp"
 
 int main(int argc, char *argv[]){

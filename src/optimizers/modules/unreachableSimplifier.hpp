@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../../syntax_tree_nodes.hpp"
+#include "../../ast_lib.hpp"
 
 namespace optimizers {
     namespace unreachable_simplifier {

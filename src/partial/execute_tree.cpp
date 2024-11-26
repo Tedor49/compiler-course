@@ -1,5 +1,4 @@
-#include "../syntax_tree_nodes.hpp"
-#include "../interpreter.hpp"
+#include "../ast_lib.hpp"
 #include "../cmd_utils.hpp"
 
 int main(int argc, char *argv[]) {
@@ -8,5 +7,5 @@ int main(int argc, char *argv[]) {
 
     ast_nodes::Node* tree = ast_nodes::readTree(*param.in_stream);
 
-    interpreter::execute(tree, &std::cout);
+    ast_nodes::execute(tree, std::cin, std::cout);
 }

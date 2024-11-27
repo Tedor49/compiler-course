@@ -49,7 +49,7 @@ Literal|48|i|1
 Body|49|(50|61|77)
 Declaration|50|c|51
 Expression|51|(52)|()
-Unary|52|#|53|#
+Unary|52|+|53|#
 Primary|53|v|arr|(54)
 Tail|54|s|55
 Expression|55|(56|58)|(+)

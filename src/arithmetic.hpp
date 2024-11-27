@@ -22,6 +22,7 @@ namespace arithmetic {
         std::unordered_map<std::string, long long> tuple_identifiers;
         std::vector<AmbiguousVariable*> array_values;
         ast_nodes::FunctionNode* function_pointer;
+        std::unordered_map<std::string, AmbiguousVariable*> function_scope;
 
     };
 

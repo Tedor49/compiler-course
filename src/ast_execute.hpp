@@ -33,7 +33,12 @@ namespace ast_nodes {
 			//out << i.first << std::endl;
 			//out << i.second << std::endl;
 			//out << "WHAT THE SIGMA" << std::endl;
-			out << '\t' << i.first << ' ' << *i.second << std::endl;
+            if(i.second != nullptr) {
+                out << '\t' << i.first << ' ' << *i.second << std::endl;
+
+            } else {
+                out << '\t' << i.first << ' ' << 0 << std::endl;
+            }
 		}
 		out << "END OF SCOPE" << std::endl;
 		return out;
@@ -60,6 +65,12 @@ namespace ast_nodes {
 	}
 	
     arithmetic::AmbiguousVariable* get_variable (std::string identifier) {
+        //std::cout << "BEGINNING OF SCOPES" << std::endl;
+        //for (auto i : scopes) {
+        //	std::cout << i << std::endl;
+        //}
+        //std::cout << "END OF SCOPES" << std::endl;
+
         for (int i = (signed)(scopes.size()) - 1; i >= 0; --i) {
             if (scopes[i].variables.count(identifier)) {
                 return scopes[i].variables[identifier];
@@ -106,6 +117,12 @@ namespace ast_nodes {
 			i->execute(in, out);
 			calced_terms.push_back(scopes.back().intermediates[i->id]);
 		}
+
+        //std::cout << "BEGINNING OF SCOPES" << std::endl;
+        //for (auto i : scopes) {
+        //    std::cout << i << std::endl;
+        //}
+        //std::cout << "END OF SCOPES" << std::endl;
 
         scopes.back().intermediates[id] = evaluate_expression(calced_terms, ops);
     }
@@ -189,12 +206,16 @@ namespace ast_nodes {
 					if (foo->params.size() != tail->params.size()) {
 						throw std::invalid_argument(std::format("Argument amount mismatch: Expected: {} got: {}", foo->params.size(), tail->params.size()));
 					}
+
+                    scopeinfo capture;
+                    capture.variables = var->function_scope;
+                    scopes.push_back(capture);
 					
 					//std::cout << "SKIBIDI" << std::endl;
 					open_scope(i);
 					
 					for (int j = 0; j < foo->params.size(); ++j) {
-						scopes.back().variables[foo->params[j]] = scopes[scopes.size() - 2].intermediates[tail->params[j]->id];
+						scopes.back().variables[foo->params[j]] = scopes[scopes.size() - 3].intermediates[tail->params[j]->id];
 					}
 					
 					//std::cout << "SKIBIDI" << std::endl;
@@ -217,6 +238,7 @@ namespace ast_nodes {
 					
 					//std::cout << "SKIBIDI" << std::endl;
 					close_scope(i);
+                    scopes.resize(scopes.size() - 1);
 				} else if (tail->type == 's') {
 					if (var->type != 'a') {
 						throw std::invalid_argument("Expected array");
@@ -239,8 +261,11 @@ namespace ast_nodes {
 			}
 			scopes.back().intermediates[id] = var;
 		} else if (type == 'l') {
+            //std::cout << "SKIBIDI1" << std::endl;
+
 			literal->execute(in, out);
 			scopes.back().intermediates[id] = scopes.back().intermediates[literal->id];
+            //std::cout << "SKIBIDI1" << std::endl;
 		} else if (type == 'e') {
 			expression->execute(in, out);
 			scopes.back().intermediates[id] = scopes.back().intermediates[expression->id];
@@ -267,9 +292,9 @@ namespace ast_nodes {
 
     // Return some expression from function
     void ReturnNode::execute(std::istream& in, std::ostream& out) {
-		//std::cout << id << std::endl;
+		std::cout << id << std::endl;
 		value->execute(in, out);
-		//std::cout << "execced" << std::endl;
+		std::cout << "execced" << std::endl;
 		returned_flag = true;
 		return_register = scopes.back().intermediates[value->id];
     }
@@ -422,6 +447,12 @@ namespace ast_nodes {
 		arithmetic::AmbiguousVariable* foo = new arithmetic::AmbiguousVariable();
 		foo->type = 'f';
 		foo->function_pointer = this;
+        // -> get all stuff that is currently available
+        for (auto& i:  scopes) {
+            for (auto j: i.variables) {
+                foo->function_scope[j.first] = j.second;
+            }
+        }
 		scopes.back().intermediates[id] = foo;
     }
 

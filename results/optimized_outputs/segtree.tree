@@ -27,7 +27,7 @@ Expression|26|(27)|()
 Unary|27|#|28|#
 Primary|28|v|l|()
 Body|29|(30|42)
-Assignment|30|31|32
+Assignment|30|=|31|32
 Primary|31|v|arr|()
 Expression|32|(33|35)|(+)
 Unary|33|#|34|#
@@ -39,7 +39,7 @@ ArrayLiteral|38|(39)
 Expression|39|(40)|()
 Unary|40|#|41|#
 Primary|41|v|elem|()
-Assignment|42|43|44
+Assignment|42|=|43|44
 Primary|43|v|n|()
 Expression|44|(45|47)|(+)
 Unary|45|#|46|#
@@ -119,7 +119,7 @@ Expression|118|(119)|()
 Unary|119|#|120|#
 Primary|120|v|n|()
 Body|121|(122|134)
-Assignment|122|123|124
+Assignment|122|=|123|124
 Primary|123|v|arr|()
 Expression|124|(125|127)|(+)
 Unary|125|#|126|#
@@ -131,7 +131,7 @@ ArrayLiteral|130|(131)
 Expression|131|(132)|()
 Unary|132|#|133|#
 Primary|133|i
-Assignment|134|135|136
+Assignment|134|=|135|136
 Primary|135|v|maxnum|()
 Expression|136|(137)|()
 Unary|137|#|138|#
@@ -197,7 +197,7 @@ Unary|196|#|197|#
 Primary|197|l|198
 Literal|198|i|1
 Body|199|(200|213)
-Assignment|200|201|206
+Assignment|200|=|201|206
 Primary|201|v|tree|(202)
 Tail|202|s|203
 Expression|203|(204)|()
@@ -215,7 +215,7 @@ Expression|214|(215)|()
 Unary|215|#|216|#
 Primary|216|l|217
 Literal|217|e
-Assignment|218|219|220
+Assignment|218|=|219|220
 Primary|219|v|_|()
 Expression|220|(221)|()
 Unary|221|#|222|#
@@ -241,7 +241,7 @@ Primary|240|v|cr|()
 Unary|241|#|242|#
 Primary|242|l|243
 Literal|243|i|2
-Assignment|244|245|246
+Assignment|244|=|245|246
 Primary|245|v|_|()
 Expression|246|(247)|()
 Unary|247|#|248|#
@@ -270,7 +270,7 @@ Literal|269|i|2
 Expression|270|(271)|()
 Unary|271|#|272|#
 Primary|272|v|cr|()
-Assignment|273|274|279
+Assignment|273|=|274|279
 Primary|274|v|tree|(275)
 Tail|275|s|276
 Expression|276|(277)|()
@@ -320,7 +320,7 @@ Unary|319|#|320|#
 Primary|320|l|321
 Literal|321|i|1
 Body|322|(323|348)
-Assignment|323|324|332
+Assignment|323|=|324|332
 Primary|324|v|lazy|(325)
 Tail|325|s|326
 Expression|326|(327|329)|(*)
@@ -345,7 +345,7 @@ Tail|344|s|345
 Expression|345|(346)|()
 Unary|346|#|347|#
 Primary|347|v|cx|()
-Assignment|348|349|360
+Assignment|348|=|349|360
 Primary|349|v|lazy|(350)
 Tail|350|s|351
 Expression|351|(352|354|357)|(*|+)
@@ -376,7 +376,7 @@ Tail|375|s|376
 Expression|376|(377)|()
 Unary|377|#|378|#
 Primary|378|v|cx|()
-Assignment|379|380|385
+Assignment|379|=|380|385
 Primary|380|v|tree|(381)
 Tail|381|s|382
 Expression|382|(383)|()
@@ -395,7 +395,7 @@ Tail|394|s|395
 Expression|395|(396)|()
 Unary|396|#|397|#
 Primary|397|v|cx|()
-Assignment|398|399|404
+Assignment|398|=|399|404
 Primary|399|v|lazy|(400)
 Tail|400|s|401
 Expression|401|(402)|()
@@ -405,7 +405,7 @@ Expression|404|(405)|()
 Unary|405|#|406|#
 Primary|406|l|407
 Literal|407|i|1
-Assignment|408|409|410
+Assignment|408|=|409|410
 Primary|409|v|maxnum|()
 Expression|410|(411)|()
 Unary|411|#|412|#
@@ -431,7 +431,7 @@ Primary|430|l|431
 Literal|431|f|432
 Function|432|b|(cx|cl|cr|tl|tr)|433
 Body|433|(434|449|464|483)
-Assignment|434|435|436
+Assignment|434|=|435|436
 Primary|435|v|_|()
 Expression|436|(437)|()
 Unary|437|#|438|#
@@ -555,7 +555,7 @@ Primary|554|l|555
 Literal|555|f|556
 Function|556|b|(cx|cl|cr|tl|tr|op)|557
 Body|557|(558|573|589|635|670|708|741)
-Assignment|558|559|560
+Assignment|558|=|559|560
 Primary|559|v|_|()
 Expression|560|(561)|()
 Unary|561|#|562|#
@@ -597,7 +597,7 @@ Primary|596|v|cl|()
 Unary|597|#|598|#
 Primary|598|v|tr|()
 Body|599|(600|615|630)
-Assignment|600|601|606
+Assignment|600|=|601|606
 Primary|601|v|lazy|(602)
 Tail|602|s|603
 Expression|603|(604)|()
@@ -612,7 +612,7 @@ Unary|611|#|612|#
 Primary|612|v|cx|()
 Unary|613|#|614|#
 Primary|614|v|op|()
-Assignment|615|616|617
+Assignment|615|=|616|617
 Primary|616|v|_|()
 Expression|617|(618)|()
 Unary|618|#|619|#
@@ -632,7 +632,7 @@ Expression|631|(632)|()
 Unary|632|#|633|#
 Primary|633|l|634
 Literal|634|e
-Assignment|635|636|637
+Assignment|635|=|636|637
 Primary|636|v|_|()
 Expression|637|(638)|()
 Unary|638|#|639|#
@@ -667,7 +667,7 @@ Primary|666|v|tr|()
 Expression|667|(668)|()
 Unary|668|#|669|#
 Primary|669|v|op|()
-Assignment|670|671|672
+Assignment|670|=|671|672
 Primary|671|v|_|()
 Expression|672|(673)|()
 Unary|673|#|674|#
@@ -705,7 +705,7 @@ Primary|704|v|tr|()
 Expression|705|(706)|()
 Unary|706|#|707|#
 Primary|707|v|op|()
-Assignment|708|709|714
+Assignment|708|=|709|714
 Primary|709|v|tree|(710)
 Tail|710|s|711
 Expression|711|(712)|()
@@ -743,7 +743,7 @@ Expression|742|(743)|()
 Unary|743|#|744|#
 Primary|744|l|745
 Literal|745|e
-Assignment|746|747|748
+Assignment|746|=|747|748
 Primary|747|v|_|()
 Expression|748|(749)|()
 Unary|749|#|750|#
@@ -773,7 +773,7 @@ Unary|772|#|773|#
 Primary|773|l|774
 Literal|774|b|1
 Body|775|(776|781)
-Assignment|776|777|778
+Assignment|776|=|777|778
 Primary|777|v|c|()
 Expression|778|(779)|()
 Unary|779|#|780|#
@@ -786,12 +786,12 @@ Unary|785|#|786|#
 Primary|786|l|787
 Literal|787|s|getmin
 Body|788|(789|794|799)
-Assignment|789|790|791
+Assignment|789|=|790|791
 Primary|790|v|l|()
 Expression|791|(792)|()
 Unary|792|#|793|#
 Primary|793|i
-Assignment|794|795|796
+Assignment|794|=|795|796
 Primary|795|v|r|()
 Expression|796|(797)|()
 Unary|797|#|798|#
@@ -837,22 +837,22 @@ Unary|836|#|837|#
 Primary|837|l|838
 Literal|838|s|mult
 Body|839|(840|845|850|855)
-Assignment|840|841|842
+Assignment|840|=|841|842
 Primary|841|v|l|()
 Expression|842|(843)|()
 Unary|843|#|844|#
 Primary|844|i
-Assignment|845|846|847
+Assignment|845|=|846|847
 Primary|846|v|r|()
 Expression|847|(848)|()
 Unary|848|#|849|#
 Primary|849|i
-Assignment|850|851|852
+Assignment|850|=|851|852
 Primary|851|v|a|()
 Expression|852|(853)|()
 Unary|853|#|854|#
 Primary|854|i
-Assignment|855|856|857
+Assignment|855|=|856|857
 Primary|856|v|_|()
 Expression|857|(858)|()
 Unary|858|#|859|#

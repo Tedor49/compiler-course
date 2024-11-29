@@ -18,7 +18,7 @@ Expression|17|(18)|()
 Unary|18|#|19|#
 Primary|19|i
 Body|20|(21)
-Assignment|21|22|23
+Assignment|21|=|22|23
 Primary|22|v|tup|()
 Expression|23|(24)|()
 Unary|24|#|25|#

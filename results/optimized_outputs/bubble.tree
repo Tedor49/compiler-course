@@ -58,7 +58,7 @@ Primary|57|v|j|()
 Unary|58|#|59|#
 Primary|59|l|60
 Literal|60|i|1
-Assignment|61|62|70
+Assignment|61|=|62|70
 Primary|62|v|arr|(63)
 Tail|63|s|64
 Expression|64|(65|67)|(+)
@@ -74,7 +74,7 @@ Tail|73|s|74
 Expression|74|(75)|()
 Unary|75|#|76|#
 Primary|76|v|j|()
-Assignment|77|78|83
+Assignment|77|=|78|83
 Primary|78|v|arr|(79)
 Tail|79|s|80
 Expression|80|(81)|()
@@ -106,7 +106,7 @@ Expression|105|(106)|()
 Unary|106|#|107|#
 Primary|107|v|arrlen|()
 Body|108|(109)
-Assignment|109|110|111
+Assignment|109|=|110|111
 Primary|110|v|arr|()
 Expression|111|(112|114)|(+)
 Unary|112|#|113|#

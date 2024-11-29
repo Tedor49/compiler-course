@@ -551,17 +551,27 @@ namespace ast_nodes {
 	}
 
     Node* AssignmentNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		this->primary = createNodeFromTokens("Primary", tokens, y);
+        this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
-		if (tokens[y].type != tokens::TokenCode::tkAssignment) {
-			throw std::invalid_argument("Expected := in supposed assignment");
-		}
-		++y;
+        switch (tokens[y].type) {
+            case tokens::TokenCode::tkAssignment:
+                this->type = '=';
+                break;
+            case tokens::TokenCode::tkPlusEq:
+                this->type = '+';
+                break;
+            case tokens::TokenCode::tkMinusEq:
+                this->type = '-';
+                break;
+            default:
+                throw std::invalid_argument("Expected :=, += or -= in supposed assignment");
+        }
+        ++y;
 
-		this->expression = createNodeFromTokens("Expression", tokens, y);
-		return this;
-	}
+        this->expression = createNodeFromTokens("Expression", tokens, y);
+        return this;
+    }
 
     Node* BodyNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
 		while (tokens.size() != y) {

@@ -5,7 +5,7 @@ Unary|4|#|5|#
 Primary|5|l|6
 Literal|6|a|7
 ArrayLiteral|7|()
-Assignment|8|9|15
+Assignment|8|=|9|15
 Primary|9|v|arr|(10)
 Tail|10|s|11
 Expression|11|(12)|()
@@ -16,7 +16,7 @@ Expression|15|(16)|()
 Unary|16|#|17|#
 Primary|17|l|18
 Literal|18|s|hello
-Assignment|19|20|26
+Assignment|19|=|20|26
 Primary|20|v|arr|(21)
 Tail|21|s|22
 Expression|22|(23)|()
@@ -47,7 +47,7 @@ Literal|46|b|1
 Unary|47|#|48|#
 Primary|48|l|49
 Literal|49|b|0
-Assignment|50|51|57
+Assignment|50|=|51|57
 Primary|51|v|arr|(52)
 Tail|52|s|53
 Expression|53|(54)|()

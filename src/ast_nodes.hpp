@@ -1023,6 +1023,7 @@ namespace ast_nodes {
 
     class AssignmentNode: public Node {
         public:
+            char type;
             Node* primary;
             Node* expression;
 			
@@ -1038,6 +1039,9 @@ namespace ast_nodes {
                 read_until_delim(s, read);
 
                 id = std::stoll(read.first);
+
+                read_until_delim(s, read);
+                type = read.first[0];
 
                 read_until_delim(s, read);
                 primary = nodes[std::stoll(read.first)];
@@ -1056,7 +1060,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Assignment|" << id << "|" << primary->id << "|" << expression->id << "\n";
+                out << "Assignment|" << id << "|" << type << "|" << primary->id << "|" << expression->id << "\n";
                 primary->machine_print(out);
                 expression->machine_print(out);
             }

@@ -17,7 +17,7 @@ Expression|16|(17)|()
 Unary|17|#|18|#
 Primary|18|l|19
 Literal|19|i|5
-Assignment|20|21|22
+Assignment|20|=|21|22
 Primary|21|v|x|()
 Expression|22|(23|25)|(+)
 Unary|23|#|24|#
@@ -32,13 +32,13 @@ Expression|31|(32)|()
 Unary|32|#|33|#
 Primary|33|l|34
 Literal|34|s|\n
-Assignment|35|36|37
+Assignment|35|=|36|37
 Primary|36|v|x|()
 Expression|37|(38)|()
 Unary|38|#|39|#
 Primary|39|l|40
 Literal|40|s|Hello 
-Assignment|41|42|43
+Assignment|41|=|42|43
 Primary|42|v|y|()
 Expression|43|(44)|()
 Unary|44|#|45|#
@@ -54,7 +54,7 @@ Expression|53|(54)|()
 Unary|54|#|55|#
 Primary|55|l|56
 Literal|56|s|\n
-Assignment|57|58|59
+Assignment|57|=|58|59
 Primary|58|v|x|()
 Expression|59|(60)|()
 Unary|60|#|61|#
@@ -69,7 +69,7 @@ Expression|68|(69)|()
 Unary|69|#|70|#
 Primary|70|l|71
 Literal|71|i|2
-Assignment|72|73|74
+Assignment|72|=|73|74
 Primary|73|v|x|()
 Expression|74|(75|77)|(+)
 Unary|75|#|76|#
@@ -94,7 +94,7 @@ Expression|93|(94)|()
 Unary|94|#|95|#
 Primary|95|l|96
 Literal|96|s|\n
-Assignment|97|98|99
+Assignment|97|=|98|99
 Primary|98|v|x|()
 Expression|99|(100)|()
 Unary|100|#|101|#
@@ -105,7 +105,7 @@ Expression|104|(105)|()
 Unary|105|#|106|#
 Primary|106|l|107
 Literal|107|s|Lishchenko
-Assignment|108|109|110
+Assignment|108|=|109|110
 Primary|109|v|x|()
 Expression|110|(111|113)|(+)
 Unary|111|#|112|#

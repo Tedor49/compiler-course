@@ -26,6 +26,9 @@ namespace ast_nodes {
             unsigned int id;
             Node* parent = nullptr;
 			
+			int line = 0;
+			int pos = 0;
+			
 			virtual Node* from_tokens(std::vector<tokens::Token>& tokens, int& y) = 0;
 			virtual void execute(std::istream& in, std::ostream& out) = 0;
 			
@@ -92,6 +95,12 @@ namespace ast_nodes {
 				id = std::stoll(read.first);
 
 				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
+				read_until_delim(s, read);
 				identifier = read.first;
 
 				read_until_delim(s, read);
@@ -105,7 +114,7 @@ namespace ast_nodes {
 			}
 
 			void machine_print(std::ostream& out){
-				out << "Declaration|" << id << "|" << identifier << "|";
+				out << "Declaration|" << id << "|" << line << "|"  << pos << "|" << identifier << "|";
 				if (value) {
 					out << value->id << "\n";
 					value->machine_print(out);
@@ -132,6 +141,12 @@ namespace ast_nodes {
                 read_until_delim(s, read);
 
                 id = std::stoll(read.first);
+
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
 
                 s >> trash;
                 read_until_delim(s, read);
@@ -172,7 +187,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Expression|" << id << "|(";
+                out << "Expression|" << id << "|" << line << "|"  << pos << "|(";
                 for(int i = 0; i < terms.size(); ++i) {
                     if (i) out << "|";
                     out << terms[i]->id;
@@ -211,6 +226,12 @@ namespace ast_nodes {
 
                 id = std::stoll(read.first);
 
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
                 read_until_delim(s, read);
                 unaryop = read.first[0];
 
@@ -228,7 +249,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Unary|" << id << "|";
+                out << "Unary|" << id << "|" << line << "|"  << pos << "|";
                 out << this->unaryop << "|" << primary->id << "|" << type_ind << "\n";
                 primary->machine_print(out);
             }
@@ -252,6 +273,12 @@ namespace ast_nodes {
                 read_until_delim(s, read);
 
                 id = std::stoll(read.first);
+
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
 
                 read_until_delim(s, read);
                 expression = nodes[std::stoll(read.first)];
@@ -279,7 +306,7 @@ namespace ast_nodes {
             }
 			
             void machine_print(std::ostream& out){
-                out << "If|" << id << "|" << expression->id << "|" << if_body->id << "|";
+                out << "If|" << id << "|" << line << "|"  << pos << "|" << expression->id << "|" << if_body->id << "|";
                 if (else_body) {
                     out << else_body->id << "\n";
                     expression->machine_print(out);
@@ -313,6 +340,12 @@ namespace ast_nodes {
 
                 id = std::stoll(read.first);
 
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
                 read_until_delim(s, read);
                 identifier = read.first;
 
@@ -341,7 +374,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "For|" << id << "|" << identifier << "|" << range_expr_l->id << "|" << range_expr_r->id << "|" << body->id << "\n";
+                out << "For|" << id << "|" << line << "|"  << pos << "|" << identifier << "|" << range_expr_l->id << "|" << range_expr_r->id << "|" << body->id << "\n";
                 range_expr_l->machine_print(out);
                 range_expr_r->machine_print(out);
                 body->machine_print(out);
@@ -366,6 +399,12 @@ namespace ast_nodes {
 
                 id = std::stoll(read.first);
 
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
                 read_until_delim(s, read);
                 expression = nodes[std::stoll(read.first)];
 
@@ -386,7 +425,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "While|" << id << "|" << expression->id << "|" << body->id << "\n";
+                out << "While|" << id << "|" << line << "|"  << pos << "|" << expression->id << "|" << body->id << "\n";
                 expression->machine_print(out);
                 body->machine_print(out);
             }
@@ -415,6 +454,12 @@ namespace ast_nodes {
                 read_until_delim(s, read);
 
                 id = std::stoll(read.first);
+
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
 
                 read_until_delim(s, read);
                 type = read.first[0];
@@ -476,7 +521,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Primary|" << id << "|" << type;
+                out << "Primary|" << id << "|" << line << "|"  << pos << "|" << type;
                 switch  (this->type) {
                     case 'i':
                     case 'r':
@@ -532,6 +577,12 @@ namespace ast_nodes {
                 read_until_delim(s, read);
 
                 id = std::stoll(read.first);
+
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
 
                 read_until_delim(s, read);
                 type = read.first[0];
@@ -595,7 +646,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Tail|" << id << "|" << type << "|";
+                out << "Tail|" << id << "|" << line << "|"  << pos << "|" << type << "|";
                 switch  (this->type) {
                     case 't':
                         out << tuple_idx << "\n";
@@ -640,6 +691,12 @@ namespace ast_nodes {
 
                 id = std::stoll(read.first);
 
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
                 s >> trash;
                 read_until_delim(s, read);
                 while (read.second != ')') {
@@ -667,7 +724,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Print|" << id << "|(";
+                out << "Print|" << id << "|" << line << "|"  << pos << "|(";
                 for(int i = 0; i < values.size(); ++i) {
                     if (i) out << "|";
                     out << values[i]->id;
@@ -697,6 +754,12 @@ namespace ast_nodes {
 
                 id = std::stoll(read.first);
 
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
                 read_until_delim(s, read);
                 value = nodes[std::stoll(read.first)];
             }
@@ -709,7 +772,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Return|" << id << "|" << value->id << "\n";
+                out << "Return|" << id << "|" << line << "|"  << pos << "|" << value->id << "\n";
                 value->machine_print(out);
             }
     };
@@ -738,6 +801,12 @@ namespace ast_nodes {
                 read_until_delim(s, read);
 
                 id = std::stoll(read.first);
+
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
 
                 read_until_delim(s, read);
                 type = read.first[0];
@@ -795,7 +864,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Literal|" << id << "|" << type;
+                out << "Literal|" << id << "|" << line << "|"  << pos << "|" << type;
                 switch  (this->type) {
                     case 'i':
                         out << "|" << int_val << "\n";
@@ -845,6 +914,12 @@ namespace ast_nodes {
 
                 id = std::stoll(read.first);
 
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
                 s >> trash;
                 read_until_delim(s, read);
                 while (read.second != ')') {
@@ -872,7 +947,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "ArrayLiteral|" << id << "|(";
+                out << "ArrayLiteral|" << id << "|" << line << "|"  << pos << "|(";
                 for(int i = 0; i < values.size(); ++i) {
                     if (i) out << "|";
                     out << values[i]->id;
@@ -903,6 +978,12 @@ namespace ast_nodes {
 
                 id = std::stoll(read.first);
 
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
                 s >> trash;
                 read_until_delim(s, read);
                 while (read.second != ')') {
@@ -941,7 +1022,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "TupleLiteral|" << id << "|(";
+                out << "TupleLiteral|" << id << "|" << line << "|"  << pos << "|(";
                 for(int i = 0; i < identifiers.size(); ++i) {
                     if (i) out << "|";
                     out << identifiers[i];
@@ -979,6 +1060,12 @@ namespace ast_nodes {
 
                 id = std::stoll(read.first);
 
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
                 read_until_delim(s, read);
                 type = read.first[0];
 
@@ -1010,7 +1097,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Function|" << id << "|" << type << "|(";
+                out << "Function|" << id << "|" << line << "|"  << pos << "|" << type << "|(";
                 for(int i = 0; i < params.size(); ++i) {
                     if (i) out << "|";
                     out << params[i];
@@ -1039,6 +1126,12 @@ namespace ast_nodes {
 
                 id = std::stoll(read.first);
 
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
+
                 read_until_delim(s, read);
                 primary = nodes[std::stoll(read.first)];
 
@@ -1056,7 +1149,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Assignment|" << id << "|" << primary->id << "|" << expression->id << "\n";
+                out << "Assignment|" << id << "|" << line << "|"  << pos << "|" << primary->id << "|" << expression->id << "\n";
                 primary->machine_print(out);
                 expression->machine_print(out);
             }
@@ -1078,6 +1171,12 @@ namespace ast_nodes {
                 read_until_delim(s, read);
 
                 id = std::stoll(read.first);
+
+				read_until_delim(s, read);
+				line = std::stoi(read.first);
+
+				read_until_delim(s, read);
+				pos = std::stoi(read.first);
 
                 s >> trash;
                 read_until_delim(s, read);
@@ -1106,7 +1205,7 @@ namespace ast_nodes {
             }
 
             void machine_print(std::ostream& out){
-                out << "Body|" << id << "|(";
+                out << "Body|" << id << "|" << line << "|"  << pos << "|(";
                 for(int i = 0; i < statements.size(); ++i) {
                     if (i) out << "|";
                     out << statements[i]->id;

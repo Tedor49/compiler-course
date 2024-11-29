@@ -16,10 +16,12 @@ namespace ast_nodes {
 	Node* createNodeFromTokens(const std::string& t, std::vector<tokens::Token>& tokens, int& y);
 
     Node* DeclarationNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		this->identifier = tokens[y].valStr;
+		this->identifier = tokens.at(y).valStr;
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
 		++y;
 
-		switch (tokens[y].type) {
+		switch (tokens.at(y).type) {
 			case tokens::TokenCode::tkComma:
 			case tokens::TokenCode::tkLineEnd:
 				return this;
@@ -34,12 +36,14 @@ namespace ast_nodes {
 	}
 
     Node* ExpressionNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
 		bool complete = false;
 
 		while (1) {
 			this->terms.push_back(createNodeFromTokens("Unary", tokens, y));
 
-			switch (tokens[y].type) {
+			switch (tokens.at(y).type) {
 				case tokens::TokenCode::tkOperatorMultiply:
 					this->ops.push_back('*');
 					break;
@@ -90,7 +94,9 @@ namespace ast_nodes {
 	}
 	
 	char UnaryNode::parse_type_ind(std::vector<tokens::Token>& tokens, int& y) {
-		switch (tokens[y].type) {
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
+		switch (tokens.at(y).type) {
 			case tokens::TokenCode::tkTypeInt:
 				++y;
 				return 'i';
@@ -107,13 +113,13 @@ namespace ast_nodes {
 				++y;
 				return 'e';
 			case tokens::TokenCode::tkBracketSquareLeft:
-				if (tokens[y+1].type != tokens::TokenCode::tkBracketSquareRight){
+				if (tokens.at(y+1).type != tokens::TokenCode::tkBracketSquareRight){
 					throw std::invalid_argument("Expected closing bracket in type indicator");
 				}
 				y += 2;
 				return 'a';
 			case tokens::TokenCode::tkBracketCurvyLeft:
-				if (tokens[y+1].type != tokens::TokenCode::tkBracketCurvyRight){
+				if (tokens.at(y+1).type != tokens::TokenCode::tkBracketCurvyRight){
 					throw std::invalid_argument("Expected closing bracket in type indicator");
 				}
 				y += 2;
@@ -127,7 +133,9 @@ namespace ast_nodes {
 	}
 	
 	Node* UnaryNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		switch (tokens[y].type) {
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
+		switch (tokens.at(y).type) {
 			case tokens::TokenCode::tkUnaryPlus:
 				this->unaryop = '+';
 
@@ -135,7 +143,7 @@ namespace ast_nodes {
 				this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
-				if (tokens[y].type == tokens::TokenCode::tkIs) {
+				if (tokens.at(y).type == tokens::TokenCode::tkIs) {
 					++y;
 					this->type_ind = parse_type_ind(tokens, y);
 				}
@@ -148,7 +156,7 @@ namespace ast_nodes {
 				this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
-				if (tokens[y].type == tokens::TokenCode::tkIs) {
+				if (tokens.at(y).type == tokens::TokenCode::tkIs) {
 					++y;
 					this->type_ind = parse_type_ind(tokens, y);
 				}
@@ -161,7 +169,7 @@ namespace ast_nodes {
 				this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
-				if (tokens[y].type == tokens::TokenCode::tkIs) {
+				if (tokens.at(y).type == tokens::TokenCode::tkIs) {
 					++y;
 					this->type_ind = parse_type_ind(tokens, y);
 				}
@@ -184,7 +192,7 @@ namespace ast_nodes {
 				this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
-				if (tokens[y].type == tokens::TokenCode::tkIs) {
+				if (tokens.at(y).type == tokens::TokenCode::tkIs) {
 					++y;
 					this->type_ind = parse_type_ind(tokens, y);
 				}
@@ -195,17 +203,19 @@ namespace ast_nodes {
 	}
 	
 	Node* IfNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
 		this->expression = createNodeFromTokens("Expression", tokens, y);
 
 
-		if (tokens[y].type != tokens::TokenCode::tkDelimeterThen) {
+		if (tokens.at(y).type != tokens::TokenCode::tkDelimeterThen) {
 			throw std::invalid_argument("Expected if body beginning");
 		}
 		++y;
 
 		this->if_body = createNodeFromTokens("Body", tokens, y);
 
-		if (tokens[y].type == tokens::TokenCode::tkElse) {
+		if (tokens.at(y).type == tokens::TokenCode::tkElse) {
 			++y;
 			this->else_body = createNodeFromTokens("Body", tokens, y);
 		}
@@ -213,14 +223,16 @@ namespace ast_nodes {
 	}
 
     Node* ForNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		if (tokens[y].type != tokens::TokenCode::tkIdentifier) {
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
+		if (tokens.at(y).type != tokens::TokenCode::tkIdentifier) {
 			throw std::invalid_argument("Expected iteration variable name");
 		}
-		this->identifier = tokens[y].valStr;
+		this->identifier = tokens.at(y).valStr;
 		++y;
 
 
-		if (tokens[y].type != tokens::TokenCode::tkIn) {
+		if (tokens.at(y).type != tokens::TokenCode::tkIn) {
 			throw std::invalid_argument("Expected range after for loop declaration");
 		}
 		++y;
@@ -228,7 +240,7 @@ namespace ast_nodes {
 		this->range_expr_l = createNodeFromTokens("Expression", tokens, y);
 
 
-		if (tokens[y].type != tokens::TokenCode::tkDoubleDot) {
+		if (tokens.at(y).type != tokens::TokenCode::tkDoubleDot) {
 			throw std::invalid_argument("Expected .. in range definition");
 		}
 		++y;
@@ -236,7 +248,7 @@ namespace ast_nodes {
 		this->range_expr_r = createNodeFromTokens("Expression", tokens, y);
 
 
-		if (tokens[y].type != tokens::TokenCode::tkDelimeterLoop) {
+		if (tokens.at(y).type != tokens::TokenCode::tkDelimeterLoop) {
 			throw std::invalid_argument("Expected loop body after range");
 		}
 		++y;
@@ -244,17 +256,19 @@ namespace ast_nodes {
 		this->body = createNodeFromTokens("Body", tokens, y);
 
 
-		if (tokens[y].type != tokens::TokenCode::tkLineEnd) {
+		if (tokens.at(y).type != tokens::TokenCode::tkLineEnd) {
 			throw std::invalid_argument("Expected line end or ; at the end of loop");
 		}
 		return this;
 	}
 	
 	Node* WhileNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
 		this->expression = createNodeFromTokens("Expression", tokens, y);
 
 
-		if (tokens[y].type != tokens::TokenCode::tkDelimeterLoop) {
+		if (tokens.at(y).type != tokens::TokenCode::tkDelimeterLoop) {
 			throw std::invalid_argument("Expected loop body after range");
 		}
 		++y;
@@ -262,14 +276,16 @@ namespace ast_nodes {
 		this->body = createNodeFromTokens("Body", tokens, y);
 
 
-		if (tokens[y].type != tokens::TokenCode::tkLineEnd) {
+		if (tokens.at(y).type != tokens::TokenCode::tkLineEnd) {
 			throw std::invalid_argument("Expected line end or ; at the end of loop");
 		}
 		return this;
 	}
 	
     Node* PrimaryNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		switch (tokens[y].type) {
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
+		switch (tokens.at(y).type) {
 			case tokens::TokenCode::tkReadInt:
 				this->type = 'i';
 				++y;
@@ -296,14 +312,14 @@ namespace ast_nodes {
 				break;
 			case tokens::TokenCode::tkIdentifier:
 				this->type = 'v';
-				this->identifier = tokens[y].valStr;
+				this->identifier = tokens.at(y).valStr;
 				++y;
 
 				while (1) {
 
-					if(tokens[y].type == tokens::TokenCode::tkDot ||
-					   tokens[y].type == tokens::TokenCode::tkBracketSquareLeft ||
-					   tokens[y].type == tokens::TokenCode::tkBracketNormalLeft) {
+					if(tokens.at(y).type == tokens::TokenCode::tkDot ||
+					   tokens.at(y).type == tokens::TokenCode::tkBracketSquareLeft ||
+					   tokens.at(y).type == tokens::TokenCode::tkBracketNormalLeft) {
 						this->tails.push_back(createNodeFromTokens("Tail", tokens, y));
 					} else {
 						break;
@@ -316,7 +332,7 @@ namespace ast_nodes {
 
 				this->expression = createNodeFromTokens("Expression", tokens, y);
 
-				if (tokens[y].type != tokens::TokenCode::tkBracketNormalRight){
+				if (tokens.at(y).type != tokens::TokenCode::tkBracketNormalRight){
 					throw std::invalid_argument("Expected closing bracket after expression");
 				}
 				++y;
@@ -326,18 +342,20 @@ namespace ast_nodes {
 	}
 
     Node* TailNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		switch (tokens[y].type) {
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
+		switch (tokens.at(y).type) {
 			case tokens::TokenCode::tkDot:
 				++y;
 
 
-				if (tokens[y].type == tokens::TokenCode::tkInt) {
+				if (tokens.at(y).type == tokens::TokenCode::tkInt) {
 					this->type = 't';
-					this->tuple_idx = tokens[y].valInt;
+					this->tuple_idx = tokens.at(y).valInt;
 					++y;
-				} else if (tokens[y].type == tokens::TokenCode::tkIdentifier) {
+				} else if (tokens.at(y).type == tokens::TokenCode::tkIdentifier) {
 					this->type = 'i';
-					this->identifier = tokens[y].valStr;
+					this->identifier = tokens.at(y).valStr;
 					++y;
 				} else {
 					 throw std::invalid_argument("Expected either identifier or int after . in tail");
@@ -351,10 +369,10 @@ namespace ast_nodes {
 				while (1) {
 					this->params.push_back(createNodeFromTokens("Expression", tokens, y));
 
-					if (tokens[y].type == tokens::TokenCode::tkComma) {
+					if (tokens.at(y).type == tokens::TokenCode::tkComma) {
 						++y;
 						continue;
-					} else if (tokens[y].type == tokens::TokenCode::tkBracketNormalRight) {
+					} else if (tokens.at(y).type == tokens::TokenCode::tkBracketNormalRight) {
 						++y;
 						break;
 					} else {
@@ -370,7 +388,7 @@ namespace ast_nodes {
 				this->subscript = createNodeFromTokens("Expression", tokens, y);
 
 
-				if (tokens[y].type != tokens::TokenCode::tkBracketSquareRight) {
+				if (tokens.at(y).type != tokens::TokenCode::tkBracketSquareRight) {
 					throw std::invalid_argument("Expected closing bracket");
 				}
 				++y;
@@ -383,11 +401,13 @@ namespace ast_nodes {
 	}
 
     Node* PrintNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
 		while (1) {
 			this->values.push_back(createNodeFromTokens("Expression", tokens, y));
 
 
-			if (tokens[y].type == tokens::TokenCode::tkComma) {
+			if (tokens.at(y).type == tokens::TokenCode::tkComma) {
 				++y;
 				continue;
 			} else {
@@ -398,22 +418,26 @@ namespace ast_nodes {
 	}
 
     Node* ReturnNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
 		this->value = createNodeFromTokens("Expression", tokens, y);
 		return this;
 	}
 
     Node* LiteralNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		switch (tokens[y].type) {
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
+		switch (tokens.at(y).type) {
 			case tokens::TokenCode::tkInt:
 				this->type = 'i';
 
-				this->int_val = tokens[y].valInt;
+				this->int_val = tokens.at(y).valInt;
 				++y;
 				break;
 			case tokens::TokenCode::tkReal:
 				this->type = 'r';
 
-				this->real_val = tokens[y].valReal;
+				this->real_val = tokens.at(y).valReal;
 				++y;
 				break;
 			case tokens::TokenCode::tkBooleanFalse:
@@ -431,7 +455,7 @@ namespace ast_nodes {
 			case tokens::TokenCode::tkString:
 				this->type = 's';
 
-				this->string_val = tokens[y].valStr;
+				this->string_val = tokens.at(y).valStr;
 				++y;
 				break;
 			case tokens::TokenCode::tkEmpty:
@@ -463,17 +487,19 @@ namespace ast_nodes {
 	}
 
     Node* ArrayLiteralNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		if (tokens[y].type == tokens::TokenCode::tkBracketSquareRight) {
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
+		if (tokens.at(y).type == tokens::TokenCode::tkBracketSquareRight) {
 			++y;
 			return this;
 		}
 		while (1) {
 			this->values.push_back(createNodeFromTokens("Expression", tokens, y));
 
-			if (tokens[y].type == tokens::TokenCode::tkComma) {
+			if (tokens.at(y).type == tokens::TokenCode::tkComma) {
 				++y;
 				continue;
-			} else if (tokens[y].type == tokens::TokenCode::tkBracketSquareRight) {
+			} else if (tokens.at(y).type == tokens::TokenCode::tkBracketSquareRight) {
 				++y;
 				break;
 			} else {
@@ -484,13 +510,15 @@ namespace ast_nodes {
 	}
 
     Node* TupleLiteralNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		if (tokens[y].type == tokens::TokenCode::tkBracketCurvyRight) {
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
+		if (tokens.at(y).type == tokens::TokenCode::tkBracketCurvyRight) {
 			return this;
 		}
 		while (1) {
-			if (tokens[y].type == tokens::TokenCode::tkIdentifier) {
-				if (tokens[y + 1].type == tokens::TokenCode::tkAssignment) {
-					this->identifiers.push_back(tokens[y].valStr);
+			if (tokens.at(y).type == tokens::TokenCode::tkIdentifier) {
+				if (tokens.at(y + 1).type == tokens::TokenCode::tkAssignment) {
+					this->identifiers.push_back(tokens.at(y).valStr);
 					y += 2;
 				} else {
 					this->identifiers.push_back("");
@@ -502,10 +530,10 @@ namespace ast_nodes {
 			this->values.push_back(createNodeFromTokens("Expression", tokens, y));
 
 
-			if (tokens[y].type == tokens::TokenCode::tkComma) {
+			if (tokens.at(y).type == tokens::TokenCode::tkComma) {
 				++y;
 				continue;
-			} else if (tokens[y].type == tokens::TokenCode::tkBracketCurvyRight) {
+			} else if (tokens.at(y).type == tokens::TokenCode::tkBracketCurvyRight) {
 				++y;
 				break;
 			} else {
@@ -516,21 +544,23 @@ namespace ast_nodes {
 	}
 
     Node* FunctionNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
-		if (tokens[y].type != tokens::TokenCode::tkBracketNormalLeft) {
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
+		if (tokens.at(y).type != tokens::TokenCode::tkBracketNormalLeft) {
 			throw std::invalid_argument("Expected iteration variable name");
 		}
 		++y;
 		while (1) {
-			if (tokens[y].type != tokens::TokenCode::tkIdentifier) {
+			if (tokens.at(y).type != tokens::TokenCode::tkIdentifier) {
 				throw std::invalid_argument("Expected identifier");
 			}
-			this->params.push_back(tokens[y].valStr);
+			this->params.push_back(tokens.at(y).valStr);
 			++y;
 
-			if (tokens[y].type == tokens::TokenCode::tkComma) {
+			if (tokens.at(y).type == tokens::TokenCode::tkComma) {
 				++y;
 				continue;
-			} else if (tokens[y].type == tokens::TokenCode::tkBracketNormalRight) {
+			} else if (tokens.at(y).type == tokens::TokenCode::tkBracketNormalRight) {
 				++y;
 				break;
 			} else {
@@ -538,11 +568,11 @@ namespace ast_nodes {
 			}
 		}
 
-		if (tokens[y].type == tokens::TokenCode::tkDelimeterIs) {
+		if (tokens.at(y).type == tokens::TokenCode::tkDelimeterIs) {
 			this->type = 'b';
 			++y;
 			this->body = createNodeFromTokens("Body", tokens, y);
-		} else if (tokens[y].type == tokens::TokenCode::tkLambda) {
+		} else if (tokens.at(y).type == tokens::TokenCode::tkLambda) {
 			this->type = 'l';
 			++y;
 			this->body = createNodeFromTokens("Expression", tokens, y);
@@ -551,10 +581,12 @@ namespace ast_nodes {
 	}
 
     Node* AssignmentNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
 		this->primary = createNodeFromTokens("Primary", tokens, y);
 
 
-		if (tokens[y].type != tokens::TokenCode::tkAssignment) {
+		if (tokens.at(y).type != tokens::TokenCode::tkAssignment) {
 			throw std::invalid_argument("Expected := in supposed assignment");
 		}
 		++y;
@@ -564,26 +596,28 @@ namespace ast_nodes {
 	}
 
     Node* BodyNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
+		this->line = tokens.at(y).line;
+		this->pos = tokens.at(y).pos;
 		while (tokens.size() != y) {
-			while (tokens[y].type == tokens::TokenCode::tkLineEnd){
+			while (tokens.at(y).type == tokens::TokenCode::tkLineEnd){
 				++y;
 				if (tokens.size() == y) break;
 			}
 			if (tokens.size() == y) break;
 
-			if (tokens[y].type == tokens::TokenCode::tkDelimeterEnd) {
+			if (tokens.at(y).type == tokens::TokenCode::tkDelimeterEnd) {
 				++y;
 				break;
-			} else if (tokens[y].type == tokens::TokenCode::tkElse) {
+			} else if (tokens.at(y).type == tokens::TokenCode::tkElse) {
 				break;
 			}
 
-			switch (tokens[y].type) {
+			switch (tokens.at(y).type) {
 				case tokens::TokenCode::tkVar:
 					do {
 						++y;
 						statements.push_back(createNodeFromTokens("Declaration", tokens, y));
-					} while (tokens[y].type == tokens::TokenCode::tkComma);
+					} while (tokens.at(y).type == tokens::TokenCode::tkComma);
 					break;
 				case tokens::TokenCode::tkIdentifier:
 					statements.push_back(createNodeFromTokens("Assignment", tokens, y));
@@ -629,7 +663,7 @@ namespace ast_nodes {
             reassign_ids(tree);
             return tree;
         } catch (std::invalid_argument& ex) {
-            throw std::invalid_argument(std::format("{} at line {}, pos {}", ex.what(), tokenized[walker].line, tokenized[walker].pos));
+            throw std::invalid_argument(std::format("Unexpected token at line {}, pos {}:\n\t{}", tokenized[walker].line, tokenized[walker].pos, ex.what()));
         } catch (std::out_of_range& ex) {
             throw std::invalid_argument("Unexpected program end");
         }

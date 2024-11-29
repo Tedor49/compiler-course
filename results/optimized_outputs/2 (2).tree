@@ -12,7 +12,7 @@ Expression|11|(12)|()
 Unary|12|#|13|#
 Primary|13|l|14
 Literal|14|s|\n
-Assignment|15|16|17
+Assignment|15|=|16|17
 Primary|16|v|x|()
 Expression|17|(18)|()
 Unary|18|#|19|#
@@ -30,7 +30,7 @@ Expression|29|(30)|()
 Unary|30|#|31|#
 Primary|31|l|32
 Literal|32|s|\n
-Assignment|33|34|35
+Assignment|33|=|34|35
 Primary|34|v|x|()
 Expression|35|(36)|()
 Unary|36|#|37|#
@@ -48,7 +48,7 @@ Expression|47|(48)|()
 Unary|48|#|49|#
 Primary|49|l|50
 Literal|50|s|\n
-Assignment|51|52|53
+Assignment|51|=|52|53
 Primary|52|v|x|()
 Expression|53|(54)|()
 Unary|54|#|55|#
@@ -66,7 +66,7 @@ Expression|65|(66)|()
 Unary|66|#|67|#
 Primary|67|l|68
 Literal|68|s|\n
-Assignment|69|70|71
+Assignment|69|=|70|71
 Primary|70|v|x|()
 Expression|71|(72)|()
 Unary|72|#|73|#

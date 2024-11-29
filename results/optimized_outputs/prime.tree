@@ -55,7 +55,7 @@ Expression|54|(55)|()
 Unary|55|#|56|#
 Primary|56|l|57
 Literal|57|b|0
-Assignment|58|59|60
+Assignment|58|=|59|60
 Primary|59|v|k|()
 Expression|60|(61|63)|(+)
 Unary|61|#|62|#

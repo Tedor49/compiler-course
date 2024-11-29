@@ -46,7 +46,7 @@ Expression|45|(46)|()
 Unary|46|#|47|#
 Primary|47|l|48
 Literal|48|s|\n
-Assignment|49|50|51
+Assignment|49|=|50|51
 Primary|50|v|x|()
 Expression|51|(52)|()
 Unary|52|#|53|#
@@ -97,7 +97,7 @@ Expression|96|(97)|()
 Unary|97|#|98|#
 Primary|98|l|99
 Literal|99|s|\n
-Assignment|100|101|102
+Assignment|100|=|101|102
 Primary|101|v|x|()
 Expression|102|(103)|()
 Unary|103|#|104|#

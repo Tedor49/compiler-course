@@ -23,7 +23,6 @@ namespace arithmetic {
         std::vector<AmbiguousVariable*> array_values;
         ast_nodes::FunctionNode* function_pointer;
         std::unordered_map<std::string, AmbiguousVariable*> function_scope;
-
     };
 
     long long array_length(const std::unordered_map<long long, long long >& myMap) {
@@ -139,13 +138,13 @@ namespace arithmetic {
 		c->type = var->type;
 		switch (var->type) {
 			case 'i':
-                c->int_val = var->int_val;
+                c->int_val = (long long)var->int_val;
                 break;
             case 'r':
-                c->real_val = var->real_val;
+                c->real_val = (long double)var->real_val;
                 break;
             case 'b':
-                c->bool_val = var->bool_val;
+                c->bool_val = (bool)var->bool_val;
                 break;
             case 'e':
                 break;
@@ -298,6 +297,75 @@ namespace arithmetic {
                         c->type = 'r';
                         c->real_val = a->real_val - b->real_val;
                         return c;
+                }
+        }
+        throw std::runtime_error("Unsupported operand type for subtraction");
+    }
+
+    AmbiguousVariable* op_plus_equality(AmbiguousVariable* a, AmbiguousVariable* b) {
+        switch (a->type) {
+            case 'i':
+                switch (b->type) {
+                    case 'i':
+                        a->int_val = a->int_val + b->int_val;
+                        return a;
+                    case 'r':
+                        a->type = 'r';
+                        a->real_val = a->int_val + b->real_val;
+                        return a;
+                }
+            case 'r':
+                switch (b->type) {
+                    case 'i':
+                        a->real_val = a->real_val + b->int_val;
+                        return a;
+                    case 'r':
+                        a->real_val = a->real_val + b->real_val;
+                        return a;
+                }
+            case 's':
+                switch (b->type) {
+                    case 's':
+                        a->string_val = a->string_val + b->string_val;
+                        return a;
+                }
+            case 't':
+                switch (b->type) {
+                    case 't':
+                        *a = *tuple_addition(a, b);
+                        return a;
+                }
+            case 'a':
+                switch (b->type) {
+                    case 'a':
+                        *a = *array_addition(a, b);
+                        return a;
+                }
+        }
+        throw std::runtime_error("Unsupported operand type for addition");
+    }
+
+
+    AmbiguousVariable* op_minus_equality(AmbiguousVariable* a, AmbiguousVariable* b) {
+        switch (a->type) {
+            case 'i':
+                switch (b->type) {
+                    case 'i':
+                        a->int_val = a->int_val - b->int_val;
+                        return a;
+                    case 'r':
+                        a->type = 'r';
+                        a->real_val = a->int_val - b->real_val;
+                        return a;
+                }
+            case 'r':
+                switch (b->type) {
+                    case 'i':
+                        a->real_val = a->real_val - b->int_val;
+                        return a;
+                    case 'r':
+                        a->real_val = a->real_val - b->real_val;
+                        return a;
                 }
         }
         throw std::runtime_error("Unsupported operand type for subtraction");

@@ -20,7 +20,7 @@ Expression|19|(20)|()
 Unary|20|#|21|#
 Primary|21|v|r|()
 Body|22|(23)
-Assignment|23|24|25
+Assignment|23|=|24|25
 Primary|24|v|newarr|()
 Expression|25|(26|28)|(+)
 Unary|26|#|27|#
@@ -72,7 +72,7 @@ Expression|71|(72)|()
 Unary|72|#|73|#
 Primary|73|v|l2|()
 Body|74|(75|81|136)
-Assignment|75|76|77
+Assignment|75|=|76|77
 Primary|76|v|flag|()
 Expression|77|(78)|()
 Unary|78|#|79|#
@@ -102,7 +102,7 @@ Expression|101|(102)|()
 Unary|102|#|103|#
 Primary|103|v|y2|()
 Body|104|(105|121)
-Assignment|105|106|107
+Assignment|105|=|106|107
 Primary|106|v|merged|()
 Expression|107|(108|110)|(+)
 Unary|108|#|109|#
@@ -118,7 +118,7 @@ Tail|117|s|118
 Expression|118|(119)|()
 Unary|119|#|120|#
 Primary|120|v|y1|()
-Assignment|121|122|123
+Assignment|121|=|122|123
 Primary|122|v|y1|()
 Expression|123|(124|126)|(+)
 Unary|124|#|125|#
@@ -127,13 +127,13 @@ Unary|126|#|127|#
 Primary|127|l|128
 Literal|128|i|1
 Body|129|(130)
-Assignment|130|131|132
+Assignment|130|=|131|132
 Primary|131|v|flag|()
 Expression|132|(133)|()
 Unary|133|#|134|#
 Primary|134|l|135
 Literal|135|b|0
-Assignment|136|137|138
+Assignment|136|=|137|138
 Primary|137|v|merged|()
 Expression|138|(139|141)|(+)
 Unary|139|#|140|#
@@ -156,7 +156,7 @@ Primary|155|v|y1|()
 Unary|156|#|157|#
 Primary|157|v|l1|()
 Body|158|(159|175)
-Assignment|159|160|161
+Assignment|159|=|160|161
 Primary|160|v|merged|()
 Expression|161|(162|164)|(+)
 Unary|162|#|163|#
@@ -172,7 +172,7 @@ Tail|171|s|172
 Expression|172|(173)|()
 Unary|173|#|174|#
 Primary|174|v|y1|()
-Assignment|175|176|177
+Assignment|175|=|176|177
 Primary|176|v|y1|()
 Expression|177|(178|180)|(+)
 Unary|178|#|179|#
@@ -307,7 +307,7 @@ Expression|306|(307)|()
 Unary|307|#|308|#
 Primary|308|v|arrlen|()
 Body|309|(310)
-Assignment|310|311|312
+Assignment|310|=|311|312
 Primary|311|v|arr|()
 Expression|312|(313|315)|(+)
 Unary|313|#|314|#

@@ -109,20 +109,13 @@ namespace ast_nodes {
 
     // Evaluate expression and put its value into current scope
 	void ExpressionNode::execute(std::istream& in, std::ostream& out) {
-		//std::cout << id << std::endl;
 		std::vector<arithmetic::AmbiguousVariable*> calced_terms;
-        terms.reserve(terms.size());
+        calced_terms.reserve(terms.size());
 		
 		for (auto i : terms) {
 			i->execute(in, out);
 			calced_terms.push_back(scopes.back().intermediates[i->id]);
 		}
-
-        //std::cout << "BEGINNING OF SCOPES" << std::endl;
-        //for (auto i : scopes) {
-        //    std::cout << i << std::endl;
-        //}
-        //std::cout << "END OF SCOPES" << std::endl;
 
         scopes.back().intermediates[id] = evaluate_expression(calced_terms, ops);
     }
@@ -276,9 +269,21 @@ namespace ast_nodes {
 
     // Assign value to variable in current scope
     void AssignmentNode::execute(std::istream& in, std::ostream& out) {
-		primary->execute(in, out);
-		expression->execute(in, out);
-		*scopes.back().intermediates[primary->id] = *scopes.back().intermediates[expression->id];
+        primary->execute(in, out);
+        expression->execute(in, out);
+        switch (type) {
+            case '=':
+                *scopes.back().intermediates[primary->id] = *scopes.back().intermediates[expression->id];
+                break;
+            case '+':
+                arithmetic::op_plus_equality(scopes.back().intermediates[primary->id], scopes.back().intermediates[expression->id]);
+                break;
+            case '-':
+                arithmetic::op_minus_equality(scopes.back().intermediates[primary->id], scopes.back().intermediates[expression->id]);
+                break;
+            default:
+                throw std::invalid_argument("Expected :=, += or -= in supposed assignment");
+        }
     }
 
     // Print some expressions

@@ -21,7 +21,7 @@ Expression|20|(21)|()
 Unary|21|#|22|#
 Primary|22|v|n|()
 Body|23|(24)
-Assignment|24|25|26
+Assignment|24|=|25|26
 Primary|25|v|ans|()
 Expression|26|(27|29)|(+)
 Unary|27|#|28|#

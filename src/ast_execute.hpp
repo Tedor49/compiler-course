@@ -13,7 +13,14 @@ namespace ast_nodes {
 	
 	arithmetic::AmbiguousVariable constempty;
 	
-	bool returned_flag = false;
+	enum ControlState {
+		Normal,
+		Break,
+		Continue,
+		Return,
+	};
+
+	int control_flag = ControlState::Normal;
 	arithmetic::AmbiguousVariable* return_register;
 
     struct scopeinfo {
@@ -30,9 +37,6 @@ namespace ast_nodes {
 		}
 		out << "Intermediates:" << std::endl;
 		for (auto i : var.intermediates) {
-			//out << i.first << std::endl;
-			//out << i.second << std::endl;
-			//out << "WHAT THE SIGMA" << std::endl;
             if(i.second != nullptr) {
                 out << '\t' << i.first << ' ' << *i.second << std::endl;
 
@@ -92,7 +96,7 @@ namespace ast_nodes {
 		for (auto i : statements) {
 			//std::cout << i->id << std::endl;
 			i->execute(in, out);
-			if (returned_flag) break;
+			if (control_flag != ControlState::Normal) break;
 		}
 		close_scope(this);
     }
@@ -215,11 +219,15 @@ namespace ast_nodes {
 					return_register = &constempty;
 					//std::cout << "SKIBIDI" << std::endl;
 					
-					returned_flag = false;
-					
 					foo->body->execute(in, out);
 					
-					returned_flag = false;
+					if (control_flag == ControlState::Return) {
+						control_flag = ControlState::Normal;
+					}
+					
+					if (control_flag != ControlState::Normal) {
+						throw std::invalid_argument("Unexpected break or continue in function call");
+					}
 					
 					//std::cout << "SKIBIDI2" << std::endl;
 					if (foo->type == 'l') {
@@ -288,7 +296,6 @@ namespace ast_nodes {
 
     // Print some expressions
     void PrintNode::execute(std::istream& in, std::ostream& out) {
-		//std::cout << id << std::endl;
         for (auto i : values) {
 			i->execute(in, out);
 			out << *scopes.back().intermediates[i->id];
@@ -296,12 +303,20 @@ namespace ast_nodes {
     }
 
     // Return some expression from function
-    void ReturnNode::execute(std::istream& in, std::ostream& out) {
-		std::cout << id << std::endl;
-		value->execute(in, out);
-		std::cout << "execced" << std::endl;
-		returned_flag = true;
-		return_register = scopes.back().intermediates[value->id];
+    void ControlNode::execute(std::istream& in, std::ostream& out) {
+		switch (type) {
+			case 'b':
+				control_flag = ControlState::Break;
+				break;
+			case 'r':
+				value->execute(in, out);
+				control_flag = ControlState::Return;
+				return_register = scopes.back().intermediates[value->id];	
+				break;
+			case 'c':
+				control_flag = ControlState::Continue;
+				break;
+		};
     }
 
     // Handle if statement and execute one of the bodies
@@ -355,7 +370,15 @@ namespace ast_nodes {
 		for (long long i = rng_l->int_val; i <= rng_r->int_val; ++i) {
 			scopes.back().variables[identifier]->int_val = i;
 			body->execute(in, out);
-			if (returned_flag) break;
+			if (control_flag == ControlState::Return) {
+				break;
+			} else if (control_flag == ControlState::Break) {
+				control_flag = ControlState::Normal;
+				break;
+			} else if (control_flag == ControlState::Continue) {
+				control_flag = ControlState::Normal;
+				continue;
+			}
 		}
 		close_scope(this);
     }
@@ -375,13 +398,20 @@ namespace ast_nodes {
 	void WhileNode::execute(std::istream& in, std::ostream& out) {
 		while (while_check_cond(this, in, out)) {			
 			body->execute(in, out);
-			if (returned_flag) break;
+			if (control_flag == ControlState::Return) {
+				break;
+			} else if (control_flag == ControlState::Break) {
+				control_flag = ControlState::Normal;
+				break;
+			} else if (control_flag == ControlState::Continue) {
+				control_flag = ControlState::Normal;
+				continue;
+			}
 		}
     }
 
     // Construct AmbiguousVariable from literal and put it into current scope
     void LiteralNode::execute(std::istream& in, std::ostream& out) {
-		//std::cout << id << std::endl;
 		arithmetic::AmbiguousVariable* lit = new arithmetic::AmbiguousVariable();
 		lit->type = type;
 		

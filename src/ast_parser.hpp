@@ -205,6 +205,8 @@ namespace ast_nodes {
 	Node* IfNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
 		this->line = tokens.at(y).line;
 		this->pos = tokens.at(y).pos;
+		++y;
+		
 		this->expression = createNodeFromTokens("Expression", tokens, y);
 
 
@@ -225,6 +227,8 @@ namespace ast_nodes {
     Node* ForNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
 		this->line = tokens.at(y).line;
 		this->pos = tokens.at(y).pos;
+		++y;
+		
 		if (tokens.at(y).type != tokens::TokenCode::tkIdentifier) {
 			throw std::invalid_argument("Expected iteration variable name");
 		}
@@ -265,6 +269,8 @@ namespace ast_nodes {
 	Node* WhileNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
 		this->line = tokens.at(y).line;
 		this->pos = tokens.at(y).pos;
+		++y;
+
 		this->expression = createNodeFromTokens("Expression", tokens, y);
 
 
@@ -403,6 +409,8 @@ namespace ast_nodes {
     Node* PrintNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
 		this->line = tokens.at(y).line;
 		this->pos = tokens.at(y).pos;
+		++y;
+		
 		while (1) {
 			this->values.push_back(createNodeFromTokens("Expression", tokens, y));
 
@@ -417,10 +425,28 @@ namespace ast_nodes {
 		return this;
 	}
 
-    Node* ReturnNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
+    Node* ControlNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
 		this->line = tokens.at(y).line;
 		this->pos = tokens.at(y).pos;
-		this->value = createNodeFromTokens("Expression", tokens, y);
+		
+		switch (tokens.at(y).type) {
+			case tokens::TokenCode::tkBreak:
+				this->type = 'b';
+				++y;
+				break;
+			case tokens::TokenCode::tkContinue:
+				this->type = 'c';
+				++y;
+				break;
+			case tokens::TokenCode::tkReturn:
+				this->type = 'r';
+				++y;
+				this->value = createNodeFromTokens("Expression", tokens, y);
+				break;
+			default:
+				throw std::invalid_argument("SOMEHOW TRIED TO CREATE CONTROL STATEMENT FROM INVALID STATE");
+		}
+		
 		return this;
 	}
 
@@ -585,7 +611,6 @@ namespace ast_nodes {
 		this->pos = tokens.at(y).pos;
         this->primary = createNodeFromTokens("Primary", tokens, y);
 
-
         switch (tokens.at(y).type) {
             case tokens::TokenCode::tkAssignment:
                 this->type = '=';
@@ -633,23 +658,20 @@ namespace ast_nodes {
 					statements.push_back(createNodeFromTokens("Assignment", tokens, y));
 					break;
 				case tokens::TokenCode::tkIf:
-					++y;
 					statements.push_back(createNodeFromTokens("If", tokens, y));
 					break;
 				case tokens::TokenCode::tkFor:
-					++y;
 					statements.push_back(createNodeFromTokens("For", tokens, y));
 					break;
 				case tokens::TokenCode::tkWhile:
-					++y;
 					statements.push_back(createNodeFromTokens("While", tokens, y));
 					break;
+				case tokens::TokenCode::tkBreak:
+				case tokens::TokenCode::tkContinue:
 				case tokens::TokenCode::tkReturn:
-					++y;
-					statements.push_back(createNodeFromTokens("Return", tokens, y));
+					statements.push_back(createNodeFromTokens("Control", tokens, y));
 					break;
 				case tokens::TokenCode::tkPrint:
-					++y;
 					statements.push_back(createNodeFromTokens("Print", tokens, y));
 					break;
 				default:

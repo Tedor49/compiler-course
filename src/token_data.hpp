@@ -46,6 +46,8 @@ namespace tokens {
         tkFor, // for
         tkIn, // in
         tkIs, // is type checker
+        tkBreak, // break
+        tkContinue, // continue
         tkReturn, // return
         tkVar, // var
         tkAssignment, // :=
@@ -246,6 +248,12 @@ namespace tokens {
                     case TokenCode::tkIs:
                         out << "(tkIs " << a.line << ' ' << a.pos << ")";
                         break;
+                    case TokenCode::tkBreak:
+                        out << "(tkBreak " << a.line << ' ' << a.pos << ")";
+                        break;
+                    case TokenCode::tkContinue:
+                        out << "(tkContinue " << a.line << ' ' << a.pos << ")";
+                        break;
                     case TokenCode::tkReturn:
                         out << "(tkReturn " << a.line << ' ' << a.pos << ")";
                         break;
@@ -443,6 +451,8 @@ namespace tokens {
         { "while", TokenCode::tkWhile },
         { "for", TokenCode::tkFor },
         { "in", TokenCode::tkIn },
+        { "break", TokenCode::tkBreak },
+        { "continue", TokenCode::tkContinue },
         { "return", TokenCode::tkReturn },
         { "var", TokenCode::tkVar },
         { ":=", TokenCode::tkAssignment },

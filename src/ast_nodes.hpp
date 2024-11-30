@@ -44,7 +44,7 @@ namespace ast_nodes {
     class TailNode;
     class AssignmentNode;
     class PrintNode;
-    class ReturnNode;
+    class ControlNode;
     class IfNode;
     class ForNode;
     class WhileNode;
@@ -737,9 +737,11 @@ namespace ast_nodes {
             }
     };
 
-    class ReturnNode: public Node {
+    class ControlNode: public Node {
         public:
-            Node* value;
+			char type;
+		
+            Node* value = nullptr;
 			
 			Node* from_tokens(std::vector<tokens::Token>& tokens, int& y);
 			void execute(std::istream& in, std::ostream& out);
@@ -761,19 +763,30 @@ namespace ast_nodes {
 				pos = std::stoi(read.first);
 
                 read_until_delim(s, read);
-                value = nodes[std::stoll(read.first)];
+                type = read.first[0];
+				
+				if (type == 'r') {
+					read_until_delim(s, read);
+					value = nodes[std::stoll(read.first)];
+				}
             }
 
             void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=true) {
                 at_enter(this);
-
-                this->value->visit(at_enter, at_repeat, at_exit, visit_body);
+				
+				if (this->type == 'r') {
+					this->value->visit(at_enter, at_repeat, at_exit, visit_body);
+				}
+				
                 at_exit(this);
             }
 
             void machine_print(std::ostream& out){
-                out << "Return|" << id << "|" << line << "|"  << pos << "|" << value->id << "\n";
-                value->machine_print(out);
+                out << "Control|" << id << "|" << line << "|"  << pos << "|" << type;
+				if (type == 'r') {
+					out << "|" << value->id << "\n";
+					value->machine_print(out);
+				} else out << "\n";
             }
     };
 
@@ -1241,8 +1254,8 @@ namespace ast_nodes {
             return (new AssignmentNode());
         } else if (t.compare("Print") == 0) {
             return (new PrintNode());
-        } else if (t.compare("Return") == 0) {
-            return (new ReturnNode());
+        } else if (t.compare("Control") == 0) {
+            return (new ControlNode());
         } else if (t.compare("If") == 0) {
             return (new IfNode());
         } else if (t.compare("For") == 0) {

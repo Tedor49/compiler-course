@@ -1,12 +1,12 @@
-Body|1|(2|7)
-Print|2|(3)
-Expression|3|(4)|()
-Unary|4|#|5|#
-Primary|5|l|6
-Literal|6|s|True it is
-Print|7|(8)
-Expression|8|(9)|()
-Unary|9|#|10|#
-Primary|10|l|11
-Literal|11|s|False it must be
+Body|1|1|2|(2|7)
+Print|2|2|4|(3)
+Expression|3|2|11|(4)|()
+Unary|4|2|11|#|5|#
+Primary|5|2|11|l|6
+Literal|6|2|11|s|True it is
+Print|7|10|4|(8)
+Expression|8|10|11|(9)|()
+Unary|9|10|11|#|10|#
+Primary|10|10|11|l|11
+Literal|11|10|11|s|False it must be
 END|-1

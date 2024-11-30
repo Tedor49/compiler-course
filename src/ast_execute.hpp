@@ -57,12 +57,12 @@ namespace ast_nodes {
 	
 	void close_scope (ast_nodes::Node* parent) {
 		if (scopes.size() == 0) {
-            throw std::invalid_argument("Scope does not exist while closing");
+            throw std::invalid_argument("SCOPE DOES NOT EXIST WHILE CLOSING");
         }
 		while (scopes.back().node_id != parent->id) {
 			scopes.resize(scopes.size() - 1);
 			if (scopes.size() == 0) {
-				throw std::invalid_argument("Scope does not exist while closing");
+				throw std::invalid_argument("SCOPE DOES NOT EXIST WHILE CLOSING");
 			}			
 		}
 		scopes.resize(scopes.size() - 1);
@@ -121,15 +121,30 @@ namespace ast_nodes {
 			calced_terms.push_back(scopes.back().intermediates[i->id]);
 		}
 
-        scopes.back().intermediates[id] = evaluate_expression(calced_terms, ops);
+        try {
+            scopes.back().intermediates[id] = evaluate_expression(calced_terms, ops);
+        } catch (std::invalid_argument& ex) {
+            throw std::invalid_argument(std::format("Evaluation error at line {}, pos {}:\n\t{}", line, pos, ex.what()));
+        } catch (std::runtime_error& ex) {
+            throw std::invalid_argument(std::format("Evaluation error at line {}, pos {}:\n\t{}", line, pos, ex.what()));
+        }
+
     }
 
     // Evaluate unary operator and put its value into current scope
     void UnaryNode::execute(std::istream& in, std::ostream& out) {
 		//std::cout << id << std::endl;
 		primary->execute(in, out);
-		
-        arithmetic::AmbiguousVariable* new_term = perform_unary_op(unaryop, scopes.back().intermediates[primary->id]);
+        arithmetic::AmbiguousVariable* new_term;
+
+        try {
+            new_term = perform_unary_op(unaryop, scopes.back().intermediates[primary->id]);
+        } catch (std::invalid_argument& ex) {
+            throw std::invalid_argument(std::format("Evaluation error at line {}, pos {}:\n\t{}", line, pos, ex.what()));
+        } catch (std::runtime_error& ex) {
+            throw std::invalid_argument(std::format("Evaluation error at  at line {}, pos {}:\n\t{}", line, pos, ex.what()));
+        }
+
         if (type_ind == '#') {
             scopes.back().intermediates[id] = new_term;
         } else {
@@ -170,55 +185,47 @@ namespace ast_nodes {
 				
 				if (tail->type == 't') {
 					if (var->type != 't') {
-						throw std::invalid_argument("Expected tuple");
+                        throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expected tuple"));
 					}
 					
 					if (var->array_values.size() < tail->tuple_idx - 1) {
-						throw std::invalid_argument("Tuple index out of range");
+                        throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Tuple index out of range"));
 					}
 					
 					var = var->array_values[tail->tuple_idx - 1];
 				} else if (tail->type == 'i') {
 					if (var->type != 't') {
-						throw std::invalid_argument("Expected tuple");
+                        throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expected tuple"));
 					}
 					
 					if (var->tuple_identifiers.count(tail->identifier) == 0) {
-						throw std::invalid_argument("Tuple identifier not present");
+                        throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Tuple identifier not present"));
 					}
 					
 					var = var->array_values[var->tuple_identifiers[tail->identifier]];
 				} else if (tail->type == 'p') {
-					//std::cout << "SKIBIDI" << std::endl;
 					if (var->type != 'f') {
-						throw std::invalid_argument("Expected function");
+                        throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expected function"));
 					}
-					//std::cout << "SKIBIDI1" << std::endl;
-					
-					//std::cout << var->type << std::endl;
-					
+
 					ast_nodes::FunctionNode* foo = var->function_pointer;
-					
-					//std::cout << "SKIBIDI" << std::endl;
+
 					if (foo->params.size() != tail->params.size()) {
-						throw std::invalid_argument(std::format("Argument amount mismatch: Expected: {} got: {}", foo->params.size(), tail->params.size()));
+						throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\tArgument amount mismatch: Expected: {} got: {}", line, pos, foo->params.size(), tail->params.size()));
 					}
 
                     scopeinfo capture;
                     capture.variables = var->function_scope;
                     scopes.push_back(capture);
-					
-					//std::cout << "SKIBIDI" << std::endl;
+
 					open_scope(i);
 					
 					for (int j = 0; j < foo->params.size(); ++j) {
 						scopes.back().variables[foo->params[j]] = scopes[scopes.size() - 3].intermediates[tail->params[j]->id];
 					}
 					
-					//std::cout << "SKIBIDI" << std::endl;
 					return_register = &constempty;
-					//std::cout << "SKIBIDI" << std::endl;
-					
+
 					foo->body->execute(in, out);
 					
 					if (control_flag == ControlState::Return) {
@@ -226,28 +233,25 @@ namespace ast_nodes {
 					}
 					
 					if (control_flag != ControlState::Normal) {
-						throw std::invalid_argument("Unexpected break or continue in function call");
+                        throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Unexpected break or continue in function call"));
 					}
 					
-					//std::cout << "SKIBIDI2" << std::endl;
 					if (foo->type == 'l') {
 						return_register = scopes.back().intermediates[foo->body->id];
 					}
 					
-					//std::cout << "SKIBIDI" << std::endl;
 					var = arithmetic::copy(return_register);
 					
-					//std::cout << "SKIBIDI" << std::endl;
 					close_scope(i);
                     scopes.resize(scopes.size() - 1);
 				} else if (tail->type == 's') {
 					if (var->type != 'a') {
-						throw std::invalid_argument("Expected array");
+                        throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expected array"));
 					}
 					
 					arithmetic::AmbiguousVariable* sub = scopes.back().intermediates[tail->subscript->id];
 					if (sub->type != 'i') {
-						throw std::invalid_argument("Expected integer as array index");
+                        throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expected integer as array index"));
 					}
 					
 					if (var->array_identifiers.count(sub->int_val) == 0) {
@@ -257,21 +261,19 @@ namespace ast_nodes {
 					
 					var = var->array_values[var->array_identifiers[sub->int_val]];
 				} else {
-					throw std::invalid_argument("Expected valid type");
+                    throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expected valid type"));
 				}
 			}
 			scopes.back().intermediates[id] = var;
 		} else if (type == 'l') {
-            //std::cout << "SKIBIDI1" << std::endl;
 
 			literal->execute(in, out);
 			scopes.back().intermediates[id] = scopes.back().intermediates[literal->id];
-            //std::cout << "SKIBIDI1" << std::endl;
 		} else if (type == 'e') {
 			expression->execute(in, out);
 			scopes.back().intermediates[id] = scopes.back().intermediates[expression->id];
 		} else {
-			throw std::invalid_argument("Expected valid type");
+            throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expected valid type"));
 		}
     }
 
@@ -290,7 +292,7 @@ namespace ast_nodes {
                 arithmetic::op_minus_equality(scopes.back().intermediates[primary->id], scopes.back().intermediates[expression->id]);
                 break;
             default:
-                throw std::invalid_argument("Expected :=, += or -= in supposed assignment");
+                throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expected :=, += or -= in supposed assignment"));
         }
     }
 
@@ -330,7 +332,7 @@ namespace ast_nodes {
                 else_body->execute(in, out);
             }
         } else {
-            throw std::invalid_argument("If statement does not contain boolean as argument");
+            throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "If statement does not contain boolean as argument"));
         }
     }
 	
@@ -358,11 +360,11 @@ namespace ast_nodes {
 		arithmetic::AmbiguousVariable* rng_r = scopes.back().intermediates[range_expr_r->id];
 		
 		if (rng_l->type != 'i') {
-			throw std::invalid_argument("Left bound of for loop is not and integer");
+            throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Left bound of for loop is not and integer"));
 		}
 		
 		if (rng_r->type != 'i') {
-			throw std::invalid_argument("Right bound of for loop is not and integer");
+            throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Right bound of for loop is not and integer"));
 		}
 		
 		scopes.back().variables[identifier] = new arithmetic::AmbiguousVariable();
@@ -383,12 +385,12 @@ namespace ast_nodes {
 		close_scope(this);
     }
 	
-	bool while_check_cond(WhileNode* node, std::istream& in, std::ostream& out) {
+	bool while_check_cond(WhileNode* node, std::istream& in, std::ostream& out, int pos, int line) {
 		node->expression->execute(in, out);
 		arithmetic::AmbiguousVariable* val = scopes.back().intermediates[node->expression->id];
 
 		if (val->type != 'b') {
-			throw std::invalid_argument("Expression in while loop does not evaluate to an integer");
+            throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expression in while loop does not evaluate to a boolean"));
 		}
 
 		return val->bool_val;
@@ -396,7 +398,7 @@ namespace ast_nodes {
 
     // Handle while statement and execute the body multiple times
 	void WhileNode::execute(std::istream& in, std::ostream& out) {
-		while (while_check_cond(this, in, out)) {			
+		while (while_check_cond(this, in, out, pos, line)) {
 			body->execute(in, out);
 			if (control_flag == ControlState::Return) {
 				break;
@@ -443,7 +445,7 @@ namespace ast_nodes {
 				lit = scopes.back().intermediates[func_val->id];
 				break;
 			default:
-				throw std::invalid_argument("Expected valid type");
+                throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos, "Expected valid type"));
 		}
 		
 		scopes.back().intermediates[id] = lit;

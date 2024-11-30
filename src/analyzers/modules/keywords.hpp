@@ -29,16 +29,16 @@ namespace analyzers {
 					case 'b':
 					case 'c':
 						if (foo_wraps.back() == 0) {
-							throw std::invalid_argument("Break or continue statement outside of loop");
+                            throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", node->line, node->pos, "Break or continue statement outside of loop"));
 						}
 						break;
 					case 'r':
 						if (foo_wraps.size() == 1) {
-							throw std::invalid_argument("Return statement outside of function");
+                            throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", node->line, node->pos, "Return statement outside of function"));
 						}
 						break;
 					default:
-						throw std::invalid_argument("CONTROL NODE HAS INVALID TYPE");
+                        throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", node->line, node->pos, "CONTROL NODE HAS INVALID TYPE"));
 				}
 			}
 

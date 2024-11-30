@@ -49,7 +49,7 @@ namespace analyzers {
                 }
 
                 if (!exists) {
-                    throw std::invalid_argument(std::format("Undefined variable {}", primary_node->identifier));
+                    throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\tUndefined variable {}", node->line, node->pos, primary_node->identifier));
                 }
             }
 

@@ -238,6 +238,7 @@ namespace arithmetic {
                         c->real_val = a->int_val + b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -249,6 +250,7 @@ namespace arithmetic {
                         c->real_val = a->real_val + b->real_val;
                         return c;
                 }
+                break;
             case 's':
                 switch (b->type) {
                     case 's':
@@ -256,18 +258,21 @@ namespace arithmetic {
                         c->string_val = a->string_val + b->string_val;
                         return c;
                 }
+                break;
             case 't':
                 switch (b->type) {
                     case 't':
                         c = tuple_addition(a, b);
                         return c;
                 }
+                break;
             case 'a':
                 switch (b->type) {
                     case 'a':
                         c = array_addition(a, b);
                         return c;
                 }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for addition");
     }
@@ -287,6 +292,7 @@ namespace arithmetic {
                         c->real_val = a->int_val - b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -298,6 +304,7 @@ namespace arithmetic {
                         c->real_val = a->real_val - b->real_val;
                         return c;
                 }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for subtraction");
     }
@@ -314,6 +321,7 @@ namespace arithmetic {
                         a->real_val = a->int_val + b->real_val;
                         return a;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -323,24 +331,28 @@ namespace arithmetic {
                         a->real_val = a->real_val + b->real_val;
                         return a;
                 }
+                break;
             case 's':
                 switch (b->type) {
                     case 's':
                         a->string_val = a->string_val + b->string_val;
                         return a;
                 }
+                break;
             case 't':
                 switch (b->type) {
                     case 't':
                         *a = *tuple_addition(a, b);
                         return a;
                 }
+                break;
             case 'a':
                 switch (b->type) {
                     case 'a':
                         *a = *array_addition(a, b);
                         return a;
                 }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for addition");
     }
@@ -358,6 +370,7 @@ namespace arithmetic {
                         a->real_val = a->int_val - b->real_val;
                         return a;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -367,6 +380,7 @@ namespace arithmetic {
                         a->real_val = a->real_val - b->real_val;
                         return a;
                 }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for subtraction");
     }
@@ -385,6 +399,7 @@ namespace arithmetic {
                         c->real_val = a->int_val * b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -396,6 +411,7 @@ namespace arithmetic {
                         c->real_val = a->real_val * b->real_val;
                         return c;
                 }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for multiplication");
     }
@@ -415,6 +431,7 @@ namespace arithmetic {
                         c->real_val = a->int_val / b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -426,6 +443,7 @@ namespace arithmetic {
                         c->real_val = a->real_val / b->real_val;
                         return c;
                 }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for division");
     }
@@ -443,6 +461,7 @@ namespace arithmetic {
                         c->bool_val = a->int_val < b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -452,6 +471,7 @@ namespace arithmetic {
                         c->bool_val = a->real_val < b->real_val;
                         return c;
                 }
+                break;
         }
 		std::cout << *a << ' ' << *b << std::endl;
         throw std::runtime_error("Unsupported operand type for <");
@@ -470,6 +490,7 @@ namespace arithmetic {
                         c->bool_val = a->int_val > b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -479,6 +500,7 @@ namespace arithmetic {
                         c->bool_val = a->real_val > b->real_val;
                         return c;
                 }
+                break;
         }
 
         throw std::runtime_error("Unsupported operand type for >");
@@ -497,6 +519,7 @@ namespace arithmetic {
                         c->bool_val = a->int_val <= b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -506,6 +529,7 @@ namespace arithmetic {
                         c->bool_val = a->real_val <= b->real_val;
                         return c;
                 }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for <=");
     }
@@ -523,6 +547,7 @@ namespace arithmetic {
                         c->bool_val = a->int_val >= b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -532,6 +557,7 @@ namespace arithmetic {
                         c->bool_val = a->real_val >= b->real_val;
                         return c;
                 }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for >=");
     }
@@ -550,6 +576,7 @@ namespace arithmetic {
                         c->bool_val = a->int_val == b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -559,21 +586,25 @@ namespace arithmetic {
                         c->bool_val = a->real_val == b->real_val;
                         return c;
                 }
+                break;
             case 's':
                 if (b->type == 's') {
 					c->bool_val = a->string_val == b->string_val;
                     return c;
 				}
+                break;
             case 'e':
                 if (b->type == 'e') {
 					c->bool_val = true;
                     return c;
 				}
+                break;
             case 'b':
                 if (b->type == 'b') {
 					c->bool_val = a->bool_val == b->bool_val;
                     return c;
 				}
+                break;
         }
 		//std::cout << *a << ' ' << *b << std::endl;
         throw std::runtime_error("Unsupported operand type for =");
@@ -595,6 +626,7 @@ namespace arithmetic {
                         c->bool_val = a->int_val != b->real_val;
                         return c;
                 }
+                break;
             case 'r':
                 switch (b->type) {
                     case 'i':
@@ -604,6 +636,7 @@ namespace arithmetic {
                         c->bool_val = a->real_val != b->real_val;
                         return c;
                 }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for \\=");
     }

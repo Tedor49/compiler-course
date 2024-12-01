@@ -4,7 +4,7 @@ Expression|3|0|0|(4)|()
 Unary|4|0|0|#|5|#
 Primary|5|0|0|l|6
 Literal|6|0|0|f|7
-Function|7|1|15|b|(n)|8
+Function|7|0|0|b|(n)|8
 Body|8|1|23|(9|22|27|66)
 If|9|2|4|10|16|0
 Expression|10|2|7|(11|13)|(l)

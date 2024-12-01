@@ -4,7 +4,7 @@ Expression|3|0|0|(4)|()
 Unary|4|0|0|#|5|#
 Primary|5|0|0|l|6
 Literal|6|0|0|f|7
-Function|7|1|21|b|(point)|8
+Function|7|0|0|b|(point)|8
 Body|8|1|33|(9)
 Control|9|2|4|r|10
 Expression|10|2|11|(11|14|17|20)|(*|+|*)
@@ -29,7 +29,7 @@ Expression|28|5|10|(29)|()
 Unary|29|5|10|#|30|#
 Primary|30|5|10|l|31
 Literal|31|5|10|t|32
-TupleLiteral|32|5|22|(x|y)|(33|36)
+TupleLiteral|32|5|10|(x|y)|(33|36)
 Expression|33|5|27|(34)|()
 Unary|34|5|27|#|35|#
 Primary|35|5|27|r

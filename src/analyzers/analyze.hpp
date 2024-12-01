@@ -8,6 +8,7 @@
 #include "../ast_lib.hpp"
 #include "./modules/keywords.hpp"
 #include "./modules/definitions.hpp"
+#include "./modules/immutable.hpp"
 
 namespace analyzers {
 
@@ -21,7 +22,8 @@ namespace analyzers {
     void analyze (ast_nodes::Node* tree, std::ostream* log=&std::cerr) {
         std::vector<analyzer_data> analyzers = {
             {keywords::name, keywords::analyze},
-            {definitions::name, definitions::analyze}
+            {definitions::name, definitions::analyze},
+            {immutable::name, immutable::analyze}
         };
 
         for(analyzer_data& i: analyzers) {

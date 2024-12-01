@@ -4,7 +4,7 @@ Expression|3|0|0|(4)|()
 Unary|4|0|0|#|5|#
 Primary|5|0|0|l|6
 Literal|6|0|0|f|7
-Function|7|1|21|b|(arrlen|arr)|8
+Function|7|0|0|b|(arrlen|arr)|8
 Body|8|1|39|(9|86)
 For|9|2|4|i|10|14|20
 Expression|10|2|13|(11)|()
@@ -96,7 +96,7 @@ Expression|95|15|12|(96)|()
 Unary|96|15|12|#|97|#
 Primary|97|15|12|l|98
 Literal|98|15|12|a|99
-ArrayLiteral|99|15|13|()
+ArrayLiteral|99|15|12|()
 For|100|17|3|i|101|105|108
 Expression|101|17|12|(102)|()
 Unary|102|17|12|#|103|#
@@ -114,7 +114,7 @@ Primary|113|18|11|v|arr|()
 Unary|114|18|16|#|115|#
 Primary|115|18|16|l|116
 Literal|116|18|16|a|117
-ArrayLiteral|117|18|18|(118)
+ArrayLiteral|117|18|16|(118)
 Expression|118|18|18|(119)|()
 Unary|119|18|18|#|120|#
 Primary|120|18|18|i

@@ -72,7 +72,7 @@ Expression|71|9|6|(72)|()
 Unary|72|9|6|#|73|#
 Primary|73|9|6|l|74
 Literal|74|9|6|a|75
-ArrayLiteral|75|9|9|(76|80|84)
+ArrayLiteral|75|9|6|(76|80|84)
 Expression|76|9|9|(77)|()
 Unary|77|9|9|#|78|#
 Primary|78|9|9|l|79

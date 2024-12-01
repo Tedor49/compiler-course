@@ -2,7 +2,7 @@
 #include "../analyzers/analyze.hpp"
 #include "../cmd_utils.hpp"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     cmd_utils::input_params param;
     cmd_utils::parse_args(argc, argv, param);
 

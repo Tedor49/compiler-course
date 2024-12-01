@@ -10,7 +10,7 @@
 
 namespace cmd_utils {
 
-    std::string readfile (std::ifstream& in) {
+    std::string readfile(std::ifstream &in) {
         std::stringstream buf;
 
         buf << in.rdbuf();
@@ -19,7 +19,7 @@ namespace cmd_utils {
         return buf.str();
     }
 
-    struct input_params{
+    struct input_params {
         std::ifstream* in_stream;
         bool out_is_file;
         std::ofstream* out_stream;
@@ -27,7 +27,7 @@ namespace cmd_utils {
         bool verbose;
     };
 
-    void parse_args(int& argc, char* argv[], input_params& par, std::ostream* log=&std::cerr){
+    void parse_args(int &argc, char* argv[], input_params &par, std::ostream* log = &std::cerr) {
 
         if (argc < 2) {
             (*log) << "Usage: " << argv[0] << " infile [-o outfile] [-h] [-v]\n";
@@ -38,7 +38,7 @@ namespace cmd_utils {
             throw std::invalid_argument("No input file specified");
         }
 
-        if (!std::filesystem::is_regular_file(argv[1]) && !std::filesystem::is_symlink(argv[1])){
+        if (!std::filesystem::is_regular_file(argv[1]) && !std::filesystem::is_symlink(argv[1])) {
             (*log) << "Usage: " << argv[0] << " infile [-o outfile] [-h] [-v]\n";
             (*log) << "  infile      path to input file\n";
             (*log) << "  -o outfile  path to output file\n";
@@ -49,7 +49,7 @@ namespace cmd_utils {
 
         std::ifstream* in = new std::ifstream(argv[1]);
 
-        if (in->fail()){
+        if (in->fail()) {
             (*log) << "Usage: " << argv[0] << " infile [-o outfile] [-h] [-v]\n";
             (*log) << "  infile      path to input file\n";
             (*log) << "  -o outfile  path to output file\n";
@@ -67,7 +67,7 @@ namespace cmd_utils {
 
         while (y != argc) {
             if (strcmp(argv[y], "-o") == 0) {
-                if (y + 1 == argc){
+                if (y + 1 == argc) {
                     (*log) << "Usage: " << argv[0] << " infile [-o outfile] [-h] [-v]\n";
                     (*log) << "  infile      path to input file\n";
                     (*log) << "  -o outfile  path to output file\n";
@@ -76,7 +76,7 @@ namespace cmd_utils {
                     throw std::invalid_argument("No output file after flag");
                 }
 
-                std::ofstream* out = new std::ofstream(argv[y+1]);
+                std::ofstream* out = new std::ofstream(argv[y + 1]);
 
                 if (out->fail()) {
                     (*log) << "Usage: " << argv[0] << " infile [-o outfile] [-h] [-v]\n";

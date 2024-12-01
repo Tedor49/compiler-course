@@ -372,7 +372,9 @@ namespace ast_nodes {
 				this->type = 'p';
 				++y;
 
-				while (1) {
+				if (tokens.at(y).type == tokens::TokenCode::tkBracketNormalRight) {
+					++y;
+				} else while (1) {
 					this->params.push_back(createNodeFromTokens("Expression", tokens, y));
 
 					if (tokens.at(y).type == tokens::TokenCode::tkComma) {
@@ -490,20 +492,14 @@ namespace ast_nodes {
 				break;
 			case tokens::TokenCode::tkBracketSquareLeft:
 				this->type = 'a';
-
-				++y;
 				this->array_val = createNodeFromTokens("ArrayLiteral", tokens, y);
 				break;
 			case tokens::TokenCode::tkBracketCurvyLeft:
 				this->type = 't';
-
-				++y;
 				this->tuple_val = createNodeFromTokens("TupleLiteral", tokens, y);
 				break;
 			case tokens::TokenCode::tkFunc:
 				this->type = 'f';
-
-				++y;
 				this->func_val = createNodeFromTokens("Function", tokens, y);
 				break;
 			default:
@@ -515,6 +511,8 @@ namespace ast_nodes {
     Node* ArrayLiteralNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
 		this->line = tokens.at(y).line;
 		this->pos = tokens.at(y).pos;
+		++y;
+		
 		if (tokens.at(y).type == tokens::TokenCode::tkBracketSquareRight) {
 			++y;
 			return this;
@@ -538,6 +536,8 @@ namespace ast_nodes {
     Node* TupleLiteralNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
 		this->line = tokens.at(y).line;
 		this->pos = tokens.at(y).pos;
+		++y;
+		
 		if (tokens.at(y).type == tokens::TokenCode::tkBracketCurvyRight) {
 			return this;
 		}
@@ -572,11 +572,16 @@ namespace ast_nodes {
     Node* FunctionNode::from_tokens(std::vector<tokens::Token>& tokens, int& y){
 		this->line = tokens.at(y).line;
 		this->pos = tokens.at(y).pos;
+		++y;
+		
 		if (tokens.at(y).type != tokens::TokenCode::tkBracketNormalLeft) {
-			throw std::invalid_argument("Expected iteration variable name");
+			throw std::invalid_argument("Expected parameters in function definition");
 		}
 		++y;
-		while (1) {
+		
+		if (tokens.at(y).type == tokens::TokenCode::tkBracketNormalRight) {
+			++y;
+		} else while (1) {
 			if (tokens.at(y).type != tokens::TokenCode::tkIdentifier) {
 				throw std::invalid_argument("Expected identifier");
 			}

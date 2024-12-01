@@ -593,12 +593,6 @@ namespace arithmetic {
                     return c;
 				}
                 break;
-            case 'e':
-                if (b->type == 'e') {
-					c->bool_val = true;
-                    return c;
-				}
-                break;
             case 'b':
                 if (b->type == 'b') {
 					c->bool_val = a->bool_val == b->bool_val;
@@ -641,13 +635,6 @@ namespace arithmetic {
                 switch (b->type) {
                     case 's':
                         c->bool_val = a->string_val != b->string_val;
-                        return c;
-                }
-                break;
-            case 'e':
-                switch (b->type) {
-                    case 'e':
-                        c->bool_val = false;
                         return c;
                 }
                 break;
@@ -790,8 +777,31 @@ namespace arithmetic {
         throw std::runtime_error("Unknown operator");
     }
 
-    AmbiguousVariable* evaluate_expression(const std::vector<AmbiguousVariable*>& variables,
-                                          const std::vector<char>& operators) {
+    AmbiguousVariable* evaluate_expression(const std::vector<AmbiguousVariable*>& unprepped_variables,
+                                          const std::vector<char>& unprepped_operators) {
+		std::vector<AmbiguousVariable*> variables;
+		std::vector<char> operators;
+		
+		operators.reserve(unprepped_operators.size());
+		variables.reserve(unprepped_variables.size());
+		
+		if (unprepped_operators.size() == 0) {
+			return unprepped_variables[0];
+		}
+		
+		operators.push_back(unprepped_operators[0]);
+		variables.push_back(unprepped_variables[0]);
+		
+		for (int i = 1; i < unprepped_operators.size(); ++i) {
+			if (precedence(unprepped_operators[i]) == 2 && precedence(unprepped_operators[i]) == precedence(unprepped_operators[i-1])) {
+				operators.push_back('a');
+				variables.push_back(unprepped_variables[i]);
+			}
+			operators.push_back(unprepped_operators[i]);
+			variables.push_back(unprepped_variables[i]);
+		}
+		variables.push_back(unprepped_variables.back());
+		  
         std::stack<AmbiguousVariable*> values;
         std::stack<char> ops;
         if (!variables.empty()) {

@@ -4,14 +4,14 @@ Expression|3|0|0|(4)|()
 Unary|4|0|0|#|5|#
 Primary|5|0|0|l|6
 Literal|6|0|0|f|7
-Function|7|1|13|b|(apply|n|arr)|8
+Function|7|0|0|b|(apply|n|arr)|8
 Body|8|1|33|(9|15|44)
 Declaration|9|2|8|ans|10
 Expression|10|2|13|(11)|()
 Unary|11|2|13|#|12|#
 Primary|12|2|13|l|13
 Literal|13|2|13|a|14
-ArrayLiteral|14|2|14|()
+ArrayLiteral|14|2|13|()
 For|15|3|4|i|16|20|23
 Expression|16|3|13|(17)|()
 Unary|17|3|13|#|18|#
@@ -29,7 +29,7 @@ Primary|28|4|12|v|ans|()
 Unary|29|4|17|#|30|#
 Primary|30|4|17|l|31
 Literal|31|4|17|a|32
-ArrayLiteral|32|4|19|(33)
+ArrayLiteral|32|4|17|(33)
 Expression|33|4|19|(34)|()
 Unary|34|4|19|#|35|#
 Primary|35|4|19|v|apply|(36)
@@ -50,7 +50,7 @@ Expression|49|0|0|(50)|()
 Unary|50|0|0|#|51|#
 Primary|51|0|0|l|52
 Literal|52|0|0|f|53
-Function|53|9|17|l|(x)|54
+Function|53|0|0|l|(x)|54
 Expression|54|9|28|(55|57)|(+)
 Unary|55|9|28|#|56|#
 Primary|56|9|28|v|x|()
@@ -62,7 +62,7 @@ Expression|61|11|14|(62)|()
 Unary|62|11|14|#|63|#
 Primary|63|11|14|l|64
 Literal|64|11|14|a|65
-ArrayLiteral|65|11|17|(66|70|74)
+ArrayLiteral|65|11|14|(66|70|74)
 Expression|66|11|17|(67)|()
 Unary|67|11|17|#|68|#
 Primary|68|11|17|l|69

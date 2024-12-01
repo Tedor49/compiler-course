@@ -82,7 +82,7 @@ Expression|81|16|6|(82)|()
 Unary|82|16|6|#|83|#
 Primary|83|16|6|l|84
 Literal|84|16|6|a|85
-ArrayLiteral|85|16|9|(86|90|94)
+ArrayLiteral|85|16|6|(86|90|94)
 Expression|86|16|9|(87)|()
 Unary|87|16|9|#|88|#
 Primary|88|16|9|l|89

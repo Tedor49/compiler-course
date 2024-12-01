@@ -60,7 +60,7 @@ Expression|59|7|6|(60)|()
 Unary|60|7|6|#|61|#
 Primary|61|7|6|l|62
 Literal|62|7|6|a|63
-ArrayLiteral|63|7|9|(64|68)
+ArrayLiteral|63|7|6|(64|68)
 Expression|64|7|9|(65)|()
 Unary|65|7|9|#|66|#
 Primary|66|7|9|l|67
@@ -77,7 +77,7 @@ Primary|76|8|8|v|x|()
 Unary|77|8|11|#|78|#
 Primary|78|8|11|l|79
 Literal|79|8|11|a|80
-ArrayLiteral|80|8|13|(81|85)
+ArrayLiteral|80|8|11|(81|85)
 Expression|81|8|13|(82)|()
 Unary|82|8|13|#|83|#
 Primary|83|8|13|l|84
@@ -100,7 +100,7 @@ Expression|99|10|6|(100)|()
 Unary|100|10|6|#|101|#
 Primary|101|10|6|l|102
 Literal|102|10|6|t|103
-TupleLiteral|103|10|9|(Ivan)|(104)
+TupleLiteral|103|10|6|(Ivan)|(104)
 Expression|104|10|16|(105)|()
 Unary|105|10|16|#|106|#
 Primary|106|10|16|l|107
@@ -113,7 +113,7 @@ Primary|112|11|8|v|x|()
 Unary|113|11|11|#|114|#
 Primary|114|11|11|l|115
 Literal|115|11|11|t|116
-TupleLiteral|116|11|13|(Fedor)|(117)
+TupleLiteral|116|11|11|(Fedor)|(117)
 Expression|117|11|21|(118)|()
 Unary|118|11|21|#|119|#
 Primary|119|11|21|l|120

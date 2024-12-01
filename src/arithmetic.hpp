@@ -637,8 +637,29 @@ namespace arithmetic {
                         return c;
                 }
                 break;
+            case 's':
+                switch (b->type) {
+                    case 's':
+                        c->bool_val = a->string_val != b->string_val;
+                        return c;
+                }
+                break;
+            case 'e':
+                switch (b->type) {
+                    case 'e':
+                        c->bool_val = false;
+                        return c;
+                }
+                break;
+            case 'b':
+                switch (b->type) {
+                    case 'b':
+                        c->bool_val = a->bool_val != b->bool_val;
+                        return c;
+                }
+                break;
         }
-        throw std::runtime_error("Unsupported operand type for \\=");
+        throw std::runtime_error("Unsupported operand type for /=");
     }
 
 

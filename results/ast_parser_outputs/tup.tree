@@ -4,7 +4,7 @@ Expression|3|1|11|(4)|()
 Unary|4|1|11|#|5|#
 Primary|5|1|11|l|6
 Literal|6|1|11|t|7
-TupleLiteral|7|1|14|(x|y)|(8|12)
+TupleLiteral|7|1|11|(x|y)|(8|12)
 Expression|8|1|17|(9)|()
 Unary|9|1|17|#|10|#
 Primary|10|1|17|l|11

@@ -4,14 +4,14 @@ Expression|3|0|0|(4)|()
 Unary|4|0|0|#|5|#
 Primary|5|0|0|l|6
 Literal|6|0|0|f|7
-Function|7|1|15|b|(arr|l|r)|8
+Function|7|0|0|b|(arr|l|r)|8
 Body|8|1|31|(9|15|39)
 Declaration|9|2|8|newarr|10
 Expression|10|2|16|(11)|()
 Unary|11|2|16|#|12|#
 Primary|12|2|16|l|13
 Literal|13|2|16|a|14
-ArrayLiteral|14|2|17|()
+ArrayLiteral|14|2|16|()
 For|15|3|4|i|16|19|22
 Expression|16|3|13|(17)|()
 Unary|17|3|13|#|18|#
@@ -28,7 +28,7 @@ Primary|27|4|15|v|newarr|()
 Unary|28|4|23|#|29|#
 Primary|29|4|23|l|30
 Literal|30|4|23|a|31
-ArrayLiteral|31|4|25|(32)
+ArrayLiteral|31|4|23|(32)
 Expression|32|4|25|(33)|()
 Unary|33|4|25|#|34|#
 Primary|34|4|25|v|arr|(35)
@@ -45,14 +45,14 @@ Expression|44|0|0|(45)|()
 Unary|45|0|0|#|46|#
 Primary|46|0|0|l|47
 Literal|47|0|0|f|48
-Function|48|9|16|b|(h1|l1|h2|l2)|49
+Function|48|0|0|b|(h1|l1|h2|l2)|49
 Body|49|9|37|(50|56|61|133|164)
 Declaration|50|12|8|merged|51
 Expression|51|12|16|(52)|()
 Unary|52|12|16|#|53|#
 Primary|53|12|16|l|54
 Literal|54|12|16|a|55
-ArrayLiteral|55|12|17|()
+ArrayLiteral|55|12|16|()
 Declaration|56|12|22|y1|57
 Expression|57|12|28|(58)|()
 Unary|58|12|28|#|59|#
@@ -98,7 +98,7 @@ Primary|97|16|16|v|merged|()
 Unary|98|16|24|#|99|#
 Primary|99|16|24|l|100
 Literal|100|16|24|a|101
-ArrayLiteral|101|16|26|(102)
+ArrayLiteral|101|16|24|(102)
 Expression|102|16|26|(103)|()
 Unary|103|16|26|#|104|#
 Primary|104|16|26|v|h1|(105)
@@ -122,7 +122,7 @@ Primary|121|19|15|v|merged|()
 Unary|122|19|23|#|123|#
 Primary|123|19|23|l|124
 Literal|124|19|23|a|125
-ArrayLiteral|125|19|25|(126)
+ArrayLiteral|125|19|23|(126)
 Expression|126|19|25|(127)|()
 Unary|127|19|25|#|128|#
 Primary|128|19|25|v|h2|(129)
@@ -145,7 +145,7 @@ Primary|144|22|15|v|merged|()
 Unary|145|22|23|#|146|#
 Primary|146|22|23|l|147
 Literal|147|22|23|a|148
-ArrayLiteral|148|22|25|(149)
+ArrayLiteral|148|22|23|(149)
 Expression|149|22|25|(150)|()
 Unary|150|22|25|#|151|#
 Primary|151|22|25|v|h1|(152)
@@ -170,7 +170,7 @@ Expression|169|0|0|(170)|()
 Unary|170|0|0|#|171|#
 Primary|171|0|0|l|172
 Literal|172|0|0|f|173
-Function|173|28|21|b|(arrlen|arr)|174
+Function|173|0|0|b|(arrlen|arr)|174
 Body|174|28|39|(175|187|215|247)
 If|175|29|4|176|182|0
 Expression|176|29|7|(177|179)|(=)
@@ -278,7 +278,7 @@ Expression|277|40|12|(278)|()
 Unary|278|40|12|#|279|#
 Primary|279|40|12|l|280
 Literal|280|40|12|a|281
-ArrayLiteral|281|40|13|()
+ArrayLiteral|281|40|12|()
 For|282|42|3|i|283|287|290
 Expression|283|42|12|(284)|()
 Unary|284|42|12|#|285|#
@@ -296,7 +296,7 @@ Primary|295|43|11|v|arr|()
 Unary|296|43|16|#|297|#
 Primary|297|43|16|l|298
 Literal|298|43|16|a|299
-ArrayLiteral|299|43|18|(300)
+ArrayLiteral|299|43|16|(300)
 Expression|300|43|18|(301)|()
 Unary|301|43|18|#|302|#
 Primary|302|43|18|i

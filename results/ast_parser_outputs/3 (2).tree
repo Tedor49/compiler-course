@@ -4,7 +4,7 @@ Expression|3|1|9|(4)|()
 Unary|4|1|9|#|5|#
 Primary|5|1|9|l|6
 Literal|6|1|9|a|7
-ArrayLiteral|7|1|12|(8|12|16)
+ArrayLiteral|7|1|9|(8|12|16)
 Expression|8|1|12|(9)|()
 Unary|9|1|12|#|10|#
 Primary|10|1|12|l|11
@@ -52,7 +52,7 @@ Expression|51|3|6|(52)|()
 Unary|52|3|6|#|53|#
 Primary|53|3|6|l|54
 Literal|54|3|6|t|55
-TupleLiteral|55|3|9|(boolianElem||classMethod)|(56|60|64)
+TupleLiteral|55|3|6|(boolianElem||classMethod)|(56|60|64)
 Expression|56|3|24|(57)|()
 Unary|57|3|24|#|58|#
 Primary|58|3|24|l|59
@@ -65,7 +65,7 @@ Expression|64|0|0|(65)|()
 Unary|65|0|0|#|66|#
 Primary|66|0|0|l|67
 Literal|67|0|0|f|68
-Function|68|3|48|b|(x)|69
+Function|68|0|0|b|(x)|69
 Body|69|3|59|(70)
 Print|70|3|59|(71|75)
 Expression|71|3|66|(72)|()
@@ -103,7 +103,7 @@ Expression|102|0|0|(103)|()
 Unary|103|0|0|#|104|#
 Primary|104|0|0|l|105
 Literal|105|0|0|f|106
-Function|106|5|8|l|(a)|107
+Function|106|0|0|l|(a)|107
 Expression|107|5|17|(108|110)|(+)
 Unary|108|5|17|#|109|#
 Primary|109|5|17|v|a|()

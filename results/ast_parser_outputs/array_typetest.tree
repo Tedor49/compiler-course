@@ -4,7 +4,7 @@ Expression|3|1|12|(4)|()
 Unary|4|1|12|#|5|#
 Primary|5|1|12|l|6
 Literal|6|1|12|a|7
-ArrayLiteral|7|1|15|(8|12)
+ArrayLiteral|7|1|12|(8|12)
 Expression|8|1|15|(9)|()
 Unary|9|1|15|#|10|#
 Primary|10|1|15|l|11
@@ -18,12 +18,12 @@ Expression|17|2|13|(18)|()
 Unary|18|2|13|#|19|#
 Primary|19|2|13|l|20
 Literal|20|2|13|a|21
-ArrayLiteral|21|2|14|(22|31)
+ArrayLiteral|21|2|13|(22|31)
 Expression|22|2|14|(23)|()
 Unary|23|2|14|#|24|#
 Primary|24|2|14|l|25
 Literal|25|2|14|t|26
-TupleLiteral|26|2|17|(a)|(27)
+TupleLiteral|26|2|14|(a)|(27)
 Expression|27|2|21|(28)|()
 Unary|28|2|21|#|29|#
 Primary|29|2|21|l|30
@@ -39,7 +39,7 @@ Primary|38|3|9|v|arr1|()
 Unary|39|3|15|#|40|#
 Primary|40|3|15|l|41
 Literal|41|3|15|a|42
-ArrayLiteral|42|3|17|(43)
+ArrayLiteral|42|3|15|(43)
 Expression|43|3|17|(44)|()
 Unary|44|3|17|#|45|#
 Primary|45|3|17|l|46
@@ -47,7 +47,7 @@ Literal|46|3|17|i|10
 Unary|47|3|22|#|48|#
 Primary|48|3|22|l|49
 Literal|49|3|22|a|50
-ArrayLiteral|50|3|24|(51)
+ArrayLiteral|50|3|22|(51)
 Expression|51|3|24|(52)|()
 Unary|52|3|24|#|53|#
 Primary|53|3|24|l|54
@@ -60,7 +60,7 @@ Expression|59|3|46|(60|68)|(+)
 Unary|60|3|46|#|61|#
 Primary|61|3|46|l|62
 Literal|62|3|46|a|63
-ArrayLiteral|63|0|0|(64)
+ArrayLiteral|63|3|46|(64)
 Expression|64|0|0|(65)|()
 Unary|65|0|0|-|66|#
 Primary|66|3|48|l|67
@@ -82,7 +82,7 @@ Expression|81|5|9|(82)|()
 Unary|82|5|9|#|83|#
 Primary|83|5|9|l|84
 Literal|84|5|9|t|85
-TupleLiteral|85|5|12|(hellooo|resp)|(86|90)
+TupleLiteral|85|5|9|(hellooo|resp)|(86|90)
 Expression|86|5|21|(87)|()
 Unary|87|5|21|#|88|#
 Primary|88|5|21|l|89
@@ -97,7 +97,7 @@ Expression|96|6|9|(97)|()
 Unary|97|6|9|#|98|#
 Primary|98|6|9|l|99
 Literal|99|6|9|t|100
-TupleLiteral|100|6|12|(x|y)|(101|105)
+TupleLiteral|100|6|9|(x|y)|(101|105)
 Expression|101|6|15|(102)|()
 Unary|102|6|15|#|103|#
 Primary|103|6|15|l|104
@@ -106,7 +106,7 @@ Expression|105|6|21|(106)|()
 Unary|106|6|21|#|107|#
 Primary|107|6|21|l|108
 Literal|108|6|21|a|109
-ArrayLiteral|109|6|24|(110|114|118)
+ArrayLiteral|109|6|21|(110|114|118)
 Expression|110|6|24|(111)|()
 Unary|111|6|24|#|112|#
 Primary|112|6|24|l|113
@@ -135,7 +135,7 @@ Expression|134|9|9|(135)|()
 Unary|135|9|9|#|136|#
 Primary|136|9|9|l|137
 Literal|137|9|9|t|138
-TupleLiteral|138|9|12|(x|y)|(139|143)
+TupleLiteral|138|9|9|(x|y)|(139|143)
 Expression|139|9|15|(140)|()
 Unary|140|9|15|#|141|#
 Primary|141|9|15|l|142

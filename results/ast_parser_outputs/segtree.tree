@@ -5,14 +5,14 @@ Expression|4|0|0|(5)|()
 Unary|5|0|0|#|6|#
 Primary|6|0|0|l|7
 Literal|7|0|0|f|8
-Function|8|3|17|b|(l|elem)|9
+Function|8|0|0|b|(l|elem)|9
 Body|9|3|31|(10|16|21|50)
 Declaration|10|4|8|arr|11
 Expression|11|4|13|(12)|()
 Unary|12|4|13|#|13|#
 Primary|13|4|13|l|14
 Literal|14|4|13|a|15
-ArrayLiteral|15|4|14|()
+ArrayLiteral|15|4|13|()
 Declaration|16|5|8|n|17
 Expression|17|5|13|(18)|()
 Unary|18|5|13|#|19|#
@@ -35,7 +35,7 @@ Primary|34|7|12|v|arr|()
 Unary|35|7|17|#|36|#
 Primary|36|7|17|l|37
 Literal|37|7|17|a|38
-ArrayLiteral|38|7|19|(39)
+ArrayLiteral|38|7|17|(39)
 Expression|39|7|19|(40)|()
 Unary|40|7|19|#|41|#
 Primary|41|7|19|v|elem|()
@@ -56,7 +56,7 @@ Expression|55|0|0|(56)|()
 Unary|56|0|0|#|57|#
 Primary|57|0|0|l|58
 Literal|58|0|0|f|59
-Function|59|13|14|b|(a|b)|60
+Function|59|0|0|b|(a|b)|60
 Body|60|13|25|(61|72)
 If|61|14|4|62|67|0
 Expression|62|14|7|(63|65)|(<)
@@ -78,7 +78,7 @@ Expression|77|0|0|(78)|()
 Unary|78|0|0|#|79|#
 Primary|79|0|0|l|80
 Literal|80|0|0|f|81
-Function|81|18|14|b|(a|b)|82
+Function|81|0|0|b|(a|b)|82
 Body|82|18|25|(83|94)
 If|83|19|4|84|89|0
 Expression|84|19|7|(85|87)|(>)
@@ -109,7 +109,7 @@ Expression|108|23|44|(109)|()
 Unary|109|23|44|#|110|#
 Primary|110|23|44|l|111
 Literal|111|23|44|a|112
-ArrayLiteral|112|23|45|()
+ArrayLiteral|112|23|44|()
 For|113|25|3|i|114|118|121
 Expression|114|25|12|(115)|()
 Unary|115|25|12|#|116|#
@@ -127,7 +127,7 @@ Primary|126|26|11|v|arr|()
 Unary|127|26|16|#|128|#
 Primary|128|26|16|l|129
 Literal|129|26|16|a|130
-ArrayLiteral|130|26|18|(131)
+ArrayLiteral|130|26|16|(131)
 Expression|131|26|18|(132)|()
 Unary|132|26|18|#|133|#
 Primary|133|26|18|i
@@ -185,7 +185,7 @@ Expression|184|0|0|(185)|()
 Unary|185|0|0|#|186|#
 Primary|186|0|0|l|187
 Literal|187|0|0|f|188
-Function|188|33|16|b|(cx|cl|cr)|189
+Function|188|0|0|b|(cx|cl|cr)|189
 Body|189|33|33|(190|218|244|273)
 If|190|34|4|191|199|0
 Expression|191|34|7|(192|194|196)|(-|=)
@@ -308,7 +308,7 @@ Expression|307|0|0|(308)|()
 Unary|308|0|0|#|309|#
 Primary|309|0|0|l|310
 Literal|310|0|0|f|311
-Function|311|43|20|b|(cx|cl|cr)|312
+Function|311|0|0|b|(cx|cl|cr)|312
 Body|312|43|37|(313|379|398|408)
 If|313|44|4|314|322|0
 Expression|314|44|7|(315|317|319)|(-|n)
@@ -429,7 +429,7 @@ Expression|428|0|0|(429)|()
 Unary|429|0|0|#|430|#
 Primary|430|0|0|l|431
 Literal|431|0|0|f|432
-Function|432|53|17|b|(cx|cl|cr|tl|tr)|433
+Function|432|0|0|b|(cx|cl|cr|tl|tr)|433
 Body|433|53|42|(434|449|464|483)
 Assignment|434|54|4|=|435|436
 Primary|435|54|4|v|_|()
@@ -553,7 +553,7 @@ Expression|552|0|0|(553)|()
 Unary|553|0|0|#|554|#
 Primary|554|0|0|l|555
 Literal|555|0|0|f|556
-Function|556|66|23|b|(cx|cl|cr|tl|tr|op)|557
+Function|556|0|0|b|(cx|cl|cr|tl|tr|op)|557
 Body|557|66|52|(558|573|589|635|670|708|741)
 Assignment|558|67|4|=|559|560
 Primary|559|67|4|v|_|()

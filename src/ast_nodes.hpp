@@ -1125,7 +1125,7 @@ namespace ast_nodes {
         public:
             char type;
             Node* primary;
-            Node* expression;
+            Node* expression = nullptr;
 			
 			Node* from_tokens(std::vector<tokens::Token>& tokens, int& y);
 			void execute(std::istream& in, std::ostream& out);
@@ -1151,24 +1151,35 @@ namespace ast_nodes {
 
                 read_until_delim(s, read);
                 primary = nodes[std::stoll(read.first)];
-
-                read_until_delim(s, read);
-                expression = nodes[std::stoll(read.first)];
+				
+				if (type != '#') {
+					read_until_delim(s, read);
+					expression = nodes[std::stoll(read.first)];
+				}
             }
 
             void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit, bool visit_body=true) {
                 at_enter(this);
 
                 this->primary->visit(at_enter, at_repeat, at_exit, visit_body);
-                at_repeat(this);
-                this->expression->visit(at_enter, at_repeat, at_exit, visit_body);
+				
+				if (this->type != '#') {
+					at_repeat(this);
+					this->expression->visit(at_enter, at_repeat, at_exit, visit_body);
+				}
                 at_exit(this);
             }
 
             void machine_print(std::ostream& out){
-                out << "Assignment|" << id << "|" << line << "|"  << pos << "|" << type << "|" << primary->id << "|" << expression->id << "\n";
-                primary->machine_print(out);
-                expression->machine_print(out);
+                out << "Assignment|" << id << "|" << line << "|"  << pos << "|" << type << "|" << primary->id;
+				if (type != '#') {
+					out << "|" << expression->id << "\n";
+					primary->machine_print(out);
+					expression->machine_print(out);
+				} else {
+					out << "\n";
+					primary->machine_print(out);
+				}
             }
     };
 

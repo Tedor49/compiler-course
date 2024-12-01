@@ -627,7 +627,8 @@ namespace ast_nodes {
                 this->type = '-';
                 break;
             default:
-                throw std::invalid_argument("Expected :=, += or -= in supposed assignment");
+				this->type = '#';
+                return this;
         }
         ++y;
 

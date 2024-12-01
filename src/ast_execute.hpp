@@ -280,6 +280,9 @@ namespace ast_nodes {
     // Assign value to variable in current scope
     void AssignmentNode::execute(std::istream& in, std::ostream& out) {
         primary->execute(in, out);
+		
+		if (type == '#') return;
+		
         expression->execute(in, out);
         switch (type) {
             case '=':

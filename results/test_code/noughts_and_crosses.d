@@ -17,7 +17,7 @@ var print_field := func () is
 		print "\n"
 	end
 	print "-------\n"
-end
+end	
 
 var check_winner := func () is
 	for i in 1 .. 3 loop
@@ -55,7 +55,7 @@ end
 var finished := true
 
 for move in 1 .. 9 loop
-	print_field() := empty
+	print_field()
 	print "\n", players[turn], " to move: "
 	var move := convert(readInt)
 	
@@ -69,7 +69,7 @@ for move in 1 .. 9 loop
 	var winner := check_winner()
 	
 	if winner /= " " then
-		print_field() := empty
+		print_field()
 		print "\n", players[turn], " won!\n"
 		finished := true
 		break
@@ -82,6 +82,6 @@ for move in 1 .. 9 loop
 end
 
 if not finished then
-	print_field() := empty
+	print_field()
 	print "\nIt's a draw!"
 end

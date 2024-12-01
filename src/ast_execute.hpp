@@ -131,7 +131,7 @@ namespace ast_nodes {
                     std::format("Evaluation error at line {}, pos {}:\n\t{}", line, pos, ex.what()));
         } catch (std::runtime_error& ex) {
             throw std::invalid_argument(
-                    std::format("Evaluation error at  at line {}, pos {}:\n\t{}", line, pos, ex.what()));
+                    std::format("Evaluation error at line {}, pos {}:\n\t{}", line, pos, ex.what()));
         }
 
         if (type_ind == '#') {

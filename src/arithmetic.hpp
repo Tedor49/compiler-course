@@ -35,6 +35,27 @@ namespace arithmetic {
         return len;
     }
 	
+	const std::unordered_map<char, std::string> type_names = {
+		{ 'i', "int" },
+		{ 'r', "real" },
+		{ 'b', "bool" },
+		{ 's', "string" },
+		{ 'e', "empty" },
+		{ 'a', "[]" },
+		{ 't', "{}" },
+		{ 'f', "func" }
+	};
+	
+	std::string get_name (char type) {
+		auto type_ref = type_names.find(type);
+
+        if (type_ref == type_names.end()) {
+            return "INVALID";
+        } else {
+            return (*type_ref).second;
+        }
+	}
+	
     std::string replace_substr(std::string init, std::string rep, std::string nn) {
         std::string::size_type index = 0;
         while ((index = init.find(rep, index)) != std::string::npos) {
@@ -277,7 +298,7 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error("Unsupported operand type for addition");
+        throw std::runtime_error(std::format("Unsupported operand type for addition: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
 
@@ -309,7 +330,7 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error("Unsupported operand type for subtraction");
+        throw std::runtime_error(std::format("Unsupported operand type for subtraction: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_plus_equality(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -357,7 +378,7 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error("Unsupported operand type for addition");
+        throw std::runtime_error(std::format("Unsupported operand type for addition: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
 
@@ -385,7 +406,7 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error("Unsupported operand type for subtraction");
+        throw std::runtime_error(std::format("Unsupported operand type for subtraction: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_multiplication(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -416,7 +437,7 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error("Unsupported operand type for multiplication");
+        throw std::runtime_error(std::format("Unsupported operand type for multiplication: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
 
@@ -448,7 +469,7 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error("Unsupported operand type for division");
+        throw std::runtime_error(std::format("Unsupported operand type for division: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_lt(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -484,7 +505,7 @@ namespace arithmetic {
                 break;
         }
 		std::cout << *a << ' ' << *b << std::endl;
-        throw std::runtime_error("Unsupported operand type for <");
+        throw std::runtime_error(std::format("Unsupported operand type for <: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_gt(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -520,7 +541,7 @@ namespace arithmetic {
                 break;
         }
 
-        throw std::runtime_error("Unsupported operand type for >");
+        throw std::runtime_error(std::format("Unsupported operand type for >: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_lte(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -555,7 +576,7 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error("Unsupported operand type for <=");
+        throw std::runtime_error(std::format("Unsupported operand type for <=: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_gte(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -590,7 +611,7 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error("Unsupported operand type for >=");
+        throw std::runtime_error(std::format("Unsupported operand type for >=: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
 
@@ -698,7 +719,7 @@ namespace arithmetic {
                 break;
         }
 		//std::cout << *a << ' ' << *b << std::endl;
-        throw std::runtime_error("Unsupported operand type for =");
+        throw std::runtime_error(std::format("Unsupported operand type for =: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_ne(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -806,7 +827,7 @@ namespace arithmetic {
 				}
                 break;
         }
-        throw std::runtime_error("Unsupported operand type for /=");
+        throw std::runtime_error(std::format("Unsupported operand type for /=: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
 
@@ -860,7 +881,7 @@ namespace arithmetic {
                 c->int_val = -a->int_val;
                 return c;
             default:
-                throw std::runtime_error("unary + operation can be performed only with integer or real");
+                throw std::runtime_error("unary - operation can be performed only with integer or real");
         }
     }
 

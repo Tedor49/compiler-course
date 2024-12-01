@@ -25,37 +25,37 @@ namespace arithmetic {
         std::unordered_map<std::string, AmbiguousVariable*> function_scope;
     };
 
-    long long array_length(const std::unordered_map<long long, long long >& myMap) {
+    long long array_length(const std::unordered_map<long long, long long>& myMap) {
         long long len = 0;
-        for (const auto& pair : myMap) {
+        for (const auto& pair: myMap) {
             if (pair.first > len) {
                 len = pair.first;
             }
         }
         return len;
     }
-	
-	const std::unordered_map<char, std::string> type_names = {
-		{ 'i', "int" },
-		{ 'r', "real" },
-		{ 'b', "bool" },
-		{ 's', "string" },
-		{ 'e', "empty" },
-		{ 'a', "[]" },
-		{ 't', "{}" },
-		{ 'f', "func" }
-	};
-	
-	std::string get_name (char type) {
-		auto type_ref = type_names.find(type);
+
+    const std::unordered_map<char, std::string> type_names = {
+            {'i', "int"},
+            {'r', "real"},
+            {'b', "bool"},
+            {'s', "string"},
+            {'e', "empty"},
+            {'a', "[]"},
+            {'t', "{}"},
+            {'f', "func"}
+    };
+
+    std::string get_name(char type) {
+        auto type_ref = type_names.find(type);
 
         if (type_ref == type_names.end()) {
             return "INVALID";
         } else {
             return (*type_ref).second;
         }
-	}
-	
+    }
+
     std::string replace_substr(std::string init, std::string rep, std::string nn) {
         std::string::size_type index = 0;
         while ((index = init.find(rep, index)) != std::string::npos) {
@@ -64,12 +64,12 @@ namespace arithmetic {
         }
         return init;
     }
-	
+
     std::ostream& operator<<(std::ostream& out, AmbiguousVariable& var) {
-		//out << var.type << std::endl;
-		std::string s;
-		bool first;
-		std::vector<std::string> ident;
+        //out << var.type << std::endl;
+        std::string s;
+        bool first;
+        std::vector <std::string> ident;
         switch (var.type) {
             case 'i':
                 out << var.int_val;
@@ -95,77 +95,77 @@ namespace arithmetic {
                 break;
             case 'a':
                 out << "[";
-				first = true;
-				for (int i = 1; i <= array_length(var.array_identifiers); ++i) {
-					if (first) {
-						first = false;
-					} else {
-						out << ", ";
-					}
-					if (var.array_identifiers.count(i)) {
-						out << *var.array_values[var.array_identifiers[i]];
-					} else {
-						out << "empty";
-					}
-				}
-				out << "]";
+                first = true;
+                for (int i = 1; i <= array_length(var.array_identifiers); ++i) {
+                    if (first) {
+                        first = false;
+                    } else {
+                        out << ", ";
+                    }
+                    if (var.array_identifiers.count(i)) {
+                        out <<* var.array_values[var.array_identifiers[i]];
+                    } else {
+                        out << "empty";
+                    }
+                }
+                out << "]";
                 break;
             case 't':
                 out << "{";
-				first = true;
-				ident.resize(var.array_values.size(), "");
-				for(auto& i : var.tuple_identifiers) {
-					ident[i.second] = i.first;
-				}
-				for (int i = 0; i < var.array_values.size(); ++i) {
-					if (first) {
-						first = false;
-					} else {
-						out << ", ";
-					}
-					
-					if (ident[i] != "") {
-						out << ident[i] << " := " << *var.array_values[i];
-					} else {
-						out << *var.array_values[i];
-					}
-				}
+                first = true;
+                ident.resize(var.array_values.size(), "");
+                for (auto& i: var.tuple_identifiers) {
+                    ident[i.second] = i.first;
+                }
+                for (int i = 0; i < var.array_values.size(); ++i) {
+                    if (first) {
+                        first = false;
+                    } else {
+                        out << ", ";
+                    }
+
+                    if (ident[i] != "") {
+                        out << ident[i] << " := " <<* var.array_values[i];
+                    } else {
+                        out <<* var.array_values[i];
+                    }
+                }
                 out << "}";
                 break;
             case 'f':
                 out << "func (";
-				first = true;
-				for (auto& i : var.function_pointer->params) {
-					if (first) {
-						first = false;
-					} else {
-						out << ", ";
-					}
-					out << i;
-				}
+                first = true;
+                for (auto& i: var.function_pointer->params) {
+                    if (first) {
+                        first = false;
+                    } else {
+                        out << ", ";
+                    }
+                    out << i;
+                }
                 out << ")";
                 break;
-			default:
-				out << "invalid " << var.type;
+            default:
+                out << "invalid " << var.type;
         }
-		//out << var.type << std::endl;
-		return out;
+        //out << var.type << std::endl;
+        return out;
     }
 
-	
-	AmbiguousVariable* copy (AmbiguousVariable* var) {
-		AmbiguousVariable* c = new AmbiguousVariable();
-		
-		c->type = var->type;
-		switch (var->type) {
-			case 'i':
-                c->int_val = (long long)var->int_val;
+
+    AmbiguousVariable* copy(AmbiguousVariable* var) {
+        AmbiguousVariable* c = new AmbiguousVariable();
+
+        c->type = var->type;
+        switch (var->type) {
+            case 'i':
+                c->int_val = (long long) var->int_val;
                 break;
             case 'r':
-                c->real_val = (long double)var->real_val;
+                c->real_val = (long double) var->real_val;
                 break;
             case 'b':
-                c->bool_val = (bool)var->bool_val;
+                c->bool_val = (bool) var->bool_val;
                 break;
             case 'e':
                 break;
@@ -174,32 +174,32 @@ namespace arithmetic {
                 break;
             case 'a':
                 c->array_identifiers = var->array_identifiers;
-				c->array_values.reserve(var->array_values.size());
-				for (auto& i : var->array_values) {
-					c->array_values.push_back(copy(i));
-				}
+                c->array_values.reserve(var->array_values.size());
+                for (auto& i: var->array_values) {
+                    c->array_values.push_back(copy(i));
+                }
                 break;
             case 't':
                 c->tuple_identifiers = var->tuple_identifiers;
-				c->array_values.reserve(var->array_values.size());
-				for (auto& i : var->array_values) {
-					c->array_values.push_back(copy(i));
-				}
+                c->array_values.reserve(var->array_values.size());
+                for (auto& i: var->array_values) {
+                    c->array_values.push_back(copy(i));
+                }
                 break;
             case 'f':
                 c->function_pointer = var->function_pointer;
-				for (auto i : var->function_scope) {
-					c->function_scope[i.first] = copy(i.second);
-				}
+                for (auto i: var->function_scope) {
+                    c->function_scope[i.first] = copy(i.second);
+                }
                 break;
-			default:
-				throw std::invalid_argument("Invalid type");
-		}
-		return c;
-	}
+            default:
+                throw std::invalid_argument("Invalid type");
+        }
+        return c;
+    }
 
     bool tuple_conflicts(AmbiguousVariable* a, AmbiguousVariable* b) {
-        for (const auto& pair : a->tuple_identifiers) {
+        for (const auto& pair: a->tuple_identifiers) {
             if (b->tuple_identifiers.find(pair.first) != b->tuple_identifiers.end()) {
                 return true;
             }
@@ -217,11 +217,11 @@ namespace arithmetic {
         c->array_values.insert(c->array_values.end(), a->array_values.begin(), a->array_values.end());
         c->array_values.insert(c->array_values.end(), b->array_values.begin(), b->array_values.end());
         std::unordered_map<std::string, long long> concatenated_map;
-        for (const auto& [key, value] : a->tuple_identifiers) {
+        for (const auto& [key, value]: a->tuple_identifiers) {
             concatenated_map[key] = value;
         }
 
-        for (const auto& [key, value] : b->tuple_identifiers) {
+        for (const auto& [key, value]: b->tuple_identifiers) {
             concatenated_map[key] = vec_size + value;
         }
         c->tuple_identifiers = concatenated_map;
@@ -235,13 +235,13 @@ namespace arithmetic {
         c->type = 'a';
         c->array_values.insert(c->array_values.end(), a->array_values.begin(), a->array_values.end());
         c->array_values.insert(c->array_values.end(), b->array_values.begin(), b->array_values.end());
-        std::unordered_map<long long, long long > concatenated_map;
+        std::unordered_map<long long, long long> concatenated_map;
 
-        for (const auto& [key, value] : a->array_identifiers) {
+        for (const auto& [key, value]: a->array_identifiers) {
             concatenated_map[key] = value;
         }
 
-        for (const auto& [key, value] : b->array_identifiers) {
+        for (const auto& [key, value]: b->array_identifiers) {
             concatenated_map[length_of_array + key] = vec_size + value;
         }
         c->array_identifiers = concatenated_map;
@@ -298,7 +298,8 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error(std::format("Unsupported operand type for addition: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for addition: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
 
@@ -330,7 +331,8 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error(std::format("Unsupported operand type for subtraction: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(std::format("Unsupported operand type for subtraction: {} and {}", get_name(a->type),
+                                             get_name(b->type)));
     }
 
     AmbiguousVariable* op_plus_equality(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -366,19 +368,20 @@ namespace arithmetic {
             case 't':
                 switch (b->type) {
                     case 't':
-                        *a = *tuple_addition(a, b);
+                       * a =* tuple_addition(a, b);
                         return a;
                 }
                 break;
             case 'a':
                 switch (b->type) {
                     case 'a':
-                        *a = *array_addition(a, b);
+                       * a =* array_addition(a, b);
                         return a;
                 }
                 break;
         }
-        throw std::runtime_error(std::format("Unsupported operand type for addition: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for addition: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
 
@@ -406,7 +409,8 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error(std::format("Unsupported operand type for subtraction: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(std::format("Unsupported operand type for subtraction: {} and {}", get_name(a->type),
+                                             get_name(b->type)));
     }
 
     AmbiguousVariable* op_multiplication(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -416,11 +420,11 @@ namespace arithmetic {
                 switch (b->type) {
                     case 'i':
                         c->type = 'i';
-                        c->int_val = a->int_val * b->int_val;
+                        c->int_val = a->int_val*  b->int_val;
                         return c;
                     case 'r':
                         c->type = 'r';
-                        c->real_val = a->int_val * b->real_val;
+                        c->real_val = a->int_val*  b->real_val;
                         return c;
                 }
                 break;
@@ -428,16 +432,18 @@ namespace arithmetic {
                 switch (b->type) {
                     case 'i':
                         c->type = 'r';
-                        c->real_val = a->real_val * b->int_val;
+                        c->real_val = a->real_val*  b->int_val;
                         return c;
                     case 'r':
                         c->type = 'r';
-                        c->real_val = a->real_val * b->real_val;
+                        c->real_val = a->real_val*  b->real_val;
                         return c;
                 }
                 break;
         }
-        throw std::runtime_error(std::format("Unsupported operand type for multiplication: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for multiplication: {} and {}", get_name(a->type),
+                            get_name(b->type)));
     }
 
 
@@ -469,7 +475,8 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error(std::format("Unsupported operand type for division: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for division: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_lt(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -504,8 +511,8 @@ namespace arithmetic {
                 }
                 break;
         }
-		std::cout << *a << ' ' << *b << std::endl;
-        throw std::runtime_error(std::format("Unsupported operand type for <: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for <: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_gt(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -541,7 +548,8 @@ namespace arithmetic {
                 break;
         }
 
-        throw std::runtime_error(std::format("Unsupported operand type for >: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for >: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_lte(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -576,7 +584,8 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error(std::format("Unsupported operand type for <=: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for <=: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_gte(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -611,7 +620,8 @@ namespace arithmetic {
                 }
                 break;
         }
-        throw std::runtime_error(std::format("Unsupported operand type for >=: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for >=: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
 
@@ -641,85 +651,87 @@ namespace arithmetic {
                 break;
             case 's':
                 if (b->type == 's') {
-					c->bool_val = a->string_val == b->string_val;
+                    c->bool_val = a->string_val == b->string_val;
                     return c;
-				}
+                }
                 break;
             case 'b':
                 if (b->type == 'b') {
-					c->bool_val = a->bool_val == b->bool_val;
+                    c->bool_val = a->bool_val == b->bool_val;
                     return c;
-				}
+                }
                 break;
             case 'a':
-				if (b->type == 'a') {
-					try {
-						for (auto i : a->array_identifiers) {
-							if (b->array_identifiers.count(i.first)) {
-								if (!op_eq(b->array_values[b->array_identifiers[i.first]], a->array_values[i.second])->bool_val) {
-									c->bool_val = false;
-									return c;
-								}
-							} else if (a->array_values[i.second]->type != 'e') {
-								c->bool_val = false;
-								return c;
-							}
-						}
-						
-						for (auto i : b->array_identifiers) {
-							if (a->array_identifiers.count(i.first)) {
-								if (!op_eq(a->array_values[a->array_identifiers[i.first]], b->array_values[i.second])->bool_val) {
-									c->bool_val = false;
-									return c;
-								}
-							} else if (b->array_values[i.second]->type != 'e') {
-								c->bool_val = false;
-								return c;
-							}
-						}
-						
-						c->bool_val = true;
-						return c;
-					} catch (std::runtime_error& ex) {
-						c->bool_val = false;
-						return c;
-					}
-				}
+                if (b->type == 'a') {
+                    try {
+                        for (auto i: a->array_identifiers) {
+                            if (b->array_identifiers.count(i.first)) {
+                                if (!op_eq(b->array_values[b->array_identifiers[i.first]],
+                                           a->array_values[i.second])->bool_val) {
+                                    c->bool_val = false;
+                                    return c;
+                                }
+                            } else if (a->array_values[i.second]->type != 'e') {
+                                c->bool_val = false;
+                                return c;
+                            }
+                        }
+
+                        for (auto i: b->array_identifiers) {
+                            if (a->array_identifiers.count(i.first)) {
+                                if (!op_eq(a->array_values[a->array_identifiers[i.first]],
+                                           b->array_values[i.second])->bool_val) {
+                                    c->bool_val = false;
+                                    return c;
+                                }
+                            } else if (b->array_values[i.second]->type != 'e') {
+                                c->bool_val = false;
+                                return c;
+                            }
+                        }
+
+                        c->bool_val = true;
+                        return c;
+                    } catch (std::runtime_error& ex) {
+                        c->bool_val = false;
+                        return c;
+                    }
+                }
                 break;
             case 't':
                 if (b->type == 't') {
-					try {
-						if (a->tuple_identifiers.size() != b->tuple_identifiers.size() ||
-							a->array_values.size() != b->array_values.size()) {
-							c->bool_val = false;
-							return c;
-						}
-						
-						for (auto i : a->tuple_identifiers) {
-							if (!b->tuple_identifiers.count(i.first) || b->tuple_identifiers[i.first] != i.second) {
-								c->bool_val = false;
-								return c;
-							}
-						}
-						
-						for (int i = 0; i < a->array_values.size(); ++i) {
-							if (!op_eq(a->array_values[i], b->array_values[i])->bool_val) {
-								c->bool_val = false;
-								return c;
-							}
-						}
-						
-						c->bool_val = true;
-						return c;
-					} catch (std::runtime_error& ex) {
-						c->bool_val = false;
-						return c;
-					}
-				}
+                    try {
+                        if (a->tuple_identifiers.size() != b->tuple_identifiers.size() ||
+                            a->array_values.size() != b->array_values.size()) {
+                            c->bool_val = false;
+                            return c;
+                        }
+
+                        for (auto i: a->tuple_identifiers) {
+                            if (!b->tuple_identifiers.count(i.first) || b->tuple_identifiers[i.first] != i.second) {
+                                c->bool_val = false;
+                                return c;
+                            }
+                        }
+
+                        for (int i = 0; i < a->array_values.size(); ++i) {
+                            if (!op_eq(a->array_values[i], b->array_values[i])->bool_val) {
+                                c->bool_val = false;
+                                return c;
+                            }
+                        }
+
+                        c->bool_val = true;
+                        return c;
+                    } catch (std::runtime_error& ex) {
+                        c->bool_val = false;
+                        return c;
+                    }
+                }
                 break;
         }
-		//std::cout << *a << ' ' << *b << std::endl;
-        throw std::runtime_error(std::format("Unsupported operand type for =: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for =: {} and {}", get_name(a->type), get_name(b->type)));
     }
 
     AmbiguousVariable* op_ne(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -761,75 +773,77 @@ namespace arithmetic {
                 }
                 break;
             case 'a':
-				if (b->type == 'a') {
-					try {
-						for (auto i : a->array_identifiers) {
-							if (b->array_identifiers.count(i.first)) {
-								if (!op_eq(b->array_values[b->array_identifiers[i.first]], a->array_values[i.second])->bool_val) {
-									c->bool_val = true;
-									return c;
-								}
-							} else if (a->array_values[i.second]->type != 'e') {
-								c->bool_val = true;
-								return c;
-							}
-						}
-						
-						for (auto i : b->array_identifiers) {
-							if (a->array_identifiers.count(i.first)) {
-								if (!op_eq(a->array_values[a->array_identifiers[i.first]], b->array_values[i.second])->bool_val) {
-									c->bool_val = true;
-									return c;
-								}
-							} else if (b->array_values[i.second]->type != 'e') {
-								c->bool_val = true;
-								return c;
-							}
-						}
-						
-						c->bool_val = false;
-						return c;
-					} catch (std::runtime_error& ex) {
-						c->bool_val = false;
-						return c;
-					}
-				}
+                if (b->type == 'a') {
+                    try {
+                        for (auto i: a->array_identifiers) {
+                            if (b->array_identifiers.count(i.first)) {
+                                if (!op_eq(b->array_values[b->array_identifiers[i.first]],
+                                           a->array_values[i.second])->bool_val) {
+                                    c->bool_val = true;
+                                    return c;
+                                }
+                            } else if (a->array_values[i.second]->type != 'e') {
+                                c->bool_val = true;
+                                return c;
+                            }
+                        }
+
+                        for (auto i: b->array_identifiers) {
+                            if (a->array_identifiers.count(i.first)) {
+                                if (!op_eq(a->array_values[a->array_identifiers[i.first]],
+                                           b->array_values[i.second])->bool_val) {
+                                    c->bool_val = true;
+                                    return c;
+                                }
+                            } else if (b->array_values[i.second]->type != 'e') {
+                                c->bool_val = true;
+                                return c;
+                            }
+                        }
+
+                        c->bool_val = false;
+                        return c;
+                    } catch (std::runtime_error& ex) {
+                        c->bool_val = false;
+                        return c;
+                    }
+                }
                 break;
             case 't':
                 if (b->type == 't') {
-					try {
-						if (a->tuple_identifiers.size() != b->tuple_identifiers.size() ||
-							a->array_values.size() != b->array_values.size()) {
-							c->bool_val = true;
-							return c;
-						}
-						
-						for (auto i : a->tuple_identifiers) {
-							if (!b->tuple_identifiers.count(i.first) || b->tuple_identifiers[i.first] != i.second) {
-								c->bool_val = true;
-								return c;
-							}
-						}
-						
-						for (int i = 0; i < a->array_values.size(); ++i) {
-							if (!op_eq(a->array_values[i], b->array_values[i])->bool_val) {
-								c->bool_val = true;
-								return c;
-							}
-						}
-						
-						c->bool_val = false;
-						return c;
-					} catch (std::runtime_error& ex) {
-						c->bool_val = false;
-						return c;
-					}
-				}
+                    try {
+                        if (a->tuple_identifiers.size() != b->tuple_identifiers.size() ||
+                            a->array_values.size() != b->array_values.size()) {
+                            c->bool_val = true;
+                            return c;
+                        }
+
+                        for (auto i: a->tuple_identifiers) {
+                            if (!b->tuple_identifiers.count(i.first) || b->tuple_identifiers[i.first] != i.second) {
+                                c->bool_val = true;
+                                return c;
+                            }
+                        }
+
+                        for (int i = 0; i < a->array_values.size(); ++i) {
+                            if (!op_eq(a->array_values[i], b->array_values[i])->bool_val) {
+                                c->bool_val = true;
+                                return c;
+                            }
+                        }
+
+                        c->bool_val = false;
+                        return c;
+                    } catch (std::runtime_error& ex) {
+                        c->bool_val = false;
+                        return c;
+                    }
+                }
                 break;
         }
-        throw std::runtime_error(std::format("Unsupported operand type for /=: {} and {}", get_name(a->type), get_name(b->type)));
+        throw std::runtime_error(
+                std::format("Unsupported operand type for /=: {} and {}", get_name(a->type), get_name(b->type)));
     }
-
 
 
     AmbiguousVariable* op_xor(AmbiguousVariable* a, AmbiguousVariable* b) {
@@ -846,7 +860,6 @@ namespace arithmetic {
     AmbiguousVariable* op_and(AmbiguousVariable* a, AmbiguousVariable* b) {
         AmbiguousVariable* c = new AmbiguousVariable();
         if (!(a->type == 'b' and b->type == 'b')) {
-			std::cout << *a << ' ' << *b << std::endl;
             throw std::runtime_error("and is possible only with two boolean arguments");
         }
         c->type = 'b';
@@ -874,7 +887,7 @@ namespace arithmetic {
         switch (a->type) {
             case 'r':
                 c->type = 'r';
-                c->real_val = - c->real_val;
+                c->real_val = -c->real_val;
                 return c;
             case 'i':
                 c->type = 'i';
@@ -954,36 +967,36 @@ namespace arithmetic {
         if (op == 'x') return op_xor(a, b);
         if (op == 'a') return op_and(a, b);
         if (op == 'o') return op_or(a, b);
-		std::cout << op << std::endl;
         throw std::runtime_error("Unknown operator");
     }
 
     AmbiguousVariable* evaluate_expression(const std::vector<AmbiguousVariable*>& unprepped_variables,
-                                          const std::vector<char>& unprepped_operators) {
-		std::vector<AmbiguousVariable*> variables;
-		std::vector<char> operators;
-		
-		operators.reserve(unprepped_operators.size());
-		variables.reserve(unprepped_variables.size());
-		
-		if (unprepped_operators.size() == 0) {
-			return unprepped_variables[0];
-		}
-		
-		operators.push_back(unprepped_operators[0]);
-		variables.push_back(unprepped_variables[0]);
-		
-		for (int i = 1; i < unprepped_operators.size(); ++i) {
-			if (precedence(unprepped_operators[i]) == 2 && precedence(unprepped_operators[i]) == precedence(unprepped_operators[i-1])) {
-				operators.push_back('a');
-				variables.push_back(unprepped_variables[i]);
-			}
-			operators.push_back(unprepped_operators[i]);
-			variables.push_back(unprepped_variables[i]);
-		}
-		variables.push_back(unprepped_variables.back());
-		  
-        std::stack<AmbiguousVariable*> values;
+                                           const std::vector<char>& unprepped_operators) {
+        std::vector < AmbiguousVariable*  > variables;
+        std::vector<char> operators;
+
+        operators.reserve(unprepped_operators.size());
+        variables.reserve(unprepped_variables.size());
+
+        if (unprepped_operators.size() == 0) {
+            return unprepped_variables[0];
+        }
+
+        operators.push_back(unprepped_operators[0]);
+        variables.push_back(unprepped_variables[0]);
+
+        for (int i = 1; i < unprepped_operators.size(); ++i) {
+            if (precedence(unprepped_operators[i]) == 2 &&
+                precedence(unprepped_operators[i]) == precedence(unprepped_operators[i - 1])) {
+                operators.push_back('a');
+                variables.push_back(unprepped_variables[i]);
+            }
+            operators.push_back(unprepped_operators[i]);
+            variables.push_back(unprepped_variables[i]);
+        }
+        variables.push_back(unprepped_variables.back());
+
+        std::stack < AmbiguousVariable*  > values;
         std::stack<char> ops;
         if (!variables.empty()) {
             values.push(variables[0]);
@@ -992,9 +1005,12 @@ namespace arithmetic {
         for (size_t i = 0; i < operators.size(); ++i) {
             const char& op = operators[i];
             while (!ops.empty() && has_higher_precedence(op, ops.top())) {
-                AmbiguousVariable* b = values.top(); values.pop();
-                AmbiguousVariable* a = values.top(); values.pop();
-                char operator_to_apply = ops.top(); ops.pop();
+                AmbiguousVariable* b = values.top();
+                values.pop();
+                AmbiguousVariable* a = values.top();
+                values.pop();
+                char operator_to_apply = ops.top();
+                ops.pop();
                 AmbiguousVariable* result = apply_operator(a, b, operator_to_apply);
                 values.push(result);
             }
@@ -1004,9 +1020,12 @@ namespace arithmetic {
             }
         }
         while (!ops.empty()) {
-            AmbiguousVariable* b = values.top(); values.pop();
-            AmbiguousVariable* a = values.top(); values.pop();
-            char operator_to_apply = ops.top(); ops.pop();
+            AmbiguousVariable* b = values.top();
+            values.pop();
+            AmbiguousVariable* a = values.top();
+            values.pop();
+            char operator_to_apply = ops.top();
+            ops.pop();
             AmbiguousVariable* result = apply_operator(a, b, operator_to_apply);
             values.push(result);
         }

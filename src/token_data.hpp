@@ -22,73 +22,73 @@ namespace tokens {
         tkIdentifier,
 
         // Operators
-        tkUnaryPlus, // +
-        tkUnaryMinus, // -
-        tkUnaryNot, // not
+        tkUnaryPlus,        // +
+        tkUnaryMinus,       // -
+        tkUnaryNot,         // not
         tkOperatorMultiply, // *
-        tkOperatorDivide, // /
-        tkOperatorPlus, // +
-        tkOperatorMinus, // -
-        tkRelationLess, // <
-        tkRelationLessEq, // <=
-        tkRelationMore, // >
-        tkRelationMoreEq, // >=
-        tkRelationEqual, // =
+        tkOperatorDivide,   // /
+        tkOperatorPlus,     // +
+        tkOperatorMinus,    // -
+        tkRelationLess,     // <
+        tkRelationLessEq,   // <=
+        tkRelationMore,     // >
+        tkRelationMoreEq,   // >=
+        tkRelationEqual,    // =
         tkRelationNotEqual, // /=
-        tkLogicOr, // or
-        tkLogicAnd, // and
-        tkLogicXor, // xor
+        tkLogicOr,          // or
+        tkLogicAnd,         // and
+        tkLogicXor,         // xor
 
         // Directives
-        tkIf, // if
-        tkElse, // else
-        tkWhile, // while
-        tkFor, // for
-        tkIn, // in
-        tkIs, // is type checker
-        tkBreak, // break
-        tkContinue, // continue
-        tkReturn, // return
-        tkVar, // var
+        tkIf,         // if
+        tkElse,       // else
+        tkWhile,      // while
+        tkFor,        // for
+        tkIn,         // in
+        tkIs,         // is type checker
+        tkBreak,      // break
+        tkContinue,   // continue
+        tkReturn,     // return
+        tkVar,        // var
         tkAssignment, // :=
-        tkPlusEq, // +=
-        tkMinusEq, // -=
+        tkPlusEq,     // +=
+        tkMinusEq,    // -=
         tkMultiplyEq, // *=
-        tkDivideEq, // /=
-        tkImport, // import
-        tkPrint, // print
-        tkReadInt, // readInt
-        tkReadReal, // readReal
+        tkDivideEq,   // /=
+        tkImport,     // import
+        tkPrint,      // print
+        tkReadInt,    // readInt
+        tkReadReal,   // readReal
         tkReadString, // readString
-        tkDot, // . for accessing tuple elements
-        tkDoubleDot, // .. for for loop
-        tkLambda, // => for defining lambda functions
-        tkFunc, // func keyword for defining functions
+        tkDot,        // . for accessing tuple elements
+        tkDoubleDot,  // .. for for loop
+        tkLambda,     // => for defining lambda functions
+        tkFunc,       // func keyword for defining functions
 
         // Type indicators
-        tkTypeInt, // int
-        tkTypeReal, // real
-        tkTypeBool, // bool
+        tkTypeInt,    // int
+        tkTypeReal,   // real
+        tkTypeBool,   // bool
         tkTypeString, // string
-        tkTypeFunc, // func type
-        tkTypeEmpty, // empty
+        tkTypeFunc,   // func type
+        tkTypeEmpty,  // empty
 
         // Comment token
         tkCommentSign, // end
 
         // Delimeters
-        tkBracketNormalLeft, // (
+        tkBracketNormalLeft,  // (
         tkBracketNormalRight, // )
-        tkBracketSquareLeft, // [
+        tkBracketSquareLeft,  // [
         tkBracketSquareRight, // ]
-        tkBracketCurvyLeft, // {
-        tkBracketCurvyRight, // }
-        tkComma, // ,
-        tkDelimeterThen, // then
-        tkDelimeterLoop, // loop
-        tkDelimeterIs, // is in function definition
-        tkDelimeterEnd, // end
-        tkLineEnd, // line feed or ;
+        tkBracketCurvyLeft,   // {
+        tkBracketCurvyRight,  // }
+        tkComma,              // ,
+        tkDelimeterThen,      // then
+        tkDelimeterLoop,      // loop
+        tkDelimeterIs,        // is in function definition
+        tkDelimeterEnd,       // end
+        tkLineEnd,            // line feed or ;
 
         // Indeterminate for words with multiple meanings, must be swapped out by the end
         tkUndetermined, // end
@@ -104,7 +104,7 @@ namespace tokens {
         int line;
         int pos;
 
-        friend std::istream& operator>>(std::istream& in, Token& a){
+        friend std::istream &operator>>(std::istream &in, Token &a) {
             char trash;
             std::string string_inp;
             long long int_inp;
@@ -129,7 +129,7 @@ namespace tokens {
             in >> int_inp;
             a.pos = int_inp;
 
-            switch (code){
+            switch (code) {
                 case TokenCode::tkInt:
                     in >> trash >> int_inp >> trash;
                     a.valInt = int_inp;
@@ -158,9 +158,9 @@ namespace tokens {
             return in;
         }
 
-        friend std::ostream& operator<<(std::ostream& out, Token a){
+        friend std::ostream &operator<<(std::ostream &out, Token a) {
             if (human_output) {
-                switch (a.type){
+                switch (a.type) {
                     case TokenCode::tkInt:
                         out << "(tkInt " << a.line << ' ' << a.pos << ' ' << a.valInt << ")";
                         break;
@@ -356,47 +356,49 @@ namespace tokens {
                     case TokenCode::tkDivideEq:
                         out << "(tkDivideEq " << a.line << ' ' << a.pos << ")";
                         break;
+                    default:
+                        throw std::invalid_argument("Invalid token type");
                 }
             } else {
-                switch (a.type){
+                switch (a.type) {
                     case TokenCode::tkInt:
                         out << "(" << a.type << '|' << a.line << '|' << a.pos << '|' << a.valInt << ")";
                         break;
                     case TokenCode::tkReal:
-                        out << "(" << a.type  << '|' << a.line << '|' << a.pos << '|'  << a.valReal << ")";
+                        out << "(" << a.type << '|' << a.line << '|' << a.pos << '|' << a.valReal << ")";
                         break;
                     case TokenCode::tkString:
-                        out << "(" << a.type  << '|' << a.line << '|' << a.pos << '|'  << a.valStr << "\n)";
+                        out << "(" << a.type << '|' << a.line << '|' << a.pos << '|' << a.valStr << "\n)";
                         break;
                     case TokenCode::tkIdentifier:
-                        out << "(" << a.type  << '|' << a.line << '|' << a.pos << '|' << a.valStr << "\n)";
+                        out << "(" << a.type << '|' << a.line << '|' << a.pos << '|' << a.valStr << "\n)";
                         break;
                     default:
-                        out << "(" << a.type  << '|' << a.line << '|' << a.pos << ")";
+                        out << "(" << a.type << '|' << a.line << '|' << a.pos << ")";
                         break;
                 }
             }
             return out;
         }
 
-        friend std::istream& operator>>(std::istream& in, std::vector<Token>& res) {
+        friend std::istream &operator>>(std::istream &in, std::vector <Token> &res) {
             res.clear();
 
             Token cur;
 
             char trash;
             in >> trash;
-            while(in.peek() != ')'){
+            while (in.peek() != ')') {
                 in >> cur;
                 res.push_back(cur);
             }
             return in;
         }
 
-        friend std::ostream& operator<<(std::ostream& out, std::vector<Token>& s){
+        friend std::ostream &operator<<(std::ostream &out, std::vector <Token> &s) {
             out << "(" << s[0];
-            for(int i = 1; i < s.size(); ++i){
-                if (human_output){
+            for (int i = 1; i < s.size(); ++i) {
+                if (human_output) {
                     out << ", ";
                 }
                 out << s[i];
@@ -407,117 +409,127 @@ namespace tokens {
     };
 
     // Map for converting token strings to enum
-    const std::unordered_map<std::string, TokenCode> hash_lookup = {
+    const std::unordered_map <std::string, TokenCode> hash_lookup = {
 
-        // Token strings with multiple meanings
+            // Token strings with multiple meanings
             // Either tkIs directive or tkDelimeterIs for function definition
-            { "is", TokenCode::tkUndetermined },
+            {"is",         TokenCode::tkUndetermined},
 
             // Either tkOperatorUnaryPlus or tkOperatorPlus
-            { "+", TokenCode::tkUndetermined },
+            {"+",          TokenCode::tkUndetermined},
 
             // Either tkOperatorUnaryMinus or tkOperatorMinus
-            { "-", TokenCode::tkUndetermined },
+            {"-",          TokenCode::tkUndetermined},
 
             // Either tkTypeFunc or tkFunc
-            { "func", TokenCode::tkUndetermined },
+            {"func",       TokenCode::tkUndetermined},
 
             // Either tkEmpty or tkTypeEmpty
-            { "empty", TokenCode::tkUndetermined },
+            {"empty",      TokenCode::tkUndetermined},
 
-        // Boolean Literals
-        { "true", TokenCode::tkBooleanTrue },
-        { "false", TokenCode::tkBooleanFalse },
+            // Boolean Literals
+            {"true",       TokenCode::tkBooleanTrue},
+            {"false",      TokenCode::tkBooleanFalse},
 
-        // Unary operators
-        { "not", TokenCode::tkUnaryNot },
+            // Unary operators
+            {"not",        TokenCode::tkUnaryNot},
 
-        // Binary operators
-        { "*", TokenCode::tkOperatorMultiply },
-        { "/", TokenCode::tkOperatorDivide },
-        { "<", TokenCode::tkRelationLess },
-        { "<=", TokenCode::tkRelationLessEq },
-        { ">", TokenCode::tkRelationMore },
-        { ">=", TokenCode::tkRelationMoreEq },
-        { "=", TokenCode::tkRelationEqual },
-        { "/=", TokenCode::tkRelationNotEqual },
-        { "or", TokenCode::tkLogicOr },
-        { "and", TokenCode::tkLogicAnd },
-        { "xor", TokenCode::tkLogicXor },
+            // Binary operators
+            {"*",          TokenCode::tkOperatorMultiply},
+            {"/",          TokenCode::tkOperatorDivide},
+            {"<",          TokenCode::tkRelationLess},
+            {"<=",         TokenCode::tkRelationLessEq},
+            {">",          TokenCode::tkRelationMore},
+            {">=",         TokenCode::tkRelationMoreEq},
+            {"=",          TokenCode::tkRelationEqual},
+            {"/=",         TokenCode::tkRelationNotEqual},
+            {"or",         TokenCode::tkLogicOr},
+            {"and",        TokenCode::tkLogicAnd},
+            {"xor",        TokenCode::tkLogicXor},
 
-        // Directives
-        { "if", TokenCode::tkIf },
-        { "else", TokenCode::tkElse },
-        { "while", TokenCode::tkWhile },
-        { "for", TokenCode::tkFor },
-        { "in", TokenCode::tkIn },
-        { "break", TokenCode::tkBreak },
-        { "continue", TokenCode::tkContinue },
-        { "return", TokenCode::tkReturn },
-        { "var", TokenCode::tkVar },
-        { ":=", TokenCode::tkAssignment },
-        { "+=", TokenCode::tkPlusEq },
-        { "-=", TokenCode::tkMinusEq },
-        { "import", TokenCode::tkImport },
-        { "print", TokenCode::tkPrint },
-        { "readInt", TokenCode::tkReadInt },
-        { "readReal", TokenCode::tkReadReal },
-        { "readString", TokenCode::tkReadString },
-        { ".", TokenCode::tkDot },
-        { "..", TokenCode::tkDoubleDot },
-        { "=>", TokenCode::tkLambda },
-        { ",", TokenCode::tkComma },
+            // Directives
+            {"if",         TokenCode::tkIf},
+            {"else",       TokenCode::tkElse},
+            {"while",      TokenCode::tkWhile},
+            {"for",        TokenCode::tkFor},
+            {"in",         TokenCode::tkIn},
+            {"break",      TokenCode::tkBreak},
+            {"continue",   TokenCode::tkContinue},
+            {"return",     TokenCode::tkReturn},
+            {"var",        TokenCode::tkVar},
+            {":=",         TokenCode::tkAssignment},
+            {"+=",         TokenCode::tkPlusEq},
+            {"-=",         TokenCode::tkMinusEq},
+            {"import",     TokenCode::tkImport},
+            {"print",      TokenCode::tkPrint},
+            {"readInt",    TokenCode::tkReadInt},
+            {"readReal",   TokenCode::tkReadReal},
+            {"readString", TokenCode::tkReadString},
+            {".",          TokenCode::tkDot},
+            {"..",         TokenCode::tkDoubleDot},
+            {"=>",         TokenCode::tkLambda},
+            {",",          TokenCode::tkComma},
 
-        // Type indicators
-        { "int", TokenCode::tkTypeInt },
-        { "real", TokenCode::tkTypeReal },
-        { "bool", TokenCode::tkTypeBool },
-        { "string", TokenCode::tkTypeString },
+            // Type indicators
+            {"int",        TokenCode::tkTypeInt},
+            {"real",       TokenCode::tkTypeReal},
+            {"bool",       TokenCode::tkTypeBool},
+            {"string",     TokenCode::tkTypeString},
 
-        // Comment
-        { "//", TokenCode::tkCommentSign },
+            // Comment
+            {"//",         TokenCode::tkCommentSign},
 
-        // Delimeters
-        { "(", TokenCode::tkBracketNormalLeft },
-        { ")", TokenCode::tkBracketNormalRight },
-        { "[", TokenCode::tkBracketSquareLeft },
-        { "]", TokenCode::tkBracketSquareRight },
-        { "{", TokenCode::tkBracketCurvyLeft },
-        { "}", TokenCode::tkBracketCurvyRight },
-        { "then", TokenCode::tkDelimeterThen },
-        { "loop", TokenCode::tkDelimeterLoop },
-        { "end", TokenCode::tkDelimeterEnd }
+            // Delimeters
+            {"(",          TokenCode::tkBracketNormalLeft},
+            {")",          TokenCode::tkBracketNormalRight},
+            {"[",          TokenCode::tkBracketSquareLeft},
+            {"]",          TokenCode::tkBracketSquareRight},
+            {"{",          TokenCode::tkBracketCurvyLeft},
+            {"}",          TokenCode::tkBracketCurvyRight},
+            {"then",       TokenCode::tkDelimeterThen},
+            {"loop",       TokenCode::tkDelimeterLoop},
+            {"end",        TokenCode::tkDelimeterEnd}
     };
 
     // For quickly looking up which characters are brackets
     // Includes symbols ()[]{},
     // These are symbols that are not part of any operator, and need to be processed right away
-    static constexpr bool delimeters[128] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0};
+    static constexpr bool delimeters[128] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0,
+                                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+                                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+                                             1, 0, 0};
 
     // For quickly looking up which characters are operators
     // Includes symbols +-*/=><.:
-    static constexpr bool operators[128] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    static constexpr bool operators[128] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0,
+                                            0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                            0, 0, 0};
 
     // Helper functions for determining the type of character quickly
-    #define isLetter(c) (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || (c == '_'))
-    #define isNumber(c) ('0' <= c && c <= '9')
-    #define isDelimeter(c) delimeters[c]
-    #define isOperator(c) operators[c]
+#define isLetter(c) (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || (c == '_'))
+#define isNumber(c) ('0' <= c && c <= '9')
+#define isDelimeter(c) delimeters[c]
+#define isOperator(c) operators[c]
 
-    Token find_token(std::string s, int line, int pos){
+    Token find_token(std::string s, int line, int pos) {
         auto code_ref = hash_lookup.find(s);
 
         if (code_ref == hash_lookup.end()) {
             return {TokenCode::tkIdentifier, 0, 0, s, line, pos};
-        }else if ((*code_ref).second == TokenCode::tkUndetermined) {
+        } else if ((*code_ref).second == TokenCode::tkUndetermined) {
             return {TokenCode::tkUndetermined, 0, 0, s, line, pos};
         } else {
             return {(*code_ref).second, 0, 0, "", line, pos};
         }
     }
 
-    void tokenize(std::string program, std::vector<Token>& result){
-        enum TokenizerState{
+    void tokenize(std::string program, std::vector <Token> &result) {
+        enum TokenizerState {
             collectingWord, // Identifier or Directive
             collectingString,
             collectingInteger,
@@ -532,8 +544,8 @@ namespace tokens {
 
         int line = 1, pos = 1;
 
-        for (char c : program){
-            if (state==TokenizerState::ignoringComment) {
+        for (char c: program) {
+            if (state == TokenizerState::ignoringComment) {
                 if (c == '\n') {
                     ++line;
                     pos = 1;
@@ -541,7 +553,7 @@ namespace tokens {
                     state = TokenizerState::waiting;
                     result.push_back({TokenCode::tkLineEnd, 0, 0, "", line, pos});
                 }
-            } else if (isLetter(c)){
+            } else if (isLetter(c)) {
                 switch (state) {
                     case TokenizerState::collectingWord:
                         accum.append(1, c);
@@ -560,18 +572,24 @@ namespace tokens {
                             state = TokenizerState::ignoringComment;
                             break;
                         }
-                        if(newToken.type == TokenCode::tkIdentifier){
-                            throw std::invalid_argument(std::format("Non-existent operator at line {} character {}", line, pos - accum.size() + 1)); \
+                        if (newToken.type == TokenCode::tkIdentifier) {
+                            throw std::invalid_argument(
+                                    std::format("Non-existent operator at line {} character {}", line,
+                                                pos - accum.size() + 1)); \
+
                         }
                         result.push_back(newToken);
 
                         state = TokenizerState::collectingWord;
-                        accum = c; }
+                        accum = c;
+                    }
                         break;
                     default:
-                        throw std::invalid_argument(std::format("Non-numericals are not allowed in numbers at line {} character {}", line, pos));
+                        throw std::invalid_argument(
+                                std::format("Non-numericals are not allowed in numbers at line {} character {}", line,
+                                            pos));
                 }
-            } else if (isNumber(c)){
+            } else if (isNumber(c)) {
                 switch (state) {
                     case TokenizerState::waiting:
                         state = TokenizerState::collectingInteger;
@@ -584,13 +602,17 @@ namespace tokens {
                             state = TokenizerState::ignoringComment;
                             break;
                         }
-                        if(newToken.type == TokenCode::tkIdentifier){
-                            throw std::invalid_argument(std::format("Non-existent operator at line {} character {}", line, pos - accum.size() + 1)); \
+                        if (newToken.type == TokenCode::tkIdentifier) {
+                            throw std::invalid_argument(
+                                    std::format("Non-existent operator at line {} character {}", line,
+                                                pos - accum.size() + 1)); \
+
                         }
                         result.push_back(newToken);
 
                         state = TokenizerState::collectingInteger;
-                        accum = c; }
+                        accum = c;
+                    }
                         break;
                     default:
                         accum.append(1, c);
@@ -610,10 +632,14 @@ namespace tokens {
                             state = TokenizerState::ignoringComment;
                             break;
                         }
-                        if(newToken.type == TokenCode::tkIdentifier){
-                            throw std::invalid_argument(std::format("Non-existent operator at line {} character {}", line, pos - accum.size() + 1)); \
+                        if (newToken.type == TokenCode::tkIdentifier) {
+                            throw std::invalid_argument(
+                                    std::format("Non-existent operator at line {} character {}", line,
+                                                pos - accum.size() + 1)); \
+
                         }
-                        result.push_back(newToken); }
+                        result.push_back(newToken);
+                    }
 
                         break;
                     case TokenizerState::collectingInteger:
@@ -625,7 +651,7 @@ namespace tokens {
                 }
                 result.push_back(find_token(*new std::string(1, c), line, pos - accum.size() + 1));
                 state = TokenizerState::waiting;
-            } else if (isOperator(c)){
+            } else if (isOperator(c)) {
                 switch (state) {
                     case TokenizerState::collectingWord:
                         result.push_back(find_token(accum, line, pos - accum.size() + 1));
@@ -647,7 +673,7 @@ namespace tokens {
                         accum.append(1, c);
                         break;
                     case TokenizerState::collectingInteger:
-                        if (c == '.'){
+                        if (c == '.') {
                             state = TokenizerState::collectingReal;
                             accum.append(1, c);
                         } else {
@@ -657,23 +683,26 @@ namespace tokens {
                         }
                         break;
                     case TokenizerState::collectingReal:
-                        if (c == '.'){
-                            throw std::invalid_argument(std::format("Two decimal separators in number at line {} character {}", line, pos));
+                        if (c == '.') {
+                            throw std::invalid_argument(
+                                    std::format("Two decimal separators in number at line {} character {}", line, pos));
                         }
                         result.push_back({TokenCode::tkReal, 0, stold(accum), "", line, pos - accum.size() + 1});
                         state = TokenizerState::collectingOperator;
                         accum = c;
                         break;
                 }
-            }else{
-                if(c == '\n' || c == ';'){
+            } else {
+                if (c == '\n' || c == ';') {
                     switch (state) {
                         case TokenizerState::collectingWord:
                             result.push_back(find_token(accum, line, pos - accum.size() + 1));
                             break;
                         case TokenizerState::collectingString:
                             if (c == ';') accum.append(1, c);
-                            else throw std::invalid_argument(std::format("Newline in the middle of string at line {}", line));
+                            else
+                                throw std::invalid_argument(
+                                        std::format("Newline in the middle of string at line {}", line));
                             break;
                         case TokenizerState::collectingOperator: {
                             // Finalize operator
@@ -687,10 +716,14 @@ namespace tokens {
                                 }
                                 break;
                             }
-                            if(newToken.type == TokenCode::tkIdentifier){
-                                throw std::invalid_argument(std::format("Non-existent operator at line {} character {}", line, pos - accum.size() + 1)); \
+                            if (newToken.type == TokenCode::tkIdentifier) {
+                                throw std::invalid_argument(
+                                        std::format("Non-existent operator at line {} character {}", line,
+                                                    pos - accum.size() + 1)); \
+
                             }
-                            result.push_back(newToken); }
+                            result.push_back(newToken);
+                        }
 
                             break;
                         case TokenizerState::collectingInteger:
@@ -701,7 +734,7 @@ namespace tokens {
                             break;
                     }
 
-                    if (state!=TokenizerState::ignoringComment) {
+                    if (state != TokenizerState::ignoringComment) {
                         result.push_back({TokenCode::tkLineEnd, 0, 0, "", line, pos - accum.size() + 1});
                         state = TokenizerState::waiting;
                     }
@@ -712,7 +745,8 @@ namespace tokens {
                 } else if (c == '"') {
                     switch (state) {
                         case TokenizerState::collectingWord:
-                            throw std::invalid_argument(std::format("Unexpected \" at line {} character {}", line, pos));
+                            throw std::invalid_argument(
+                                    std::format("Unexpected \" at line {} character {}", line, pos));
                             break;
                         case TokenizerState::collectingString:
                             result.push_back({TokenCode::tkString, 0, 0, accum, line, pos - accum.size() + 1});
@@ -726,19 +760,25 @@ namespace tokens {
                                 state = TokenizerState::ignoringComment;
                                 break;
                             }
-                            if(newToken.type == TokenCode::tkIdentifier){
-                                throw std::invalid_argument(std::format("Non-existent operator at line {} character {}", line, pos - accum.size() + 1)); \
+                            if (newToken.type == TokenCode::tkIdentifier) {
+                                throw std::invalid_argument(
+                                        std::format("Non-existent operator at line {} character {}", line,
+                                                    pos - accum.size() + 1)); \
+
                             }
                             result.push_back(newToken);
 
                             state = TokenizerState::collectingString;
-                            accum = ""; }
+                            accum = "";
+                        }
                             break;
                         case TokenizerState::collectingInteger:
-                            throw std::invalid_argument(std::format("Unexpected \" at line {} character {}", line, pos));
+                            throw std::invalid_argument(
+                                    std::format("Unexpected \" at line {} character {}", line, pos));
                             break;
                         case TokenizerState::collectingReal:
-                            throw std::invalid_argument(std::format("Unexpected \" at line {} character {}", line, pos));
+                            throw std::invalid_argument(
+                                    std::format("Unexpected \" at line {} character {}", line, pos));
                             break;
                         case TokenizerState::waiting:
                             state = TokenizerState::collectingString;
@@ -753,17 +793,21 @@ namespace tokens {
                         case TokenizerState::collectingString:
                             accum.append(1, c);
                             break;
-                        case TokenizerState::collectingOperator:  {
+                        case TokenizerState::collectingOperator: {
                             // Finalize operator
                             Token newToken = find_token(accum, line, pos - accum.size() + 1);
                             if (newToken.type == TokenCode::tkCommentSign) {
                                 state = TokenizerState::ignoringComment;
                                 break;
                             }
-                            if(newToken.type == TokenCode::tkIdentifier){
-                                throw std::invalid_argument(std::format("Non-existent operator at line {} character {}", line, pos - accum.size() + 1)); \
+                            if (newToken.type == TokenCode::tkIdentifier) {
+                                throw std::invalid_argument(
+                                        std::format("Non-existent operator at line {} character {}", line,
+                                                    pos - accum.size() + 1)); \
+
                             }
-                            result.push_back(newToken); }
+                            result.push_back(newToken);
+                        }
 
                             break;
                         case TokenizerState::collectingInteger:
@@ -773,7 +817,8 @@ namespace tokens {
                             result.push_back({TokenCode::tkReal, 0, stold(accum), "", line, pos - accum.size() + 1});
                             break;
                     }
-                    if(state != TokenizerState::ignoringComment && state != TokenizerState::collectingString) state = TokenizerState::waiting;
+                    if (state != TokenizerState::ignoringComment && state != TokenizerState::collectingString)
+                        state = TokenizerState::waiting;
                 }
             }
             ++pos;
@@ -792,11 +837,14 @@ namespace tokens {
                     state = TokenizerState::ignoringComment;
                     break;
                 }
-                if(newToken.type == TokenCode::tkIdentifier){
-                    throw std::invalid_argument(std::format("Non-existent operator at line {} character {}", line, pos - accum.size() + 1)); \
+                if (newToken.type == TokenCode::tkIdentifier) {
+                    throw std::invalid_argument(
+                            std::format("Non-existent operator at line {} character {}", line, pos - accum.size() + 1)); \
+
                 }
-                result.push_back(newToken); }
-                 // Maybe there should be an error outright because there are no postfix operators
+                result.push_back(newToken);
+            }
+                // Maybe there should be an error outright because there are no postfix operators
                 break;
             case TokenizerState::collectingInteger:
                 result.push_back({TokenCode::tkInt, stoll(accum), 0, "", line, pos - accum.size() + 1});
@@ -807,54 +855,54 @@ namespace tokens {
         }
         result.push_back({TokenCode::tkLineEnd, 0, 0, "", line, pos - accum.size() + 1});
 
-        for(int i = 0; i < result.size(); ++i){
-            if (result[i].type == TokenCode::tkUndetermined){
-                if(result[i].valStr == "+"){
-                    if(i != 0 && (result[i - 1].type == TokenCode::tkBooleanFalse ||
-                                  result[i - 1].type == TokenCode::tkBooleanTrue ||
-                                  result[i - 1].type == TokenCode::tkBracketCurvyRight ||
-                                  result[i - 1].type == TokenCode::tkBracketNormalRight||
-                                  result[i - 1].type == TokenCode::tkBracketSquareRight ||
-                                  result[i - 1].type == TokenCode::tkDelimeterEnd ||
-                                  result[i - 1].type == TokenCode::tkIdentifier ||
-                                  result[i - 1].type == TokenCode::tkInt ||
-                                  result[i - 1].type == TokenCode::tkReadInt ||
-                                  result[i - 1].type == TokenCode::tkReadReal ||
-                                  result[i - 1].type == TokenCode::tkReadString ||
-                                  result[i - 1].type == TokenCode::tkReal ||
-                                  result[i - 1].type == TokenCode::tkString)) {
-                                    result[i] = {TokenCode::tkOperatorPlus, 0, 0, ""};
+        for (int i = 0; i < result.size(); ++i) {
+            if (result[i].type == TokenCode::tkUndetermined) {
+                if (result[i].valStr == "+") {
+                    if (i != 0 && (result[i - 1].type == TokenCode::tkBooleanFalse ||
+                                   result[i - 1].type == TokenCode::tkBooleanTrue ||
+                                   result[i - 1].type == TokenCode::tkBracketCurvyRight ||
+                                   result[i - 1].type == TokenCode::tkBracketNormalRight ||
+                                   result[i - 1].type == TokenCode::tkBracketSquareRight ||
+                                   result[i - 1].type == TokenCode::tkDelimeterEnd ||
+                                   result[i - 1].type == TokenCode::tkIdentifier ||
+                                   result[i - 1].type == TokenCode::tkInt ||
+                                   result[i - 1].type == TokenCode::tkReadInt ||
+                                   result[i - 1].type == TokenCode::tkReadReal ||
+                                   result[i - 1].type == TokenCode::tkReadString ||
+                                   result[i - 1].type == TokenCode::tkReal ||
+                                   result[i - 1].type == TokenCode::tkString)) {
+                        result[i] = {TokenCode::tkOperatorPlus, 0, 0, ""};
                     } else {
                         result[i] = {TokenCode::tkUnaryPlus, 0, 0, ""};
                     }
-                } else if(result[i].valStr == "-"){
-                    if(i != 0 && (result[i - 1].type == TokenCode::tkBooleanFalse ||
-                                  result[i - 1].type == TokenCode::tkBooleanTrue ||
-                                  result[i - 1].type == TokenCode::tkBracketCurvyRight ||
-                                  result[i - 1].type == TokenCode::tkBracketNormalRight||
-                                  result[i - 1].type == TokenCode::tkBracketSquareRight ||
-                                  result[i - 1].type == TokenCode::tkDelimeterEnd ||
-                                  result[i - 1].type == TokenCode::tkIdentifier ||
-                                  result[i - 1].type == TokenCode::tkInt ||
-                                  result[i - 1].type == TokenCode::tkReadInt ||
-                                  result[i - 1].type == TokenCode::tkReadReal ||
-                                  result[i - 1].type == TokenCode::tkReadString ||
-                                  result[i - 1].type == TokenCode::tkReal ||
-                                  result[i - 1].type == TokenCode::tkString)) {
-                                    result[i] = {TokenCode::tkOperatorMinus, 0, 0, ""};
+                } else if (result[i].valStr == "-") {
+                    if (i != 0 && (result[i - 1].type == TokenCode::tkBooleanFalse ||
+                                   result[i - 1].type == TokenCode::tkBooleanTrue ||
+                                   result[i - 1].type == TokenCode::tkBracketCurvyRight ||
+                                   result[i - 1].type == TokenCode::tkBracketNormalRight ||
+                                   result[i - 1].type == TokenCode::tkBracketSquareRight ||
+                                   result[i - 1].type == TokenCode::tkDelimeterEnd ||
+                                   result[i - 1].type == TokenCode::tkIdentifier ||
+                                   result[i - 1].type == TokenCode::tkInt ||
+                                   result[i - 1].type == TokenCode::tkReadInt ||
+                                   result[i - 1].type == TokenCode::tkReadReal ||
+                                   result[i - 1].type == TokenCode::tkReadString ||
+                                   result[i - 1].type == TokenCode::tkReal ||
+                                   result[i - 1].type == TokenCode::tkString)) {
+                        result[i] = {TokenCode::tkOperatorMinus, 0, 0, ""};
                     } else {
                         result[i] = {TokenCode::tkUnaryMinus, 0, 0, ""};
                     }
-                }else if(result[i].valStr == "is"){
-                    if(i != 0 && (result[i - 1].type == TokenCode::tkFunc)) {
+                } else if (result[i].valStr == "is") {
+                    if (i != 0 && (result[i - 1].type == TokenCode::tkFunc)) {
                         result[i] = {TokenCode::tkDelimeterIs, 0, 0, ""};
                     } else {
-                        if(i != 0 && (result[i - 1].type == TokenCode::tkBracketNormalRight)){
+                        if (i != 0 && (result[i - 1].type == TokenCode::tkBracketNormalRight)) {
                             int bcount = 1, y = i - 2;
-                            while(y > 0 && bcount != 0){
-                                if (result[y].type == TokenCode::tkBracketNormalRight){
+                            while (y > 0 && bcount != 0) {
+                                if (result[y].type == TokenCode::tkBracketNormalRight) {
                                     ++bcount;
-                                } else if (result[y].type == TokenCode::tkBracketNormalLeft){
+                                } else if (result[y].type == TokenCode::tkBracketNormalLeft) {
                                     --bcount;
                                 }
                                 --y;
@@ -870,14 +918,14 @@ namespace tokens {
                         }
 
                     }
-                }else if(result[i].valStr == "func"){
-                    if(i != 0 && (result[i - 1].type == TokenCode::tkIs)) {
+                } else if (result[i].valStr == "func") {
+                    if (i != 0 && (result[i - 1].type == TokenCode::tkIs)) {
                         result[i] = {TokenCode::tkTypeFunc, 0, 0, ""};
                     } else {
                         result[i] = {TokenCode::tkFunc, 0, 0, ""};
                     }
-                }else if(result[i].valStr == "empty"){
-                    if(i != 0 && (result[i - 1].type == TokenCode::tkIs)) {
+                } else if (result[i].valStr == "empty") {
+                    if (i != 0 && (result[i - 1].type == TokenCode::tkIs)) {
                         result[i] = {TokenCode::tkTypeEmpty, 0, 0, ""};
                     } else {
                         result[i] = {TokenCode::tkEmpty, 0, 0, ""};

@@ -7,7 +7,7 @@
 #include "analyzers/analyze.hpp"
 #include "optimizers/optimize.hpp"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     cmd_utils::input_params param;
     cmd_utils::parse_args(argc, argv, param);
 
@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
     std::string prog = cmd_utils::readfile(*param.in_stream);
 
-    std::vector<tokens::Token> tokenized;
+    std::vector <tokens::Token> tokenized;
     tokens::tokenize(prog, tokenized);
 
     ast_nodes::Node* tree = ast_nodes::construct(tokenized);

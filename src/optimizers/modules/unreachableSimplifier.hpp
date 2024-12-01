@@ -11,18 +11,18 @@ namespace optimizers {
 
         const std::string name = "unreachable_simplifier";
 
-        void at_enter (ast_nodes::Node* node) {
+        void at_enter(ast_nodes::Node* node) {
             ast_nodes::ControlNode* control_node = dynamic_cast<ast_nodes::ControlNode*>(node);
 
             if (control_node != nullptr) {
-                ast_nodes::BodyNode*       body_node =                 dynamic_cast<ast_nodes::BodyNode*>     (control_node->parent);
+                ast_nodes::BodyNode* body_node = dynamic_cast<ast_nodes::BodyNode*>     (control_node->parent);
 
-                std::vector<ast_nodes::Node*> statements_to_change;
-                std::vector<ast_nodes::Node*> resulting_statements;
+                std::vector <ast_nodes::Node*> statements_to_change;
+                std::vector <ast_nodes::Node*> resulting_statements;
 
                 statements_to_change = body_node->statements;
 
-                for (auto & i : statements_to_change) {
+                for (auto& i: statements_to_change) {
                     resulting_statements.push_back(i);
                     if (i == node) {
                         break;
@@ -33,10 +33,10 @@ namespace optimizers {
             }
         }
 
-        void optimize(ast_nodes::Node* tree, std::ostream* log=&std::cerr) {
+        void optimize(ast_nodes::Node* tree, std::ostream* log = &std::cerr) {
             tree->visit(at_enter, ast_nodes::dummy, ast_nodes::dummy);
             reassign_ids(tree);
-			assign_parents(tree);
+            assign_parents(tree);
         }
     }
 }

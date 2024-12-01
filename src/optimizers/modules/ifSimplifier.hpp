@@ -11,8 +11,8 @@ namespace optimizers {
 
         const std::string name = "if_simplifier";
 
-        void at_enter (ast_nodes::Node* node) {
-            ast_nodes::IfNode*                  if_node =      dynamic_cast<ast_nodes::IfNode*>(node);
+        void at_enter(ast_nodes::Node* node) {
+            ast_nodes::IfNode* if_node = dynamic_cast<ast_nodes::IfNode*>(node);
 
             if (if_node != nullptr) {
                 ast_nodes::ExpressionNode* expression_node = dynamic_cast<ast_nodes::ExpressionNode*>(if_node->expression);
@@ -31,21 +31,20 @@ namespace optimizers {
                     return;
                 }
 
-                ast_nodes::BodyNode*       body_node =                 dynamic_cast<ast_nodes::BodyNode*>     (node->parent);
+                ast_nodes::BodyNode* body_node = dynamic_cast<ast_nodes::BodyNode*>(node->parent);
 
-                std::vector<ast_nodes::Node*> statements_to_change;
-                std::vector<ast_nodes::Node*> resulting_statements;
+                std::vector <ast_nodes::Node*> statements_to_change;
+                std::vector <ast_nodes::Node*> resulting_statements;
 
                 statements_to_change = body_node->statements;
 
-        //        cout << "If node with True or False detected at " << nodes << endl;
 
                 if (literal_node->bool_val) {
                     ast_nodes::BodyNode* if_body_node = dynamic_cast<ast_nodes::BodyNode*> (if_node->if_body);
 
-                    for (auto & i : statements_to_change) {
+                    for (auto& i: statements_to_change) {
                         if (i == node) {
-                            for (auto & j : if_body_node->statements) {
+                            for (auto& j: if_body_node->statements) {
                                 resulting_statements.push_back(j);
                             }
                         } else {
@@ -56,7 +55,7 @@ namespace optimizers {
                     return;
                 } else {
                     if (if_node->else_body == nullptr) {
-                        for (auto & i : statements_to_change) {
+                        for (auto& i: statements_to_change) {
                             if (i == node) {
                                 continue;
                             } else {
@@ -69,9 +68,9 @@ namespace optimizers {
 
                     ast_nodes::BodyNode* else_body_node = dynamic_cast<ast_nodes::BodyNode*> (if_node->else_body);
 
-                    for (auto & i : statements_to_change) {
+                    for (auto& i: statements_to_change) {
                         if (i == node) {
-                            for (auto & j : else_body_node->statements) {
+                            for (auto& j: else_body_node->statements) {
                                 resulting_statements.push_back(j);
                             }
                         } else {
@@ -86,7 +85,7 @@ namespace optimizers {
             return;
         }
 
-        void optimize(ast_nodes::Node* tree, std::ostream* log=&std::cerr) {
+        void optimize(ast_nodes::Node* tree, std::ostream* log = &std::cerr) {
             tree->visit(at_enter, ast_nodes::dummy, ast_nodes::dummy);
             reassign_ids(tree);
         }

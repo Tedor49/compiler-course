@@ -167,6 +167,9 @@ namespace arithmetic {
                 break;
             case 'f':
                 c->function_pointer = var->function_pointer;
+				for (auto i : var->function_scope) {
+					c->function_scope[i.first] = copy(i.second);
+				}
                 break;
 			default:
 				throw std::invalid_argument("Invalid type");
@@ -472,6 +475,13 @@ namespace arithmetic {
                         return c;
                 }
                 break;
+            case 's':
+                switch (b->type) {
+                    case 's':
+                        c->bool_val = a->string_val < b->string_val;
+                        return a;
+                }
+                break;
         }
 		std::cout << *a << ' ' << *b << std::endl;
         throw std::runtime_error("Unsupported operand type for <");
@@ -499,6 +509,13 @@ namespace arithmetic {
                     case 'r':
                         c->bool_val = a->real_val > b->real_val;
                         return c;
+                }
+                break;
+            case 's':
+                switch (b->type) {
+                    case 's':
+                        c->bool_val = a->string_val > b->string_val;
+                        return a;
                 }
                 break;
         }
@@ -530,6 +547,13 @@ namespace arithmetic {
                         return c;
                 }
                 break;
+            case 's':
+                switch (b->type) {
+                    case 's':
+                        c->bool_val = a->string_val <= b->string_val;
+                        return a;
+                }
+                break;
         }
         throw std::runtime_error("Unsupported operand type for <=");
     }
@@ -556,6 +580,13 @@ namespace arithmetic {
                     case 'r':
                         c->bool_val = a->real_val >= b->real_val;
                         return c;
+                }
+                break;
+            case 's':
+                switch (b->type) {
+                    case 's':
+                        c->bool_val = a->string_val >= b->string_val;
+                        return a;
                 }
                 break;
         }
@@ -599,13 +630,76 @@ namespace arithmetic {
                     return c;
 				}
                 break;
+            case 'a':
+				if (b->type == 'a') {
+					try {
+						for (auto i : a->array_identifiers) {
+							if (b->array_identifiers.count(i.first)) {
+								if (!op_eq(b->array_values[b->array_identifiers[i.first]], a->array_values[i.second])->bool_val) {
+									c->bool_val = false;
+									return c;
+								}
+							} else if (a->array_values[i.second]->type != 'e') {
+								c->bool_val = false;
+								return c;
+							}
+						}
+						
+						for (auto i : b->array_identifiers) {
+							if (a->array_identifiers.count(i.first)) {
+								if (!op_eq(a->array_values[a->array_identifiers[i.first]], b->array_values[i.second])->bool_val) {
+									c->bool_val = false;
+									return c;
+								}
+							} else if (b->array_values[i.second]->type != 'e') {
+								c->bool_val = false;
+								return c;
+							}
+						}
+						
+						c->bool_val = true;
+						return c;
+					} catch (std::runtime_error& ex) {
+						c->bool_val = false;
+						return c;
+					}
+				}
+                break;
+            case 't':
+                if (b->type == 't') {
+					try {
+						if (a->tuple_identifiers.size() != b->tuple_identifiers.size() ||
+							a->array_values.size() != b->array_values.size()) {
+							c->bool_val = false;
+							return c;
+						}
+						
+						for (auto i : a->tuple_identifiers) {
+							if (!b->tuple_identifiers.count(i.first) || b->tuple_identifiers[i.first] != i.second) {
+								c->bool_val = false;
+								return c;
+							}
+						}
+						
+						for (int i = 0; i < a->array_values.size(); ++i) {
+							if (!op_eq(a->array_values[i], b->array_values[i])->bool_val) {
+								c->bool_val = false;
+								return c;
+							}
+						}
+						
+						c->bool_val = true;
+						return c;
+					} catch (std::runtime_error& ex) {
+						c->bool_val = false;
+						return c;
+					}
+				}
+                break;
         }
 		//std::cout << *a << ' ' << *b << std::endl;
         throw std::runtime_error("Unsupported operand type for =");
     }
-
-
-
 
     AmbiguousVariable* op_ne(AmbiguousVariable* a, AmbiguousVariable* b) {
         AmbiguousVariable* c = new AmbiguousVariable();
@@ -644,6 +738,72 @@ namespace arithmetic {
                         c->bool_val = a->bool_val != b->bool_val;
                         return c;
                 }
+                break;
+            case 'a':
+				if (b->type == 'a') {
+					try {
+						for (auto i : a->array_identifiers) {
+							if (b->array_identifiers.count(i.first)) {
+								if (!op_eq(b->array_values[b->array_identifiers[i.first]], a->array_values[i.second])->bool_val) {
+									c->bool_val = true;
+									return c;
+								}
+							} else if (a->array_values[i.second]->type != 'e') {
+								c->bool_val = true;
+								return c;
+							}
+						}
+						
+						for (auto i : b->array_identifiers) {
+							if (a->array_identifiers.count(i.first)) {
+								if (!op_eq(a->array_values[a->array_identifiers[i.first]], b->array_values[i.second])->bool_val) {
+									c->bool_val = true;
+									return c;
+								}
+							} else if (b->array_values[i.second]->type != 'e') {
+								c->bool_val = true;
+								return c;
+							}
+						}
+						
+						c->bool_val = false;
+						return c;
+					} catch (std::runtime_error& ex) {
+						c->bool_val = false;
+						return c;
+					}
+				}
+                break;
+            case 't':
+                if (b->type == 't') {
+					try {
+						if (a->tuple_identifiers.size() != b->tuple_identifiers.size() ||
+							a->array_values.size() != b->array_values.size()) {
+							c->bool_val = true;
+							return c;
+						}
+						
+						for (auto i : a->tuple_identifiers) {
+							if (!b->tuple_identifiers.count(i.first) || b->tuple_identifiers[i.first] != i.second) {
+								c->bool_val = true;
+								return c;
+							}
+						}
+						
+						for (int i = 0; i < a->array_values.size(); ++i) {
+							if (!op_eq(a->array_values[i], b->array_values[i])->bool_val) {
+								c->bool_val = true;
+								return c;
+							}
+						}
+						
+						c->bool_val = false;
+						return c;
+					} catch (std::runtime_error& ex) {
+						c->bool_val = false;
+						return c;
+					}
+				}
                 break;
         }
         throw std::runtime_error("Unsupported operand type for /=");

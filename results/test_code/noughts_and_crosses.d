@@ -4,7 +4,7 @@ var players := ["X", "O"]
 
 var turn := 1
 
-var print_field := func () is
+var print_field := func is
 	for i in 1 .. 3 loop
 		print "-------\n|"
 		for j in 1 .. 3 loop
@@ -20,7 +20,7 @@ var print_field := func () is
 	return
 end	
 
-var check_winner := func () is
+var check_winner := func is
 	for i in 1 .. 3 loop
 		if field[i][1] = field[i][2] and field[i][2] = field[i][3] and field[i][1] /= " " then
 			return field[i][1]

@@ -598,33 +598,34 @@ namespace ast_nodes {
         this->line = tokens.at(y).line;
         this->pos = tokens.at(y).pos;
         ++y;
+		if (tokens.at(y).type == tokens::TokenCode::tkBracketNormalLeft) {
+			++y;
 
-        if (tokens.at(y).type != tokens::TokenCode::tkBracketNormalLeft) {
-            throw std::invalid_argument("Expected parameters in function definition");
+			if (tokens.at(y).type == tokens::TokenCode::tkBracketNormalRight) {
+				++y;
+			} else {
+				while (1) {
+					if (tokens.at(y).type != tokens::TokenCode::tkIdentifier) {
+						throw std::invalid_argument("Expected identifier");
+					}
+					this->params.push_back(tokens.at(y).valStr);
+					++y;
+
+					if (tokens.at(y).type == tokens::TokenCode::tkComma) {
+						++y;
+						continue;
+					} else if (tokens.at(y).type == tokens::TokenCode::tkBracketNormalRight) {
+						++y;
+						break;
+					} else {
+						throw std::invalid_argument("Expected closing bracket or comma");
+					}
+				}
+			}
+		} else if (tokens.at(y).type != tokens::TokenCode::tkDelimeterIs && tokens.at(y).type != tokens::TokenCode::tkLambda) {
+            throw std::invalid_argument("Expected parameters or body in function definition");
         }
-        ++y;
-
-        if (tokens.at(y).type == tokens::TokenCode::tkBracketNormalRight) {
-            ++y;
-        } else
-            while (1) {
-                if (tokens.at(y).type != tokens::TokenCode::tkIdentifier) {
-                    throw std::invalid_argument("Expected identifier");
-                }
-                this->params.push_back(tokens.at(y).valStr);
-                ++y;
-
-                if (tokens.at(y).type == tokens::TokenCode::tkComma) {
-                    ++y;
-                    continue;
-                } else if (tokens.at(y).type == tokens::TokenCode::tkBracketNormalRight) {
-                    ++y;
-                    break;
-                } else {
-                    throw std::invalid_argument("Expected closing bracket or comma");
-                }
-            }
-
+        
         if (tokens.at(y).type == tokens::TokenCode::tkDelimeterIs) {
             this->type = 'b';
             ++y;
@@ -633,7 +634,9 @@ namespace ast_nodes {
             this->type = 'l';
             ++y;
             this->body = createNodeFromTokens("Expression", tokens, y);
-        }
+        } else {
+			throw std::invalid_argument("Expected body after parameters in function definition");
+		}
         return this;
     }
 

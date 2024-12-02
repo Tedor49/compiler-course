@@ -484,7 +484,7 @@ namespace ast_nodes {
 
         for (int i = 0; i < values.size(); ++i) {
             values[i]->execute(in, out);
-            tup->array_values.push_back(scopes.back().intermediates[values[i]->id]);
+            tup->array_values.push_back(arithmetic::copy(scopes.back().intermediates[values[i]->id]));
             if (!identifiers[i].empty()) {
                 if (tup->tuple_identifiers.count(identifiers[i])) {
                     throw std::invalid_argument(std::format("Error at line {}, pos {}:\n\t{}", line, pos,

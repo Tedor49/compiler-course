@@ -33,7 +33,7 @@ namespace ast_nodes {
 
         virtual void execute(std::istream& in, std::ostream& out) = 0;
 
-        virtual void from_config(std::vector<Node*>& nodes, std::string& confstr) = 0;
+        virtual void from_config(std::vector <Node*>& nodes, std::string& confstr) = 0;
 
         virtual void visit(callback_function at_enter, callback_function at_repeat, callback_function at_exit,
                            bool visit_body = true) = 0;
@@ -106,7 +106,7 @@ namespace ast_nodes {
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -149,14 +149,14 @@ namespace ast_nodes {
 
     class ExpressionNode: public Node {
     public:
-        std::vector<Node*> terms;
-        std::vector<char> ops;
+        std::vector <Node*> terms;
+        std::vector <char> ops;
 
         Node* from_tokens(std::vector <tokens::Token>& tokens, int& y);
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -243,7 +243,7 @@ namespace ast_nodes {
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -293,7 +293,7 @@ namespace ast_nodes {
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -361,7 +361,7 @@ namespace ast_nodes {
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -423,7 +423,7 @@ namespace ast_nodes {
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -475,13 +475,13 @@ namespace ast_nodes {
         Node* expression;
 
         std::string identifier;
-        std::vector<Node*> tails;
+        std::vector <Node*> tails;
 
         Node* from_tokens(std::vector <tokens::Token>& tokens, int& y);
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -600,13 +600,13 @@ namespace ast_nodes {
 
         Node* subscript;
 
-        std::vector<Node*> params;
+        std::vector <Node*> params;
 
         Node* from_tokens(std::vector <tokens::Token>& tokens, int& y);
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -710,13 +710,13 @@ namespace ast_nodes {
 
     class PrintNode: public Node {
     public:
-        std::vector<Node*> values;
+        std::vector <Node*> values;
 
         Node* from_tokens(std::vector <tokens::Token>& tokens, int& y);
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -783,7 +783,7 @@ namespace ast_nodes {
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -848,7 +848,7 @@ namespace ast_nodes {
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -956,13 +956,13 @@ namespace ast_nodes {
 
     class ArrayLiteralNode: public Node {
     public:
-        std::vector<Node*> values;
+        std::vector <Node*> values;
 
         Node* from_tokens(std::vector <tokens::Token>& tokens, int& y);
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -1022,13 +1022,13 @@ namespace ast_nodes {
     class TupleLiteralNode: public Node {
     public:
         std::vector <std::string> identifiers;
-        std::vector<Node*> values;
+        std::vector <Node*> values;
 
         Node* from_tokens(std::vector <tokens::Token>& tokens, int& y);
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -1112,7 +1112,7 @@ namespace ast_nodes {
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -1181,7 +1181,7 @@ namespace ast_nodes {
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -1237,13 +1237,13 @@ namespace ast_nodes {
 
     class BodyNode: public Node {
     public:
-        std::vector<Node*> statements;
+        std::vector <Node*> statements;
 
         Node* from_tokens(std::vector <tokens::Token>& tokens, int& y);
 
         void execute(std::istream& in, std::ostream& out);
 
-        void from_config(std::vector<Node*>& nodes, std::string& confstr) {
+        void from_config(std::vector <Node*>& nodes, std::string& confstr) {
             std::stringstream s(confstr);
 
             char trash;
@@ -1344,8 +1344,8 @@ namespace ast_nodes {
 
     Node* readTree(std::istream& in) {
         id_counter = 1;
-        std::vector<std::pair<std::string, std::string>> configs;
-        std::vector<Node*> nodes;
+        std::vector <std::pair<std::string, std::string>> configs;
+        std::vector <Node*> nodes;
 
         nodes.push_back(nullptr);
 

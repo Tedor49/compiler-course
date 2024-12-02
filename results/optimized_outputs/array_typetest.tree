@@ -62,9 +62,9 @@ Primary|61|3|46|l|62
 Literal|62|3|46|a|63
 ArrayLiteral|63|3|46|(64)
 Expression|64|0|0|(65)|()
-Unary|65|0|0|-|66|#
+Unary|65|0|0|#|66|#
 Primary|66|3|48|l|67
-Literal|67|3|48|i|50
+Literal|67|3|48|i|-50
 Unary|68|3|54|#|69|#
 Primary|69|3|54|v|arr2|()
 Expression|70|3|61|(71)|()

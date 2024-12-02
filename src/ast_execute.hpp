@@ -317,9 +317,11 @@ namespace ast_nodes {
                 control_flag = ControlState::Break;
                 break;
             case 'r':
-                value->execute(in, out);
+				if (value != nullptr) {
+					value->execute(in, out);
+					return_register = scopes.back().intermediates[value->id];
+				}
                 control_flag = ControlState::Return;
-                return_register = scopes.back().intermediates[value->id];
                 break;
             case 'c':
                 control_flag = ControlState::Continue;

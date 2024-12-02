@@ -17,6 +17,7 @@ var print_field := func () is
 		print "\n"
 	end
 	print "-------\n"
+	return
 end	
 
 var check_winner := func () is

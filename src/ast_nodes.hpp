@@ -812,7 +812,7 @@ namespace ast_nodes {
                    bool visit_body = true) {
             at_enter(this);
 
-            if (this->type == 'r') {
+            if (this->value != nullptr) {
                 this->value->visit(at_enter, at_repeat, at_exit, visit_body);
             }
 
@@ -822,8 +822,12 @@ namespace ast_nodes {
         void machine_print(std::ostream& out) {
             out << "Control|" << id << "|" << line << "|" << pos << "|" << type;
             if (type == 'r') {
-                out << "|" << value->id << "\n";
-                value->machine_print(out);
+				if (value != nullptr) {
+					out << "|" << value->id << "\n";
+					value->machine_print(out);
+				} else {
+					out << "|0\n";
+				}
             } else out << "\n";
         }
     };

@@ -198,6 +198,8 @@ namespace ast_nodes {
                 }
 
                 break;
+			default:
+				throw std::invalid_argument("Invalid unary");
         }
         return this;
     }
@@ -444,7 +446,29 @@ namespace ast_nodes {
             case tokens::TokenCode::tkReturn:
                 this->type = 'r';
                 ++y;
-                this->value = createNodeFromTokens("Expression", tokens, y);
+				switch (tokens.at(y).type) {
+					case tokens::TokenCode::tkUnaryPlus:
+					case tokens::TokenCode::tkUnaryMinus:
+					case tokens::TokenCode::tkUnaryNot:
+					case tokens::TokenCode::tkIdentifier:
+					case tokens::TokenCode::tkReadInt:
+					case tokens::TokenCode::tkReadReal:
+					case tokens::TokenCode::tkReadString:
+					case tokens::TokenCode::tkInt:
+					case tokens::TokenCode::tkBooleanFalse:
+					case tokens::TokenCode::tkBooleanTrue:
+					case tokens::TokenCode::tkString:
+					case tokens::TokenCode::tkBracketSquareLeft:
+					case tokens::TokenCode::tkBracketCurvyLeft:
+					case tokens::TokenCode::tkReal:
+					case tokens::TokenCode::tkFunc:
+					case tokens::TokenCode::tkEmpty:
+					case tokens::TokenCode::tkBracketNormalLeft:
+						this->value = createNodeFromTokens("Expression", tokens, y);
+						break;
+					default:
+						break;
+				}
                 break;
             default:
                 throw std::invalid_argument("SOMEHOW TRIED TO CREATE CONTROL STATEMENT FROM INVALID STATE");

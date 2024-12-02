@@ -879,6 +879,7 @@ namespace arithmetic {
 
 
     AmbiguousVariable* op_unary_plus(AmbiguousVariable* a) {
+		if (a->type == 'e') throw std::runtime_error("unary + operation cannot be performed on empty"); 
         return copy(a);
     }
 

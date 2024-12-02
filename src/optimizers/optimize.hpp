@@ -8,6 +8,7 @@
 #include "../ast_lib.hpp"
 #include "./modules/ifSimplifier.hpp"
 #include "./modules/unreachableSimplifier.hpp"
+#include "./modules/constExprSimplifier.hpp"
 
 namespace optimizers {
 
@@ -22,7 +23,8 @@ namespace optimizers {
     void optimize(ast_nodes::Node* tree, std::ostream* log = &std::cerr) {
         std::vector <optimizer_data> optimizers = {
                 {if_simplifier::name,          if_simplifier::optimize},
-                {unreachable_simplifier::name, unreachable_simplifier::optimize}
+                {unreachable_simplifier::name, unreachable_simplifier::optimize},
+                {const_simplifier::name, const_simplifier::optimize}
         };
 
         for (optimizer_data& i: optimizers) {
